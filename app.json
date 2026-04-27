@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/onboarding/onboarding",
+    "pages/index/index",
+    "pages/main/main",
+    "pages/settings/settings",
+    "pages/history/history",
+    "pages/emotion/emotion",
+    "pages/training/training",
+    "pages/women/women",
+    "pages/shop/shop",
+    "pages/record/record",
+    "pages/about/about",
+    "pages/companion/companion",
+    "pages/knowledge/knowledge",
+    "pages/emotion-report/emotion-report",
+    "pages/general-report/general-report",
+    "pages/sensory-writing/sensory-writing",
+    "pages/dialogue-training/dialogue-training",
+    "pages/contact/contact",
+    "pages/emotion-library/emotion-library",
+    "pages/emotion-detail/emotion-detail",
+    "pages/chat/chat",
+    "pages/mine/mine",
+    "pages/favorite-quotes/favorite-quotes",
+    "pages/psych-knowledge/psych-knowledge"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#FAF9F7",
+    "backgroundColor": "#FAF9F7",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "requiredBackgroundModes": ["audio"],
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

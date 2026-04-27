@@ -1,0 +1,244 @@
+<view class="container">
+
+  <!-- ===== 主视图 ===== -->
+  <block wx:if="{{!showHistory}}">
+    <!-- 页面标题 -->
+    <view class="page-header">
+      <text class="page-title">言心小筑</text>
+      <text class="page-subtitle">系统提升情绪表达能力</text>
+    </view>
+
+    <!-- 两个主入口（左右并排） -->
+    <view class="main-entries-row">
+      <!-- 模拟对话入口 -->
+      <view class="entry-card dialogue-card" bindtap="showDialogueOptions">
+        <view class="card-icon-wrap">
+          <view class="ci-dialogue">
+            <view class="ci-d-bubble1"></view>
+            <view class="ci-d-bubble2"></view>
+          </view>
+        </view>
+        <text class="card-title">模拟对话</text>
+        <text class="card-desc">真实场景练习</text>
+      </view>
+
+      <!-- 感官写作入口 -->
+      <view class="entry-card writing-card" bindtap="showWritingOptions">
+        <view class="card-icon-wrap">
+          <view class="ci-writing">
+            <view class="ci-w-pen"></view>
+            <view class="ci-w-line1"></view>
+            <view class="ci-w-line2"></view>
+          </view>
+        </view>
+        <text class="card-title">感官写作</text>
+        <text class="card-desc">五感描述情绪</text>
+      </view>
+    </view>
+
+    <!-- 模拟对话场景选择 -->
+    <view class="scenarios-section" wx:if="{{showDialogueScenarios}}">
+      <view class="section-header">
+        <text class="section-title">选择练习场景</text>
+      </view>
+
+      <!-- 预设场景列表 -->
+      <view class="scenarios-list">
+        <view
+          class="scenario-card"
+          wx:for="{{dialogueScenarios}}"
+          wx:key="id"
+          bindtap="selectScenario"
+          data-id="{{item.id}}"
+        >
+          <view class="scenario-icon-wrap">
+            <view class="scene-icon scene-icon-{{item.iconType}}">
+              <view class="si-part1"></view>
+              <view class="si-part2"></view>
+              <view class="si-part3"></view>
+            </view>
+          </view>
+          <view class="scenario-info">
+            <view class="scenario-title-row">
+              <text class="scenario-title">{{item.title}}</text>
+              <view class="difficulty-tag">{{item.difficulty}}</view>
+            </view>
+            <text class="scenario-desc">{{item.description}}</text>
+          </view>
+          <view class="scenario-arrow">
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 自定义场景入口 -->
+      <view class="custom-section">
+        <view class="custom-trigger" bindtap="showCustomScene" wx:if="{{!showCustomInput}}">
+          <view class="custom-icon-wrap">
+            <view class="scene-icon scene-icon-custom">
+              <view class="si-part1"></view>
+              <view class="si-part2"></view>
+              <view class="si-part3"></view>
+            </view>
+          </view>
+          <view class="custom-trigger-text">
+            <text class="custom-title">自定义场景</text>
+            <text class="custom-desc">描述你想练习的真实场景</text>
+          </view>
+          <text class="custom-plus">+</text>
+        </view>
+
+        <!-- 自定义输入框 -->
+        <view class="custom-input-area" wx:if="{{showCustomInput}}">
+          <text class="custom-input-label">描述你想练习的场景</text>
+          <textarea
+            class="custom-textarea"
+            placeholder="例如：和老板谈加薪、拒绝朋友借钱、向父母表达不满..."
+            bindinput="onCustomInput"
+            value="{{customSceneText}}"
+            maxlength="100"
+            auto-height
+          />
+          <button class="custom-submit-btn" bindtap="submitCustomScene">
+            <text class="btn-text">开始训练</text>
+            <text class="btn-arrow">→</text>
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 训练记录入口 -->
+    <view class="history-entry" bindtap="viewTrainingHistory" wx:if="{{trainingRecords.length > 0}}">
+      <view class="history-entry-left">
+        <view class="history-entry-icon">
+          <view class="ci-dialogue" style="transform: scale(0.65);">
+            <view class="ci-d-bubble1"></view>
+            <view class="ci-d-bubble2"></view>
+          </view>
+        </view>
+        <text class="history-entry-text">训练记录（{{trainingRecords.length}}次）</text>
+      </view>
+      <text class="arrow-icon">›</text>
+    </view>
+  </block>
+
+  <!-- ===== 历史列表视图 ===== -->
+  <block wx:if="{{showHistory && !viewingRecord}}">
+    <view class="page-header">
+      <text class="page-title">训练记录</text>
+      <text class="page-subtitle">共 {{trainingRecords.length}} 次对话训练</text>
+    </view>
+
+    <view class="history-list">
+      <view
+        class="history-card"
+        wx:for="{{trainingRecords}}"
+        wx:key="id"
+        bindtap="viewRecordDetail"
+        data-id="{{item.id}}"
+      >
+        <view class="history-card-header">
+          <text class="history-card-avatar">{{item.npcAvatar}}</text>
+          <view class="history-card-info">
+            <text class="history-card-title">{{item.scenarioTitle}}</text>
+            <text class="history-card-date">{{item.createdAt}}</text>
+          </view>
+          <view class="history-card-score">
+            <text class="history-score-value">{{item.summary.totalScore}}</text>
+          </view>
+        </view>
+        <view class="history-card-meta">
+          <view class="difficulty-tag small">{{item.scenarioDifficulty}}</view>
+          <text class="history-card-rating">{{item.summary.rating}}</text>
+          <text class="history-card-rounds">{{item.roundData.length}}轮对话</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="back-link" bindtap="backFromHistory">
+      <text>← 返回</text>
+    </view>
+  </block>
+
+  <!-- ===== 记录详情视图 ===== -->
+  <block wx:if="{{showHistory && viewingRecord}}">
+    <view class="page-header">
+      <text class="page-title">{{viewingRecord.npcAvatar}} {{viewingRecord.scenarioTitle}}</text>
+      <view class="detail-meta-row">
+        <view class="difficulty-tag small">{{viewingRecord.scenarioDifficulty}}</view>
+        <text class="page-subtitle">{{viewingRecord.createdAt}}</text>
+      </view>
+    </view>
+
+    <!-- 得分卡片 -->
+    <view class="detail-score-card">
+      <view class="detail-score-ring">
+        <text class="detail-score-number">{{viewingRecord.summary.totalScore}}</text>
+      </view>
+      <view class="detail-score-info">
+        <text class="detail-score-rating">{{viewingRecord.summary.rating}}</text>
+        <text class="detail-score-focus">训练重点：{{viewingRecord.scenarioFocus}}</text>
+      </view>
+    </view>
+
+    <!-- 对话回顾 -->
+    <view class="detail-section">
+      <text class="detail-section-title">对话回顾</text>
+      <view class="detail-dialogue">
+        <block wx:for="{{viewingRecord.roundData}}" wx:key="index">
+          <!-- 用户发言 -->
+          <view class="detail-msg detail-msg-user">
+            <text class="detail-msg-label">你</text>
+            <text class="detail-msg-text">{{item.user}}</text>
+          </view>
+          <!-- 教练点评 -->
+          <view class="detail-msg detail-msg-coach" wx:if="{{item.coach}}">
+            <text class="detail-msg-label">小知点评</text>
+            <text class="detail-msg-text">{{item.coach}}</text>
+          </view>
+          <!-- NPC回应 -->
+          <view class="detail-msg detail-msg-npc">
+            <text class="detail-msg-label">{{viewingRecord.npcAvatar}} {{viewingRecord.npcName}}</text>
+            <text class="detail-msg-text">{{item.npc}}</text>
+          </view>
+          <!-- 分割线 -->
+          <view class="detail-round-divider" wx:if="{{index < viewingRecord.roundData.length - 1}}"></view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 亮点 -->
+    <view class="detail-section" wx:if="{{viewingRecord.summary.highlights.length > 0}}">
+      <text class="detail-section-title">做得好的地方</text>
+      <view class="detail-feedback-list">
+        <view class="detail-feedback-item" wx:for="{{viewingRecord.summary.highlights}}" wx:key="index">
+          <view class="feedback-dot good-dot"></view>
+          <text class="feedback-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 改进建议 -->
+    <view class="detail-section" wx:if="{{viewingRecord.summary.improvements.length > 0}}">
+      <text class="detail-section-title">可以更好</text>
+      <view class="detail-feedback-list">
+        <view class="detail-feedback-item" wx:for="{{viewingRecord.summary.improvements}}" wx:key="index">
+          <view class="feedback-dot improve-dot"></view>
+          <text class="feedback-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 建议 -->
+    <view class="detail-tip-card" wx:if="{{viewingRecord.summary.tip}}">
+      <text class="detail-tip-text">{{viewingRecord.summary.tip}}</text>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="detail-actions">
+      <view class="detail-back-btn" bindtap="backFromDetail">← 返回列表</view>
+      <view class="detail-delete-btn" bindtap="deleteRecord" data-id="{{viewingRecord.id}}">删除记录</view>
+    </view>
+  </block>
+
+</view>

@@ -1,0 +1,130 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">护理知识与经验 📚</text>
+    <text class="page-subtitle">专业知识 + 真实经验分享</text>
+  </view>
+
+  <!-- 分类标签 -->
+  <view class="category-tabs">
+    <view
+      class="tab-item {{currentTab === item.id ? 'active' : ''}}"
+      wx:for="{{categories}}"
+      wx:key="id"
+      bindtap="switchTab"
+      data-id="{{item.id}}"
+    >
+      <text class="tab-icon">{{item.icon}}</text>
+      <text class="tab-name">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 专业知识区域 -->
+  <view class="knowledge-section">
+    <view class="section-header">
+      <text class="section-title">专业知识</text>
+      <text class="section-badge">医学认证</text>
+    </view>
+
+    <view class="knowledge-list">
+      <view
+        class="knowledge-card"
+        wx:for="{{professionalKnowledge}}"
+        wx:key="id"
+        bindtap="viewKnowledgeDetail"
+        data-item="{{item}}"
+      >
+        <view class="card-header">
+          <text class="knowledge-icon">{{item.icon}}</text>
+          <view class="knowledge-info">
+            <text class="knowledge-title">{{item.title}}</text>
+            <text class="knowledge-source">来源：{{item.source}}</text>
+          </view>
+        </view>
+        <text class="knowledge-summary">{{item.summary}}</text>
+        <view class="card-footer">
+          <text class="read-count">{{item.readCount}} 次阅读</text>
+          <text class="arrow">→</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 社区经验分享 -->
+  <view class="community-section">
+    <view class="section-header">
+      <text class="section-title">社区经验</text>
+      <text class="section-badge">真实分享</text>
+    </view>
+
+    <view class="experience-list">
+      <view
+        class="experience-card"
+        wx:for="{{communityExperiences}}"
+        wx:key="id"
+        bindtap="viewExperienceDetail"
+        data-item="{{item}}"
+      >
+        <view class="card-top">
+          <view class="user-info">
+            <view class="user-avatar">{{item.userName.charAt(0)}}</view>
+            <view class="user-details">
+              <text class="user-name">{{item.userName}}</text>
+              <text class="post-time">{{item.timeAgo}}</text>
+            </view>
+          </view>
+          <view class="helpful-badge" wx:if="{{item.isHelpful}}">
+            <text class="badge-icon">⭐</text>
+            <text class="badge-text">高赞</text>
+          </view>
+        </view>
+
+        <text class="experience-title">{{item.title}}</text>
+        <text class="experience-content">{{item.content}}</text>
+
+        <view class="experience-tags">
+          <text
+            class="tag"
+            wx:for="{{item.tags}}"
+            wx:key="*this"
+            wx:for-item="tag"
+          >
+            #{{tag}}
+          </text>
+        </view>
+
+        <view class="card-actions">
+          <view class="action-item">
+            <text class="action-icon">👍</text>
+            <text class="action-count">{{item.likes}}</text>
+          </view>
+          <view class="action-item">
+            <text class="action-icon">💬</text>
+            <text class="action-count">{{item.comments}}</text>
+          </view>
+          <view class="action-item">
+            <text class="action-icon">⭐</text>
+            <text class="action-count">{{item.favorites}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分享你的经验按钮 -->
+  <view class="share-section">
+    <button class="share-btn" bindtap="shareExperience">
+      <text class="btn-icon">✍️</text>
+      <text class="btn-text">分享你的经验</text>
+    </button>
+  </view>
+
+  <!-- 温馨提示 -->
+  <view class="tips-card">
+    <text class="tips-icon">💡</text>
+    <view class="tips-content">
+      <text class="tips-title">温馨提示</text>
+      <text class="tips-text">社区经验仅供参考，如有严重不适请及时就医。专业知识内容经过医学审核，但不能替代医生诊断。</text>
+    </view>
+  </view>
+</view>

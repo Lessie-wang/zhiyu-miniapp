@@ -1,0 +1,266 @@
+<view class="container">
+  <!-- 步骤1: 欢迎页 -->
+  <view class="step-container" wx:if="{{currentStep === 1}}">
+    <view class="welcome-section">
+      <text class="logo-text">知愈</text>
+      <text class="logo-subtitle">FeelingMosaic</text>
+      <text class="welcome-title">养育你的情绪</text>
+      <text class="welcome-desc">在这里，你的每一种感受都值得被看见</text>
+    </view>
+
+    <view class="welcome-features">
+      <view class="feature-item">
+        <text class="feature-icon">✨</text>
+        <text class="feature-text">精准命名你的情绪</text>
+      </view>
+      <view class="feature-item">
+        <text class="feature-icon">🧩</text>
+        <text class="feature-text">系统提升表达能力</text>
+      </view>
+      <view class="feature-item">
+        <text class="feature-icon">📝</text>
+        <text class="feature-text">记录情绪成长轨迹</text>
+      </view>
+    </view>
+
+    <button class="primary-btn" bindtap="nextStep">
+      <text class="btn-text">开始使用</text>
+    </button>
+  </view>
+
+  <!-- 步骤2: 头像与昵称 -->
+  <view class="step-container" wx:if="{{currentStep === 2}}">
+    <view class="auth-section">
+      <text class="step-title">欢迎来到知愈</text>
+      <text class="step-desc">设置你的头像和昵称，让知愈认识你</text>
+
+      <view class="auth-card">
+        <view class="avatar-wrapper">
+          <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+            <image wx:if="{{avatarUrl}}" class="avatar-img" src="{{avatarUrl}}" mode="aspectFill"></image>
+            <view wx:else class="avatar-placeholder">
+              <text class="avatar-placeholder-icon">👤</text>
+            </view>
+            <text class="avatar-edit-hint">点击选择头像</text>
+          </button>
+        </view>
+
+        <view class="nickname-wrapper">
+          <text class="form-label">昵称</text>
+          <input
+            type="nickname"
+            class="nickname-input"
+            placeholder="点击填写昵称"
+            value="{{nickname}}"
+            bindinput="onInputNickname"
+            bindblur="onInputNickname"
+          />
+        </view>
+      </view>
+
+      <button class="primary-btn" bindtap="onConfirmProfile">
+        <text class="btn-text">确认并继续</text>
+      </button>
+
+      <text class="skip-text" bindtap="skipAuth">暂不设置，直接使用</text>
+    </view>
+  </view>
+
+  <!-- 步骤3: 用户画像问卷 -->
+  <view class="step-container" wx:if="{{currentStep === 3}}">
+    <view class="survey-section">
+      <text class="step-title">了解你一点</text>
+      <text class="step-desc">帮助小知更好地陪伴你</text>
+
+      <!-- 隐私说明 -->
+      <view class="privacy-note">
+        <text class="privacy-icon">🔒</text>
+        <text class="privacy-text">这些信息只用来帮小知理解你，不会被任何人看到。你可以随时跳过或修改。</text>
+      </view>
+
+      <view class="survey-form">
+        <!-- 生日 -->
+        <view class="form-item">
+          <text class="form-label">生日</text>
+          <picker mode="date" value="{{formData.birthday}}" bindchange="onBirthdayChange" end="{{today}}">
+            <view class="picker-input">
+              <text class="{{formData.birthday ? 'picker-value' : 'picker-placeholder'}}">
+                {{formData.birthday || '选择你的生日'}}
+              </text>
+              <text class="picker-arrow">›</text>
+            </view>
+          </picker>
+        </view>
+
+        <!-- 性别 -->
+        <view class="form-item">
+          <text class="form-label">性别</text>
+          <view class="radio-group">
+            <view
+              class="radio-item {{formData.gender === '男' ? 'active' : ''}}"
+              bindtap="selectGender"
+              data-value="男"
+            >
+              <text class="radio-icon">{{formData.gender === '男' ? '●' : '○'}}</text>
+              <text class="radio-text">男</text>
+            </view>
+            <view
+              class="radio-item {{formData.gender === '女' ? 'active' : ''}}"
+              bindtap="selectGender"
+              data-value="女"
+            >
+              <text class="radio-icon">{{formData.gender === '女' ? '●' : '○'}}</text>
+              <text class="radio-text">女</text>
+            </view>
+            <view
+              class="radio-item {{formData.gender === '其他' ? 'active' : ''}}"
+              bindtap="selectGender"
+              data-value="其他"
+            >
+              <text class="radio-icon">{{formData.gender === '其他' ? '●' : '○'}}</text>
+              <text class="radio-text">其他</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 身份 -->
+        <view class="form-item">
+          <text class="form-label">你是</text>
+          <view class="radio-group">
+            <view
+              class="radio-item {{formData.occupation === '学生' ? 'active' : ''}}"
+              bindtap="selectOccupation"
+              data-value="学生"
+            >
+              <text class="radio-icon">{{formData.occupation === '学生' ? '●' : '○'}}</text>
+              <text class="radio-text">学生</text>
+            </view>
+            <view
+              class="radio-item {{formData.occupation === '职场人' ? 'active' : ''}}"
+              bindtap="selectOccupation"
+              data-value="职场人"
+            >
+              <text class="radio-icon">{{formData.occupation === '职场人' ? '●' : '○'}}</text>
+              <text class="radio-text">职场人</text>
+            </view>
+            <view
+              class="radio-item {{formData.occupation === '自由职业' ? 'active' : ''}}"
+              bindtap="selectOccupation"
+              data-value="自由职业"
+            >
+              <text class="radio-icon">{{formData.occupation === '自由职业' ? '●' : '○'}}</text>
+              <text class="radio-text">自由职业</text>
+            </view>
+            <view
+              class="radio-item {{formData.occupation === '其他' ? 'active' : ''}}"
+              bindtap="selectOccupation"
+              data-value="其他"
+            >
+              <text class="radio-icon">{{formData.occupation === '其他' ? '●' : '○'}}</text>
+              <text class="radio-text">其他</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 情绪表达困扰 -->
+        <view class="form-item">
+          <text class="form-label">你在情绪表达上最困扰的是？</text>
+          <text class="form-hint">没有对错，选择最贴近你的就好</text>
+          <view class="checkbox-group">
+            <view
+              class="checkbox-item {{item.checked ? 'active' : ''}}"
+              wx:for="{{concerns}}"
+              wx:key="value"
+              bindtap="toggleConcern"
+              data-index="{{index}}"
+            >
+              <text class="checkbox-icon">{{item.checked ? '☑' : '☐'}}</text>
+              <text class="checkbox-text">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 使用目的 -->
+        <view class="form-item">
+          <text class="form-label">你希望通过知愈</text>
+          <view class="checkbox-group">
+            <view
+              class="checkbox-item {{item.checked ? 'active' : ''}}"
+              wx:for="{{goals}}"
+              wx:key="value"
+              bindtap="toggleGoal"
+              data-index="{{index}}"
+            >
+              <text class="checkbox-icon">{{item.checked ? '☑' : '☐'}}</text>
+              <text class="checkbox-text">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 情绪触发场景 -->
+        <view class="form-item">
+          <text class="form-label">你的情绪波动通常和什么有关？</text>
+          <view class="checkbox-group">
+            <view
+              class="checkbox-item {{item.checked ? 'active' : ''}}"
+              wx:for="{{triggers}}"
+              wx:key="value"
+              bindtap="toggleTrigger"
+              data-index="{{index}}"
+            >
+              <text class="checkbox-icon">{{item.checked ? '☑' : '☐'}}</text>
+              <text class="checkbox-text">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 情绪应对方式 -->
+        <view class="form-item">
+          <text class="form-label">情绪不好时，你通常会？</text>
+          <text class="form-hint">每种方式都很正常，这里只是帮小知了解你</text>
+          <view class="checkbox-group">
+            <view
+              class="checkbox-item {{item.checked ? 'active' : ''}}"
+              wx:for="{{copingStyles}}"
+              wx:key="value"
+              bindtap="toggleCoping"
+              data-index="{{index}}"
+            >
+              <text class="checkbox-icon">{{item.checked ? '☑' : '☐'}}</text>
+              <text class="checkbox-text">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 对话期待（多选） -->
+        <view class="form-item">
+          <text class="form-label">你希望知愈怎么帮你？</text>
+          <view class="checkbox-group">
+            <view
+              class="checkbox-item {{item.checked ? 'active' : ''}}"
+              wx:for="{{expectations}}"
+              wx:key="value"
+              bindtap="toggleExpectation"
+              data-index="{{index}}"
+            >
+              <text class="checkbox-icon">{{item.checked ? '☑' : '☐'}}</text>
+              <text class="checkbox-text">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <button class="primary-btn" bindtap="submitSurvey">
+        <text class="btn-text">完成</text>
+      </button>
+
+      <text class="skip-text" bindtap="skipSurvey">跳过，稍后填写</text>
+    </view>
+  </view>
+
+  <!-- 进度指示器 -->
+  <view class="progress-dots" wx:if="{{currentStep > 1}}">
+    <view class="dot {{currentStep === 2 ? 'active' : ''}}"></view>
+    <view class="dot {{currentStep === 3 ? 'active' : ''}}"></view>
+  </view>
+</view>

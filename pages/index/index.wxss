@@ -1,0 +1,522 @@
+/* 知愈首页 - 全面优化 */
+page {
+  background: linear-gradient(165deg, #FAF9F7 0%, #F5EDE7 40%, #EDE3DB 100%);
+  height: 100vh;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60rpx 40rpx 40rpx;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ==================== 闪光粒子系统 ==================== */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 184, 165, 0.8) 0%, rgba(212, 184, 165, 0) 70%);
+  animation: particleDrift linear infinite;
+}
+
+@keyframes particleDrift {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(calc(var(--dx, 30) * 1rpx), calc(var(--dy, -50) * 1rpx)) scale(1.3);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(var(--dx2, -20) * 1rpx), calc(var(--dy2, 40) * 1rpx)) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* 粒子闪烁替代方案（不依赖CSS变量） */
+.particle {
+  animation: particleFloat ease-in-out infinite, particleGlow ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-40rpx) translateX(20rpx);
+  }
+  50% {
+    transform: translateY(-10rpx) translateX(-15rpx);
+  }
+  75% {
+    transform: translateY(-50rpx) translateX(10rpx);
+  }
+}
+
+@keyframes particleGlow {
+  0%, 100% {
+    opacity: 0.2;
+    box-shadow: 0 0 6rpx 2rpx rgba(212, 184, 165, 0.3);
+  }
+  50% {
+    opacity: 0.9;
+    box-shadow: 0 0 16rpx 6rpx rgba(212, 184, 165, 0.6);
+  }
+}
+
+/* ==================== BGM 按钮与音符图标 ==================== */
+.bgm-toggle {
+  position: fixed;
+  top: 24rpx;
+  right: 32rpx;
+  width: 72rpx;
+  height: 72rpx;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 20rpx rgba(212, 184, 165, 0.2);
+  z-index: 100;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10rpx);
+}
+
+.bgm-toggle:active {
+  transform: scale(0.9);
+}
+
+.icon-music {
+  position: relative;
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.music-note {
+  position: absolute;
+  bottom: 4rpx;
+  left: 6rpx;
+  width: 12rpx;
+  height: 12rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+}
+
+.music-note::after {
+  content: '';
+  position: absolute;
+  left: 10rpx;
+  bottom: 4rpx;
+  width: 3rpx;
+  height: 22rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx;
+}
+
+.music-wave {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  border: 3rpx solid #D4B8A5;
+  border-left: none;
+  border-radius: 0 50% 50% 0;
+}
+
+.music-wave-1 {
+  width: 8rpx;
+  height: 16rpx;
+  margin-top: -8rpx;
+  animation: waveScale 1.2s ease-in-out infinite;
+}
+
+.music-wave-2 {
+  width: 14rpx;
+  height: 24rpx;
+  margin-top: -12rpx;
+  animation: waveScale 1.2s ease-in-out 0.3s infinite;
+}
+
+@keyframes waveScale {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.mute-line {
+  position: absolute;
+  top: 2rpx;
+  left: 2rpx;
+  width: 44rpx;
+  height: 3rpx;
+  background: #B8B2A7;
+  transform: rotate(45deg);
+  transform-origin: left top;
+}
+
+.icon-music.muted .music-note {
+  background: #B8B2A7;
+}
+
+.icon-music.muted .music-note::after {
+  background: #B8B2A7;
+}
+
+/* ==================== Logo 区域 ==================== */
+.logo-section {
+  text-align: center;
+  margin-bottom: 36rpx;
+  animation: fadeInDown 0.8s ease-out;
+  z-index: 1;
+}
+
+.logo-mark {
+  width: 56rpx;
+  height: 56rpx;
+  margin: 0 auto 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CSS心形标识 */
+.logo-heart {
+  position: relative;
+  width: 28rpx;
+  height: 26rpx;
+  background: linear-gradient(135deg, #D4B8A5, #C4A893);
+  transform: rotate(-45deg);
+  border-radius: 4rpx;
+  opacity: 0.7;
+}
+
+.logo-heart::before,
+.logo-heart::after {
+  content: '';
+  position: absolute;
+  width: 28rpx;
+  height: 28rpx;
+  background: linear-gradient(135deg, #D4B8A5, #C4A893);
+  border-radius: 50%;
+}
+
+.logo-heart::before {
+  top: -14rpx;
+  left: 0;
+}
+
+.logo-heart::after {
+  top: 0;
+  right: -14rpx;
+}
+
+.logo-text {
+  display: block;
+  font-size: 80rpx;
+  font-weight: 800;
+  color: #C8A692;
+  letter-spacing: 12rpx;
+  margin-bottom: 8rpx;
+}
+
+.logo-subtitle {
+  display: block;
+  font-size: 22rpx;
+  color: #BEB7AD;
+  letter-spacing: 6rpx;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+/* ==================== 日期时间区域 ==================== */
+.datetime-section {
+  text-align: center;
+  margin-bottom: 28rpx;
+  animation: fadeIn 1s ease-out 0.2s both;
+  z-index: 1;
+}
+
+.date-text {
+  display: block;
+  font-size: 28rpx;
+  color: #8A857E;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+  letter-spacing: 3rpx;
+}
+
+.time-text {
+  display: block;
+  font-size: 72rpx;
+  color: #C8A692;
+  font-weight: 200;
+  letter-spacing: 8rpx;
+  font-family: 'DIN Alternate', 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1;
+}
+
+.festival-text {
+  display: inline-block;
+  font-size: 22rpx;
+  color: #C8A692;
+  margin-top: 20rpx;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 1rpx;
+  padding: 8rpx 28rpx;
+  background: rgba(212, 184, 165, 0.1);
+  border-radius: 32rpx;
+  border: 1rpx solid rgba(212, 184, 165, 0.15);
+}
+
+/* ==================== 问候语区域 ==================== */
+.greeting-section {
+  text-align: center;
+  margin-bottom: 80rpx;
+  animation: fadeIn 1s ease-out 0.4s both;
+  z-index: 1;
+}
+
+.greeting-text {
+  display: block;
+  font-size: 36rpx;
+  color: #7A756F;
+  font-weight: 400;
+  letter-spacing: 3rpx;
+  line-height: 1.6;
+}
+
+/* ==================== 主要操作按钮 ==================== */
+.main-action {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInUp 1s ease-out 0.6s both;
+  z-index: 1;
+  margin-bottom: 20rpx;
+}
+
+.record-button {
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #D9C0AD 0%, #C4A893 50%, #B8997F 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 48rpx;
+  border: none;
+  padding: 0;
+  transition: transform 0.3s ease;
+}
+
+.record-button::after {
+  border: none;
+}
+
+.record-button:active {
+  transform: scale(0.96);
+}
+
+/* 外发光环 */
+.button-glow {
+  position: absolute;
+  width: 340rpx;
+  height: 340rpx;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 80rpx 20rpx rgba(212, 184, 165, 0.2);
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 60rpx 10rpx rgba(212, 184, 165, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 100rpx 30rpx rgba(212, 184, 165, 0.3);
+  }
+}
+
+/* 旋转光环 */
+.button-ring {
+  position: absolute;
+  width: 330rpx;
+  height: 330rpx;
+  border-radius: 50%;
+  border: 1rpx solid rgba(255, 255, 255, 0.15);
+  border-top-color: rgba(255, 255, 255, 0.5);
+  animation: ringRotate 8s linear infinite;
+}
+
+@keyframes ringRotate {
+  to { transform: rotate(360deg); }
+}
+
+.button-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+/* CSS 星光图标 */
+.icon-star {
+  position: relative;
+  width: 64rpx;
+  height: 64rpx;
+  margin-bottom: 18rpx;
+  animation: starFloat 3s ease-in-out infinite;
+}
+
+.star-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16rpx;
+  height: 16rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 16rpx 4rpx rgba(255, 255, 255, 0.6);
+}
+
+.star-ray {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0));
+  height: 3rpx;
+  width: 28rpx;
+  transform-origin: 0 50%;
+  border-radius: 2rpx;
+}
+
+.star-ray-1 { transform: rotate(0deg); }
+.star-ray-2 { transform: rotate(90deg); }
+.star-ray-3 { transform: rotate(45deg); width: 20rpx; }
+.star-ray-4 { transform: rotate(135deg); width: 20rpx; }
+
+@keyframes starFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateY(-10rpx) scale(1.1);
+    filter: brightness(1.2);
+  }
+}
+
+.button-text {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  letter-spacing: 2rpx;
+  white-space: nowrap;
+}
+
+/* ==================== 底部名言区域 ==================== */
+.quote-section {
+  padding-top: 20rpx;
+  animation: fadeIn 1s ease-out 0.8s both;
+  z-index: 1;
+}
+
+.quote-container {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 28rpx;
+  padding: 32rpx 36rpx;
+  backdrop-filter: blur(20rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  margin: 0 auto;
+  max-width: 600rpx;
+}
+
+/* CSS 引号图标 */
+.icon-quote {
+  position: relative;
+  width: 32rpx;
+  height: 28rpx;
+  flex-shrink: 0;
+  margin-top: 6rpx;
+}
+
+.quote-mark {
+  position: absolute;
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: #D4B8A5;
+  opacity: 0.6;
+}
+
+.quote-mark::after {
+  content: '';
+  position: absolute;
+  top: 8rpx;
+  left: 4rpx;
+  width: 4rpx;
+  height: 10rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx;
+  opacity: 0.6;
+}
+
+.quote-mark-l {
+  left: 0;
+  top: 0;
+}
+
+.quote-mark-r {
+  left: 16rpx;
+  top: 0;
+}
+
+.quote-text {
+  font-size: 26rpx;
+  color: #7A756F;
+  line-height: 2;
+  flex: 1;
+  letter-spacing: 1rpx;
+}
+
+/* ==================== 动画 ==================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}

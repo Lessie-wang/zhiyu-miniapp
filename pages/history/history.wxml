@@ -1,0 +1,246 @@
+<view class="container">
+  <!-- 放大后的顶部日历 -->
+  <view class="calendar-section calendar-section-hero">
+    <view class="calendar-hero-top">
+      <view class="calendar-hero-copy">
+        <text class="calendar-tag">心之笺语</text>
+        <text class="calendar-title">情绪日历</text>
+        <text class="calendar-subtitle">点开日期，回看那一天的心情与记录</text>
+      </view>
+      <view class="calendar-meta">
+        <view class="calendar-meta-item">
+          <text class="calendar-meta-value">{{userInfo.useDays}}</text>
+          <text class="calendar-meta-label">陪伴天数</text>
+        </view>
+        <view class="calendar-meta-divider"></view>
+        <view class="calendar-meta-item">
+          <text class="calendar-meta-value">{{userInfo.recordCount}}</text>
+          <text class="calendar-meta-label">记录次数</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="calendar-header">
+      <text class="calendar-month-label">{{currentYear}}年{{currentMonth + 1}}月</text>
+      <view class="month-selector">
+        <view class="month-btn" bindtap="changeMonth" data-direction="prev">
+          <text class="arrow">←</text>
+        </view>
+        <view class="month-btn" bindtap="changeMonth" data-direction="next">
+          <text class="arrow">→</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="calendar-grid">
+      <view class="weekday-header">
+        <text class="weekday">日</text>
+        <text class="weekday">一</text>
+        <text class="weekday">二</text>
+        <text class="weekday">三</text>
+        <text class="weekday">四</text>
+        <text class="weekday">五</text>
+        <text class="weekday">六</text>
+      </view>
+
+      <view class="days-grid">
+        <view
+          class="day-cell {{item.isEmpty ? 'empty' : ''}} {{item.isToday ? 'today' : ''}} {{item.hasRecord ? 'has-record' : ''}}"
+          wx:for="{{calendarDays}}"
+          wx:key="dateStr"
+          bindtap="selectDate"
+          data-datestr="{{item.dateStr}}"
+          style="{{item.hasRecord && item.emotionColor ? 'background:' + item.emotionColor + ';' : ''}}"
+        >
+          <text class="day-number" wx:if="{{!item.isEmpty}}">{{item.day}}</text>
+          <view class="record-dot" wx:if="{{item.hasRecord && item.recordCount > 1}}">
+            <text class="dot-count">{{item.recordCount}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <text class="calendar-footnote">带颜色的日期表示当天有情绪记录</text>
+  </view>
+
+  <!-- 报告区 -->
+  <view class="content-section">
+    <view class="section-heading">
+      <text class="section-tag">本月报告</text>
+      <text class="section-caption">{{currentMonth + 1}} 月情绪趋势与总结</text>
+    </view>
+
+    <view class="report-card report-card-main">
+      <view class="report-header">
+        <view class="icon-css-report">
+          <view class="rpt-bar b1"></view>
+          <view class="rpt-bar b2"></view>
+          <view class="rpt-bar b3"></view>
+        </view>
+        <text class="report-title">给你的一段情绪回顾</text>
+      </view>
+
+      <text class="report-summary">{{aiSummary}}</text>
+
+      <view class="report-actions">
+        <button class="report-action-btn report-action-btn-primary" bindtap="generateMonthlyReport">生成{{currentMonth + 1}}月报告</button>
+        <button class="report-action-btn report-action-btn-secondary" bindtap="toggleStats">{{showStats ? '收起统计' : '查看统计'}}</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 金句库 -->
+  <view class="content-section">
+    <view class="section-heading">
+      <text class="section-tag">金句库</text>
+      <text class="section-caption">收藏小知说过的温暖话语</text>
+    </view>
+
+    <view class="quote-library-card" bindtap="goToFavoriteQuotes">
+      <view class="quote-library-left">
+        <view class="icon-css-star">
+          <view class="star-fill"></view>
+        </view>
+        <view class="quote-library-copy">
+          <text class="quote-library-title">进入金句库</text>
+          <text class="quote-library-desc">把那些让你停顿一下的句子，好好收好</text>
+        </view>
+      </view>
+      <text class="stats-entry-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 统计详情 -->
+  <view class="stats-detail" wx:if="{{showStats}}">
+    <view class="stats-section">
+      <view class="stats-header">
+        <text class="section-title">情绪统计</text>
+        <view class="time-range-tabs">
+          <text
+            class="range-tab {{timeRange === 'week' ? 'active' : ''}}"
+            bindtap="switchTimeRange"
+            data-range="week"
+          >本周</text>
+          <text
+            class="range-tab {{timeRange === 'month' ? 'active' : ''}}"
+            bindtap="switchTimeRange"
+            data-range="month"
+          >本月</text>
+          <text
+            class="range-tab {{timeRange === 'all' ? 'active' : ''}}"
+            bindtap="switchTimeRange"
+            data-range="all"
+          >全部</text>
+        </view>
+      </view>
+
+      <view class="stats-content" wx:if="{{emotionStats.length > 0}}">
+        <view class="emotion-stat-item" wx:for="{{emotionStats}}" wx:key="name">
+          <view class="stat-left">
+            <view class="stat-color-dot" style="background: {{item.color}};"></view>
+            <text class="stat-name">{{item.name}}</text>
+          </view>
+          <view class="stat-right">
+            <view class="stat-bar">
+              <view class="stat-bar-fill" style="width: {{item.percentage}}%; background: {{item.color}};"></view>
+            </view>
+            <text class="stat-count">{{item.count}}次</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="stats-empty" wx:else>
+        <text class="empty-text">暂无统计数据</text>
+      </view>
+    </view>
+
+    <view class="export-section">
+      <button class="export-btn" bindtap="exportData">
+        <view class="icon-css-export">
+          <view class="exp-box"></view>
+          <view class="exp-arrow"></view>
+          <view class="exp-arrow-head"></view>
+        </view>
+        <text class="export-text">导出数据</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 日期详情弹窗（信纸风格） -->
+  <view class="day-detail-modal" wx:if="{{showDayDetail}}" bindtap="closeDayDetail">
+    <view class="letter-container" catchtap="preventClose">
+      <!-- 信纸顶部装饰 -->
+      <view class="letter-header">
+        <view class="letter-date-badge">
+          <text class="letter-date">{{selectedDate}}</text>
+        </view>
+        <text class="letter-close" bindtap="closeDayDetail">✕</text>
+      </view>
+
+      <!-- 信纸内容区 -->
+      <scroll-view class="letter-body" scroll-y="true" enhanced="true" show-scrollbar="true" style="height: 75vh;">
+        <view class="letter-record" wx:for="{{selectedDayRecords}}" wx:key="id">
+          <!-- 时间戳 -->
+          <view class="letter-time-line">
+            <view class="time-dot"></view>
+            <text class="letter-time">{{item.recordTime || item.date.split(' ')[1] || ''}}</text>
+          </view>
+
+          <!-- 情绪标签 -->
+          <view class="letter-emotion-row">
+            <view class="emotion-tags-wrapper" wx:if="{{item.emotions && item.emotions.length > 0}}">
+              <view class="emotion-tag-item" wx:for="{{item.emotions}}" wx:for-item="emotion" wx:key="*this" wx:for-index="emoIdx">
+                <view class="letter-emotion-dot" style="background: {{item.emotionColors[emoIdx] || '#D4B8A5'}};"></view>
+                <text class="letter-emotion-name">{{emotion}}</text>
+              </view>
+            </view>
+            <view class="emotion-tags-wrapper" wx:else>
+              <view class="emotion-tag-item">
+                <view class="letter-emotion-dot" style="background: {{item.emotionColors[0] || '#D4B8A5'}};"></view>
+                <text class="letter-emotion-name">{{item.emotion}}</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 强度/子情绪 -->
+          <view class="letter-field" wx:if="{{item.intensity}}">
+            <text class="letter-label">程度</text>
+            <view class="letter-value" wx:if="{{item.subEmotion}}">{{item.intensity}}/6 {{item.subEmotion}}</view>
+            <view class="letter-value" wx:else>{{item.intensity}}/6</view>
+          </view>
+
+          <!-- 身体感受 -->
+          <view class="letter-field" wx:if="{{item.bodyFeelings && item.bodyFeelings.length > 0}}">
+            <text class="letter-label">身体感受</text>
+            <view class="letter-value">{{item.bodyFeelingsText}}</view>
+          </view>
+
+          <!-- AI对话整理 -->
+          <view class="letter-conversation" wx:if="{{item.conversation && item.conversation.length > 0}}">
+            <text class="letter-label">与AI对话</text>
+            <view class="conversation-list">
+              <view class="conversation-item" wx:for="{{item.conversation}}" wx:for-item="msg" wx:key="index" wx:for-index="msgIdx">
+                <view class="conv-role">{{msg.role === 'ai' ? '知愈AI' : '我'}}</view>
+                <view class="conv-content">{{msg.content}}</view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 用户笔记（旧数据兼容） -->
+          <view class="letter-field" wx:if="{{item.note && (!item.conversation || item.conversation.length === 0)}}">
+            <text class="letter-label">记录</text>
+            <view class="letter-value">{{item.note}}</view>
+          </view>
+
+          <!-- 分隔线（非最后一条） -->
+          <view class="letter-divider" wx:if="{{index < selectedDayRecords.length - 1}}"></view>
+        </view>
+
+        <!-- 信纸底部装饰 -->
+        <view class="letter-footer">
+          <text class="letter-sign">— 知愈 · 记录每一刻的你 —</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

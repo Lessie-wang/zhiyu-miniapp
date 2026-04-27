@@ -1,0 +1,71 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">知愈商店</text>
+    <text class="page-subtitle">用温柔的方式，疗愈每一天</text>
+  </view>
+
+  <!-- 我的订单入口 -->
+  <view class="order-entry" bindtap="goToOrders">
+    <view class="order-left">
+      <text class="order-icon">📦</text>
+      <text class="order-text">我的订单</text>
+    </view>
+    <text class="order-arrow">→</text>
+  </view>
+
+  <!-- 商品分类 -->
+  <view class="section-title">
+    <text class="title-text">情绪疗愈好物</text>
+    <text class="title-desc">精心挑选，陪伴你的情绪旅程</text>
+  </view>
+
+  <!-- 商品列表 -->
+  <view class="product-grid">
+    <!-- 待上架商品占位 -->
+    <view class="product-card coming-soon">
+      <view class="product-image-placeholder">
+        <text class="placeholder-icon">🕯️</text>
+      </view>
+      <view class="product-info">
+        <text class="product-name">情绪香薰蜡烛</text>
+        <text class="product-tag">即将上架</text>
+      </view>
+    </view>
+
+    <view class="product-card coming-soon">
+      <view class="product-image-placeholder">
+        <text class="placeholder-icon">📓</text>
+      </view>
+      <view class="product-info">
+        <text class="product-name">情绪书写手账</text>
+        <text class="product-tag">即将上架</text>
+      </view>
+    </view>
+
+    <view class="product-card coming-soon">
+      <view class="product-image-placeholder">
+        <text class="placeholder-icon">📿</text>
+      </view>
+      <view class="product-info">
+        <text class="product-name">疗愈饰品</text>
+        <text class="product-tag">即将上架</text>
+      </view>
+    </view>
+
+    <view class="product-card coming-soon">
+      <view class="product-image-placeholder">
+        <text class="placeholder-icon">🧸</text>
+      </view>
+      <view class="product-info">
+        <text class="product-name">情绪陪伴玩偶</text>
+        <text class="product-tag">即将上架</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部提示 -->
+  <view class="bottom-hint">
+    <text class="hint-text">更多好物正在路上，敬请期待</text>
+  </view>
+</view>

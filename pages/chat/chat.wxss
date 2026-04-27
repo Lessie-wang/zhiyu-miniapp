@@ -1,0 +1,1068 @@
+/* AI 对话页面样式 */
+page {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  height: 100vh;
+  background: linear-gradient(to bottom, #FAF9F7 0%, #F2E6DF 100%);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 历史对话侧边栏 */
+.sidebar-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.history-sidebar {
+  position: fixed;
+  top: 0;
+  left: -80%;
+  width: 80%;
+  height: 100vh;
+  background: white;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4rpx 0 24rpx rgba(0, 0, 0, 0.15);
+  transition: left 0.3s ease;
+}
+
+.history-sidebar.show {
+  left: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx 24rpx;
+  border-bottom: 1rpx solid rgba(212, 184, 165, 0.15);
+}
+
+.sidebar-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+
+.sidebar-close {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.sidebar-close:active {
+  background: #F2E6DF;
+}
+
+.close-icon {
+  font-size: 28rpx;
+  color: #B8B2A7;
+  font-weight: 700;
+}
+
+.sidebar-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.new-conversation-btn {
+  margin: 24rpx;
+  padding: 24rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  box-shadow: 0 4rpx 16rpx rgba(212, 184, 165, 0.25);
+}
+
+.new-conversation-btn:active {
+  transform: scale(0.98);
+}
+
+.new-icon {
+  font-size: 32rpx;
+  color: white;
+  font-weight: 700;
+}
+
+.new-text {
+  font-size: 28rpx;
+  color: white;
+  font-weight: 600;
+}
+
+.conversation-list {
+  flex: 1;
+  height: 0;
+  padding: 0 24rpx;
+}
+
+.conversation-item {
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  background: #FAF9F7;
+  border-radius: 12rpx;
+  border-left: 4rpx solid #D4B8A5;
+}
+
+.conversation-item:active {
+  background: #F2E6DF;
+}
+
+.conv-emotions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-bottom: 12rpx;
+}
+
+.conv-emotion-tag {
+  padding: 4rpx 12rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  color: white;
+  font-size: 20rpx;
+  font-weight: 600;
+  border-radius: 12rpx;
+}
+
+.conv-preview {
+  display: block;
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.5;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conv-time {
+  font-size: 22rpx;
+  color: #B8B2A7;
+}
+
+.conversation-empty {
+  padding: 80rpx 0;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #B8B2A7;
+}
+
+
+/* 小知介绍 */
+.ai-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 24rpx;
+  margin-top: -165rpx;
+  background: white;
+  border-bottom: 1rpx solid rgba(212, 184, 165, 0.15);
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ai-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+}
+
+.ai-avatar {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  border: 2rpx solid #F2E6DF;
+  margin-right: 20rpx;
+}
+
+.ai-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-name {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  line-height: 1.2;
+}
+
+.ai-desc {
+  font-size: 24rpx;
+  color: #B8B2A7;
+  margin-top: 4rpx;
+}
+
+.history-btn {
+  width: 52rpx;
+  height: 52rpx;
+  min-height: 0;
+  background: #FAF9F7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+.history-btn::after {
+  border: none;
+}
+
+.history-icon {
+  font-size: 24rpx;
+}
+
+.header-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.end-btn {
+  width: 52rpx;
+  height: 52rpx;
+  min-height: 0;
+  background: #D4B8A5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  position: relative;
+  z-index: 10;
+}
+
+.end-btn::after {
+  border: none;
+}
+
+.end-icon {
+  font-size: 28rpx;
+  color: white;
+  font-weight: 700;
+}
+
+/* 情绪标签 */
+.emotion-tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  padding: 16rpx 32rpx;
+  border-bottom: 1rpx solid rgba(212, 184, 165, 0.15);
+  flex-shrink: 0;
+}
+
+.tag {
+  padding: 8rpx 24rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  color: white;
+  font-size: 24rpx;
+  font-weight: 600;
+  border-radius: 32rpx;
+}
+
+.body-tag {
+  background: linear-gradient(135deg, #B8D4E8 0%, #9BC4D8 100%);
+}
+
+/* 对话区域 */
+.chat-area {
+  flex: 1;
+  padding: 24rpx 32rpx 0;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.chat-messages {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-bottom: 8rpx;
+}
+
+.chat-messages-bottom {
+  justify-content: flex-end;
+}
+
+.message {
+  margin-bottom: 24rpx;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.ai-message {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-message {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.welcome-message {
+  margin-top: auto;
+}
+
+.message-text {
+  display: inline-block;
+  padding: 24rpx 28rpx;
+  border-radius: 24rpx;
+  font-size: 30rpx;
+  line-height: 1.6;
+  max-width: 90%;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.ai-message .message-text {
+  background: white;
+  color: #6D6A65;
+  box-shadow: 0 4rpx 16rpx rgba(212, 184, 165, 0.12);
+}
+
+.user-message .message-text {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  color: white;
+}
+
+/* 小知思考中 */
+.ai-message.thinking {
+  display: flex;
+  align-items: flex-start;
+}
+
+.thinking-bubble {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12rpx;
+  padding: 20rpx 24rpx;
+  background: white;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(212, 184, 165, 0.12);
+}
+
+.thinking-text {
+  font-size: 26rpx;
+  color: #B8B2A7;
+}
+
+.thinking-dots {
+  display: flex;
+  flex-direction: row;
+  gap: 8rpx;
+}
+
+.thinking-dots .dot {
+  width: 10rpx;
+  height: 10rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+  animation: thinking 1.4s infinite ease-in-out;
+}
+
+.thinking-dots .dot:nth-child(1) { animation-delay: 0s; }
+.thinking-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes thinking {
+  0%, 60%, 100% { transform: scale(1); opacity: 0.5; }
+  30% { transform: scale(1.5); opacity: 1; }
+}
+
+/* 底部输入区域 */
+.input-area {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 12rpx;
+  padding: 16rpx 24rpx;
+  background: white;
+  border-top: 1rpx solid rgba(212, 184, 165, 0.15);
+  width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+}
+
+.chat-input-wrap {
+  flex: 1;
+  width: 0;
+  min-height: 80rpx;
+  max-height: 200rpx;
+  padding: 20rpx 28rpx;
+  background: #FAF9F7;
+  border-radius: 32rpx;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.chat-input {
+  width: 100%;
+  min-height: 40rpx;
+  font-size: 28rpx;
+  color: #6D6A65;
+  line-height: 1.5;
+}
+
+.send-btn {
+  width: 64rpx;
+  height: 64rpx;
+  min-height: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: 0 4rpx 16rpx rgba(212, 184, 165, 0.25);
+  flex-shrink: 0;
+  margin: 0;
+  margin-bottom: 4rpx;
+  line-height: 1;
+}
+
+.send-btn::after {
+  border: none;
+}
+
+.send-icon {
+  font-size: 32rpx;
+  color: white;
+  font-weight: 700;
+}
+
+
+/* 消息内容包裹 */
+.message-content {
+  display: inline-block;
+  max-width: 80%;
+}
+
+.ai-message .message-content {
+  text-align: left;
+}
+
+.user-message .message-content {
+  text-align: right;
+}
+
+.welcome-message-content {
+  max-width: 72%;
+}
+
+.welcome-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.welcome-label {
+  display: block;
+  font-size: 22rpx;
+  color: #B8B2A7;
+  margin-left: 8rpx;
+}
+
+.welcome-text {
+  border-radius: 4rpx 20rpx 20rpx 20rpx;
+}
+
+/* 重新生成按钮 */
+.regenerate-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  margin-top: 8rpx;
+  padding: 6rpx 16rpx;
+  opacity: 0.6;
+}
+
+.regenerate-btn:active {
+  opacity: 1;
+}
+
+.regenerate-icon {
+  font-size: 22rpx;
+}
+
+.regenerate-text {
+  font-size: 22rpx;
+  color: #7a6a4b;
+}
+
+/* 编辑按钮 */
+.message-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 16rpx;
+  margin-top: 8rpx;
+  flex-wrap: wrap;
+}
+
+.copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 6rpx 16rpx;
+  opacity: 0.6;
+}
+
+.copy-btn:active {
+  opacity: 1;
+}
+
+.copy-icon {
+  font-size: 22rpx;
+}
+
+.copy-text {
+  font-size: 22rpx;
+  color: #B8B2A7;
+}
+
+.user-message .copy-text {
+  color: rgba(116, 85, 85, 0.95);
+}
+
+/* 收藏按钮 */
+.favorite-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 6rpx 16rpx;
+  opacity: 0.6;
+}
+
+.favorite-btn:active {
+  opacity: 1;
+}
+
+.favorite-btn.favorited {
+  opacity: 1;
+}
+
+.favorite-text {
+  font-size: 22rpx;
+  color: #B8B2A7;
+}
+
+.favorite-btn.favorited .favorite-text {
+  color: #D4B8A5;
+  font-weight: 600;
+}
+
+.edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 6rpx 16rpx;
+  opacity: 0.6;
+}
+
+.edit-btn:active {
+  opacity: 1;
+}
+
+.edit-icon {
+  font-size: 22rpx;
+}
+
+.edit-text {
+  font-size: 22rpx;
+  color: #B8B2A7;
+}
+
+.user-message .edit-text {
+  color: rgba(117, 79, 79, 0.95);
+}
+
+.regenerate-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 6rpx 16rpx;
+  opacity: 0.6;
+}
+
+.regenerate-btn:active {
+  opacity: 1;
+}
+
+.regenerate-icon {
+  font-size: 22rpx;
+}
+
+.regenerate-text {
+  font-size: 22rpx;
+  color: #B8B2A7;
+}
+
+/* 版本号指示器 */
+.version-indicator {
+  margin-top: 8rpx;
+  opacity: 1;
+}
+
+.version-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.version-btn {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(184, 178, 167, 0.4);
+  border-radius: 50%;
+  border: 1rpx solid rgba(184, 178, 167, 0.6);
+}
+
+.version-btn:active {
+  background: rgba(184, 178, 167, 0.6);
+}
+
+.version-arrow {
+  font-size: 28rpx;
+  color: #6D6A65;
+  font-weight: 700;
+}
+
+.user-message .version-arrow {
+  color: white;
+}
+
+.user-message .version-btn {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+}
+
+.user-message .version-btn:active {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.version-text {
+  font-size: 24rpx;
+  color: #6D6A65;
+  font-weight: 600;
+  min-width: 60rpx;
+  text-align: center;
+}
+
+.user-message .version-text {
+  color: white;
+}
+
+/* 编辑容器 */
+.editing-container {
+  width: 100%;
+}
+
+.user-message .editing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.edit-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 24rpx 28rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border: none;
+  border-radius: 24rpx;
+  font-size: 30rpx;
+  color: white;
+  line-height: 1.6;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.edit-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12rpx;
+  margin-top: 12rpx;
+  justify-content: flex-end;
+}
+
+.edit-action-btn {
+  padding: 16rpx 40rpx;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120rpx;
+}
+
+.cancel-btn {
+  background: rgba(255, 255, 255, 0.9);
+  color: #6D6A65;
+  border: 1rpx solid rgba(212, 184, 165, 0.3);
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  color: white;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.3);
+}
+
+/* ==================== 聊天页 CSS 图标 ==================== */
+
+/* 历史按钮 - 书本图标 */
+.history-css-icon {
+  width: 24rpx;
+  height: 22rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.history-css-icon .hbook-spine {
+  width: 3rpx;
+  height: 22rpx;
+  background: #B8B2A7;
+  border-radius: 2rpx;
+  flex-shrink: 0;
+}
+.history-css-icon .hbook-body {
+  width: 18rpx;
+  height: 18rpx;
+  border: 2rpx solid #B8B2A7;
+  border-left: none;
+  border-radius: 0 4rpx 4rpx 0;
+  margin-left: 1rpx;
+}
+
+/* 复制按钮 - 剪贴板图标 */
+.copy-css-icon {
+  width: 18rpx;
+  height: 20rpx;
+  position: relative;
+}
+.copy-css-icon .clipboard-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 14rpx;
+  height: 16rpx;
+  border: 1.5rpx solid #B8B2A7;
+  border-radius: 2rpx;
+}
+.copy-css-icon .clipboard-front {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 14rpx;
+  height: 16rpx;
+  border: 1.5rpx solid #B8B2A7;
+  border-radius: 2rpx;
+  background: white;
+}
+.user-message .copy-css-icon .clipboard-back,
+.user-message .copy-css-icon .clipboard-front {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.user-message .copy-css-icon .clipboard-front {
+  background: transparent;
+}
+
+/* 换一条按钮 - 刷新图标 */
+.regen-css-icon {
+  width: 18rpx;
+  height: 18rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.regen-css-icon .regen-circle {
+  width: 14rpx;
+  height: 14rpx;
+  border: 2rpx solid #B8B2A7;
+  border-radius: 50%;
+  border-top-color: transparent;
+}
+.regen-css-icon .regen-arrow {
+  position: absolute;
+  top: 0;
+  right: 1rpx;
+  width: 0;
+  height: 0;
+  border-left: 4rpx solid transparent;
+  border-right: 4rpx solid transparent;
+  border-bottom: 5rpx solid #B8B2A7;
+}
+
+/* 编辑按钮 - 铅笔图标 */
+.edit-css-icon {
+  width: 18rpx;
+  height: 20rpx;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.edit-css-icon .pencil-body {
+  width: 6rpx;
+  height: 14rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx 2rpx 0 0;
+  transform: rotate(-25deg);
+}
+.edit-css-icon .pencil-tip {
+  width: 0;
+  height: 0;
+  border-left: 3rpx solid transparent;
+  border-right: 3rpx solid transparent;
+  border-top: 5rpx solid #D4B8A5;
+  transform: rotate(-25deg);
+  margin-top: -1rpx;
+}
+.user-message .edit-css-icon .pencil-body {
+  background: rgba(255, 255, 255, 0.7);
+}
+.user-message .edit-css-icon .pencil-tip {
+  border-top-color: rgba(255, 255, 255, 0.7);
+}
+
+/* 收藏按钮 - 五角星图标 */
+.star-css-icon {
+  width: 18rpx;
+  height: 18rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.star-css-icon .star-shape {
+  width: 18rpx;
+  height: 18rpx;
+  background: transparent;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  border: 1.5rpx solid #B8B2A7;
+}
+.favorite-btn.favorited .star-css-icon .star-shape {
+  background: #D4B8A5;
+  border-color: #D4B8A5;
+}
+
+/* ==================== 语音输入样式 ==================== */
+
+/* 语音/键盘切换按钮 */
+.voice-toggle-btn {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 4rpx;
+  border-radius: 50%;
+  background: #FAF9F7;
+}
+
+.voice-toggle-btn:active {
+  background: #F2E6DF;
+}
+
+/* 麦克风图标 */
+.voice-toggle-icon {
+  width: 24rpx;
+  height: 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.voice-toggle-icon .mic-head {
+  width: 14rpx;
+  height: 18rpx;
+  border: 2rpx solid #B8B2A7;
+  border-radius: 14rpx 14rpx 0 0;
+  background: transparent;
+}
+
+.voice-toggle-icon .mic-stem {
+  width: 2rpx;
+  height: 6rpx;
+  background: #B8B2A7;
+}
+
+.voice-toggle-icon .mic-base {
+  width: 12rpx;
+  height: 2rpx;
+  background: #B8B2A7;
+  border-radius: 2rpx;
+}
+
+/* 键盘图标 */
+.keyboard-toggle-icon {
+  width: 28rpx;
+  height: 22rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rpx;
+}
+
+.keyboard-toggle-icon .kb-row {
+  height: 3rpx;
+  background: #B8B2A7;
+  border-radius: 2rpx;
+}
+
+.keyboard-toggle-icon .kb-r1 {
+  width: 24rpx;
+}
+
+.keyboard-toggle-icon .kb-r2 {
+  width: 20rpx;
+}
+
+.keyboard-toggle-icon .kb-r3 {
+  width: 14rpx;
+}
+
+/* 语音录制按钮 */
+.voice-record-btn {
+  flex: 1;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FAF9F7;
+  border-radius: 40rpx;
+  border: 2rpx solid rgba(212, 184, 165, 0.3);
+  transition: all 0.2s ease;
+}
+
+.voice-record-btn:active,
+.voice-record-btn.recording {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-color: transparent;
+  transform: scale(1.02);
+}
+
+.voice-record-text {
+  font-size: 28rpx;
+  color: #6D6A65;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+
+.voice-record-btn:active .voice-record-text,
+.voice-record-btn.recording .voice-record-text {
+  color: white;
+}
+
+/* 录音中浮层 */
+.recording-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.2s ease;
+}
+
+.recording-indicator {
+  width: 360rpx;
+  padding: 60rpx 40rpx;
+  background: white;
+  border-radius: 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24rpx;
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 录音波形动画 */
+.recording-waves {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  height: 64rpx;
+}
+
+.rec-wave {
+  width: 6rpx;
+  background: linear-gradient(to top, #D4B8A5, #C4A893);
+  border-radius: 4rpx;
+  animation: waveAnim 1s ease-in-out infinite;
+}
+
+.rec-wave.rw1 { height: 24rpx; animation-delay: 0s; }
+.rec-wave.rw2 { height: 40rpx; animation-delay: 0.15s; }
+.rec-wave.rw3 { height: 56rpx; animation-delay: 0.3s; }
+.rec-wave.rw4 { height: 40rpx; animation-delay: 0.45s; }
+.rec-wave.rw5 { height: 24rpx; animation-delay: 0.6s; }
+
+@keyframes waveAnim {
+  0%, 100% { transform: scaleY(0.5); opacity: 0.6; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+.recording-text {
+  font-size: 32rpx;
+  color: #6D6A65;
+  font-weight: 600;
+}
+
+.recording-hint {
+  font-size: 24rpx;
+  color: #B8B2A7;
+}

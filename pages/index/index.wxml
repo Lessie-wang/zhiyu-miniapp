@@ -1,0 +1,71 @@
+<view class="container">
+  <!-- 闪光粒子背景 -->
+  <view class="particles">
+    <view
+      wx:for="{{particles}}"
+      wx:key="id"
+      class="particle"
+      style="left:{{item.x}}%;top:{{item.y}}%;width:{{item.size}}rpx;height:{{item.size}}rpx;animation-delay:{{item.delay}}s;animation-duration:{{item.duration}}s;opacity:{{item.opacity}}"
+    ></view>
+  </view>
+
+  <!-- BGM 开关按钮 - CSS 音符图标 -->
+  <view class="bgm-toggle" bindtap="toggleBGM">
+    <view class="icon-music {{bgmEnabled ? '' : 'muted'}}">
+      <view class="music-note"></view>
+      <view class="music-wave music-wave-1" wx:if="{{bgmEnabled}}"></view>
+      <view class="music-wave music-wave-2" wx:if="{{bgmEnabled}}"></view>
+      <view class="mute-line" wx:if="{{!bgmEnabled}}"></view>
+    </view>
+  </view>
+
+  <!-- 知愈 Logo -->
+  <view class="logo-section">
+    <view class="logo-mark">
+      <view class="logo-heart"></view>
+    </view>
+    <text class="logo-text">知愈</text>
+    <text class="logo-subtitle">FeelingMosaic</text>
+  </view>
+
+  <!-- 日期和时间 -->
+  <view class="datetime-section">
+    <text class="date-text">{{currentDate}}</text>
+    <text class="time-text">{{currentTime}}</text>
+    <text class="festival-text" wx:if="{{festivalMessage}}">{{festivalMessage}}</text>
+  </view>
+
+  <!-- 个性化问候 -->
+  <view class="greeting-section">
+    <text class="greeting-text">{{greetingText}}</text>
+  </view>
+
+  <!-- 主要操作按钮 - CSS星光图标 -->
+  <view class="main-action">
+    <view class="record-button" bindtap="goToMain">
+      <view class="button-glow"></view>
+      <view class="button-ring"></view>
+      <view class="button-content">
+        <view class="icon-star">
+          <view class="star-center"></view>
+          <view class="star-ray star-ray-1"></view>
+          <view class="star-ray star-ray-2"></view>
+          <view class="star-ray star-ray-3"></view>
+          <view class="star-ray star-ray-4"></view>
+        </view>
+        <text class="button-text">开始今天的情绪探索</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部名言 - CSS引号图标 -->
+  <view class="quote-section">
+    <view class="quote-container">
+      <view class="icon-quote">
+        <view class="quote-mark quote-mark-l"></view>
+        <view class="quote-mark quote-mark-r"></view>
+      </view>
+      <text class="quote-text">{{currentQuote}}</text>
+    </view>
+  </view>
+</view>

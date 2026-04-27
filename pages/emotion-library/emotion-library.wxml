@@ -1,0 +1,158 @@
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <text class="title">情绪库解读</text>
+    <text class="subtitle">了解情绪，理解自己</text>
+  </view>
+
+  <!-- 情绪列表 -->
+  <view class="emotion-list">
+    <view
+      class="emotion-item {{expandedEmotion === item.name ? 'expanded' : ''}}"
+      wx:for="{{emotions}}"
+      wx:key="name"
+    >
+      <!-- 情绪卡片头部（点击展开/收起） -->
+      <view class="emotion-header" bindtap="toggleEmotion" data-name="{{item.name}}">
+        <view class="emotion-left">
+          <view class="emotion-color-dot" style="background: {{item.color}};"></view>
+          <!-- CSS 情绪图标 -->
+          <view class="elib-css-icon elib-{{item.iconType}}" style="color: {{item.color}};">
+            <!-- 开心 -->
+            <block wx:if="{{item.iconType === 'happy'}}">
+              <view class="el-eye ell" style="background: {{item.color}};"></view>
+              <view class="el-eye elr" style="background: {{item.color}};"></view>
+              <view class="el-smile" style="border-color: {{item.color}};"></view>
+            </block>
+            <!-- 平静 -->
+            <block wx:elif="{{item.iconType === 'calm'}}">
+              <view class="el-wave ew1" style="background: {{item.color}};"></view>
+              <view class="el-wave ew2" style="background: {{item.color}};"></view>
+              <view class="el-wave ew3" style="background: {{item.color}};"></view>
+            </block>
+            <!-- 难过 -->
+            <block wx:elif="{{item.iconType === 'sad'}}">
+              <view class="el-drop" style="background: {{item.color}};"></view>
+            </block>
+            <!-- 累 -->
+            <block wx:elif="{{item.iconType === 'tired'}}">
+              <view class="el-droop" style="border-color: {{item.color}};"></view>
+              <view class="el-droop-dot" style="background: {{item.color}};"></view>
+            </block>
+            <!-- 烦躁 -->
+            <block wx:elif="{{item.iconType === 'irritated'}}">
+              <view class="el-zig ez1" style="background: {{item.color}};"></view>
+              <view class="el-zig ez2" style="background: {{item.color}};"></view>
+              <view class="el-zig ez3" style="background: {{item.color}};"></view>
+            </block>
+            <!-- 焦虑 -->
+            <block wx:elif="{{item.iconType === 'anxious'}}">
+              <view class="el-spiral-outer" style="border-color: {{item.color}}; border-top-color: transparent;"></view>
+              <view class="el-spiral-inner" style="border-color: {{item.color}}; border-bottom-color: transparent;"></view>
+              <view class="el-spiral-dot" style="background: {{item.color}};"></view>
+            </block>
+            <!-- 愤怒 -->
+            <block wx:elif="{{item.iconType === 'angry'}}">
+              <view class="el-bolt-top" style="background: {{item.color}};"></view>
+              <view class="el-bolt-bottom" style="background: {{item.color}};"></view>
+            </block>
+            <!-- 感动 -->
+            <block wx:elif="{{item.iconType === 'touched'}}">
+              <view class="el-heart-l" style="background: {{item.color}};"></view>
+              <view class="el-heart-r" style="background: {{item.color}};"></view>
+            </block>
+            <!-- 困惑 -->
+            <block wx:elif="{{item.iconType === 'confused'}}">
+              <view class="el-q-curve" style="border-color: {{item.color}};"></view>
+              <view class="el-q-dot" style="background: {{item.color}};"></view>
+            </block>
+            <!-- 无聊 -->
+            <block wx:elif="{{item.iconType === 'bored'}}">
+              <view class="el-line" style="background: {{item.color}};"></view>
+              <view class="el-yawn" style="border-color: {{item.color}};"></view>
+            </block>
+            <!-- 震惊 -->
+            <block wx:elif="{{item.iconType === 'shocked'}}">
+              <view class="el-star-circle" style="background: {{item.color}};"></view>
+              <view class="el-ray er1" style="background: {{item.color}};"></view>
+              <view class="el-ray er2" style="background: {{item.color}};"></view>
+              <view class="el-ray er3" style="background: {{item.color}};"></view>
+              <view class="el-ray er4" style="background: {{item.color}};"></view>
+            </block>
+            <!-- 不知道 -->
+            <block wx:elif="{{item.iconType === 'unknown'}}">
+              <view class="el-cloud-main" style="background: {{item.color}};"></view>
+              <view class="el-cloud-top" style="background: {{item.color}};"></view>
+              <view class="el-cloud-q" style="background: {{item.color}};"></view>
+            </block>
+          </view>
+          <text class="emotion-name">{{item.name}}</text>
+        </view>
+        <view class="emotion-right">
+          <text class="sub-range">{{item.subEmotions[0]}} → {{item.subEmotions[5]}}</text>
+          <text class="arrow {{expandedEmotion === item.name ? 'arrow-up' : ''}}">›</text>
+        </view>
+      </view>
+
+      <!-- 子情绪标签 -->
+      <view class="sub-emotion-tags" wx:if="{{expandedEmotion === item.name}}">
+        <view
+          class="sub-tag"
+          wx:for="{{item.subEmotions}}"
+          wx:for-item="sub"
+          wx:for-index="subIdx"
+          wx:key="*this"
+          style="background: {{item.color}}; opacity: {{0.4 + subIdx * 0.12}};"
+        >
+          {{sub}}
+        </view>
+      </view>
+
+      <!-- 展开的详情区域 -->
+      <view class="emotion-detail" wx:if="{{expandedEmotion === item.name}}">
+        <!-- 理论/故事切换标签 -->
+        <view class="tab-bar">
+          <view
+            class="tab {{activeTab === 'theory' ? 'tab-active' : ''}}"
+            bindtap="switchTab"
+            data-tab="theory"
+          >
+            <view class="tab-icon-wrap">
+              <view class="tab-icon-brain">
+                <view class="brain-l"></view>
+                <view class="brain-r"></view>
+              </view>
+            </view>
+            理论解读
+          </view>
+          <view
+            class="tab {{activeTab === 'story' ? 'tab-active' : ''}}"
+            bindtap="switchTab"
+            data-tab="story"
+          >
+            <view class="tab-icon-wrap">
+              <view class="tab-icon-book">
+                <view class="tbook-spine"></view>
+                <view class="tbook-body"></view>
+              </view>
+            </view>
+            故事解读
+          </view>
+        </view>
+
+        <!-- 理论内容 -->
+        <view class="detail-content" wx:if="{{activeTab === 'theory'}}">
+          <text class="detail-text">{{item.theory}}</text>
+        </view>
+
+        <!-- 故事内容 -->
+        <view class="detail-content" wx:if="{{activeTab === 'story'}}">
+          <text class="detail-text">{{item.story}}</text>
+          <view class="story-source">
+            <text class="source-text">— {{item.storySource}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

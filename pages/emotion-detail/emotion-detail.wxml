@@ -1,0 +1,59 @@
+<view class="container">
+  <!-- 情绪头部 -->
+  <view class="emotion-header" style="background: linear-gradient(135deg, {{emotion.color}} 0%, {{emotion.color}}dd 100%);">
+    <text class="emotion-icon">{{emotion.icon}}</text>
+    <text class="emotion-name">{{emotion.name}}</text>
+  </view>
+
+  <!-- 子情绪强度 -->
+  <view class="sub-emotions-section">
+    <text class="section-title">情绪强度层级</text>
+    <view class="sub-emotions-list">
+      <view
+        class="sub-emotion-item"
+        wx:for="{{emotion.subEmotions}}"
+        wx:key="*this"
+        wx:for-index="idx"
+        style="background: {{intensityColors[idx]}};"
+      >
+        <text class="sub-emotion-name">{{item}}</text>
+        <text class="intensity-level">强度 {{idx + 1}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 理论解读 -->
+  <view class="interpretation-section">
+    <view class="section-header">
+      <text class="section-icon">📚</text>
+      <text class="section-title">理论解读</text>
+    </view>
+    <view class="content-card">
+      <text class="content-text">{{theoryInterpretation}}</text>
+    </view>
+  </view>
+
+  <!-- 故事解读 -->
+  <view class="interpretation-section">
+    <view class="section-header">
+      <text class="section-icon">📖</text>
+      <text class="section-title">故事解读</text>
+    </view>
+    <view class="content-card">
+      <text class="story-title">{{storyTitle}}</text>
+      <text class="content-text">{{storyContent}}</text>
+    </view>
+  </view>
+
+  <!-- AI生成图片占位 -->
+  <view class="image-section">
+    <view class="section-header">
+      <text class="section-icon">🎨</text>
+      <text class="section-title">情绪意象</text>
+    </view>
+    <view class="image-placeholder" style="border-color: {{emotion.color}};">
+      <text class="placeholder-text">{{emotion.icon}}</text>
+      <text class="placeholder-hint">AI 生成的情绪意象</text>
+    </view>
+  </view>
+</view>

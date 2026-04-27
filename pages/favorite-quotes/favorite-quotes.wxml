@@ -1,0 +1,37 @@
+<view class="container">
+  <!-- 收藏列表 -->
+  <view class="quotes-list" wx:if="{{!isEmpty}}">
+    <view class="quote-card" wx:for="{{quotes}}" wx:key="id">
+      <view class="quote-content">
+        <text class="quote-text">{{item.content}}</text>
+      </view>
+
+      <!-- 情绪标签 -->
+      <view class="quote-emotions" wx:if="{{item.emotions && item.emotions.length > 0}}">
+        <text class="quote-emotion-tag" wx:for="{{item.emotions}}" wx:for-item="emotion" wx:key="*this">{{emotion}}</text>
+      </view>
+
+      <!-- 底部操作栏 -->
+      <view class="quote-footer">
+        <text class="quote-time">{{item.createdAt}}</text>
+        <view class="quote-actions">
+          <view class="quote-action-btn" bindtap="copyQuote" data-content="{{item.content}}">
+            <text class="action-text">复制</text>
+          </view>
+          <view class="quote-action-btn delete-btn" bindtap="deleteFavorite" data-id="{{item.id}}" data-cloudid="{{item._id}}">
+            <text class="action-text delete-text">删除</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{isEmpty}}">
+    <view class="empty-star">
+      <view class="empty-star-shape"></view>
+    </view>
+    <text class="empty-title">还没有收藏的金句</text>
+    <text class="empty-hint">和小知聊聊天，遇到喜欢的话点击 ☆ 收藏吧</text>
+  </view>
+</view>

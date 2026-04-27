@@ -1,0 +1,1919 @@
+/* 主页样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #FAF9F7 0%, #F2E6DF 100%);
+  padding: 20rpx 24rpx 180rpx;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* 顶部日期 */
+.date-header {
+  text-align: center;
+  margin-bottom: 8rpx;
+}
+
+.time-text {
+  display: block;
+  font-size: 72rpx;
+  font-weight: 300;
+  color: #6D6A65;
+  letter-spacing: 4rpx;
+  line-height: 1.2;
+  margin-top: 8rpx;
+}
+
+.date-text {
+  font-size: 26rpx;
+  color: #B8B2A7;
+  font-weight: 500;
+}
+
+/* 节日祝福 */
+.festival-text {
+  display: block;
+  font-size: 24rpx;
+  color: #D4B8A5;
+  text-align: center;
+  margin-top: 12rpx;
+  padding: 8rpx 24rpx;
+  background: rgba(212, 184, 165, 0.1);
+  border-radius: 20rpx;
+  max-width: 600rpx;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* 情绪轮盘区域 */
+.emotion-wheel-section {
+  margin-bottom: 16rpx;
+  margin-top: 8rpx;
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 12rpx;
+  text-align: center;
+}
+
+.section-hint {
+  display: block;
+  font-size: 22rpx;
+  color: #B8B2A7;
+  text-align: center;
+  margin-bottom: 16rpx;
+}
+
+/* 情绪网格布局 - 3行4列 */
+.emotion-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12rpx;
+  margin-bottom: 48rpx;
+  margin-left: -12rpx;
+  margin-right: -12rpx;
+}
+
+/* 自定义情绪卡片 */
+.custom-emotion-card {
+  grid-column: 2 / 4;
+  border: 2rpx dashed #D4B8A5 !important;
+  background: transparent !important;
+}
+
+.custom-emotion-card:active {
+  background: rgba(212, 184, 165, 0.1) !important;
+}
+
+.emotion-library-section { display: none; }
+.emotion-library-btn { display: none; }
+
+.emotion-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 8rpx;
+  background: white;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  transition: all 0.3s ease;
+  position: relative;
+  min-height: 140rpx;
+  overflow: hidden;
+}
+
+.emotion-card.selected {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  box-shadow: 0 12rpx 32rpx rgba(212, 184, 165, 0.3);
+  transform: scale(1.05);
+}
+
+.emotion-icon {
+  font-size: 56rpx;
+  margin-bottom: 12rpx;
+}
+
+.emotion-name {
+  font-size: 24rpx;
+  color: #6D6A65;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.emotion-card.selected .emotion-name {
+  color: white;
+}
+
+.check-mark {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 28rpx;
+  height: 28rpx;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18rpx;
+  color: #D4B8A5;
+  font-weight: 700;
+}
+
+/* 身体感受区域 */
+.body-feeling-section {
+  margin-bottom: 48rpx;
+}
+
+.section-hint {
+  display: block;
+  font-size: 24rpx;
+  color: #B8B2A7;
+  margin-top: 8rpx;
+  text-align: center;
+}
+
+.feeling-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 24rpx;
+  justify-content: center;
+}
+
+.feeling-tag {
+  padding: 16rpx 28rpx;
+  background: white;
+  border-radius: 40rpx;
+  font-size: 26rpx;
+  color: #6D6A65;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feeling-tag.selected {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.35);
+  transform: scale(1.05);
+}
+
+/* AI对话区域 */
+.ai-chat-section {
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 48rpx;
+  box-shadow: 0 10rpx 40rpx rgba(212, 184, 165, 0.15);
+}
+
+.chat-messages {
+  max-height: 600rpx;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 24rpx;
+}
+
+.message {
+  margin-bottom: 24rpx;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.ai-message {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-message {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.message-text {
+  display: inline-block;
+  padding: 20rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  max-width: 80%;
+}
+
+.ai-message .message-text {
+  background: #F2E6DF;
+  color: #6D6A65;
+}
+
+/* AI 思考中状态 */
+.ai-message.thinking {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.thinking-text {
+  font-size: 26rpx;
+  color: #B8B2A7;
+  padding: 16rpx 20rpx;
+  background: #F2E6DF;
+  border-radius: 20rpx;
+}
+
+.thinking-dots {
+  display: flex;
+  gap: 8rpx;
+  padding: 16rpx 12rpx;
+  background: #F2E6DF;
+  border-radius: 20rpx;
+}
+
+.thinking-dots .dot {
+  width: 8rpx;
+  height: 8rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+  animation: thinking 1.4s infinite ease-in-out;
+}
+
+.thinking-dots .dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.thinking-dots .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.thinking-dots .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes thinking {
+  0%, 60%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  30% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}
+
+.user-message .message-text {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  color: white;
+}
+
+.chat-input-area {
+  display: flex;
+  gap: 16rpx;
+  align-items: center;
+}
+
+.chat-input {
+  flex: 1;
+  height: 80rpx;
+  padding: 0 24rpx;
+  background: #F2E6DF;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  color: #6D6A65;
+}
+
+.send-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.3);
+}
+
+.send-btn::after {
+  border: none;
+}
+
+.send-icon {
+  font-size: 32rpx;
+  color: white;
+  font-weight: 600;
+}
+
+/* 快速记录区域（信纸风格） */
+.quick-note-section {
+  margin-top: 28rpx;
+  margin-bottom: 24rpx;
+  padding: 0 16rpx;
+}
+
+.letter-paper {
+  background: #FFFDF8;
+  border-radius: 20rpx;
+  padding: 20px 20rpx;
+  box-shadow: 0 8rpx 30rpx rgba(212, 184, 165, 0.15);
+  border: 0.8rpx solid #F0E6D8;
+  position: relative;
+  overflow: hidden;
+}
+
+.letter-paper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6rpx;
+  background: linear-gradient(90deg, #D4B8A5, #E8D4C4, #D4B8A5);
+}
+
+.letter-lines {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 54rpx,
+    #F0E6D8 54rpx,
+    #F0E6D8 56rpx
+  );
+  min-height: 160rpx;
+}
+
+.quick-note-input {
+  width: 100%;
+  font-size: 28rpx;
+  color: #6D6A65;
+  line-height: 56rpx;
+  min-height: 160rpx;
+  background: transparent;
+}
+
+/* 操作按钮行（左右并排） */
+.action-row {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 8rpx;
+  padding: 0 16rpx;
+}
+
+.action-left-btn {
+  flex: 1;
+  height: 80rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.25);
+  transition: all 0.3s ease;
+}
+
+.action-left-btn::after {
+  border: none;
+}
+
+.action-left-btn:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.action-right-btn {
+  flex: 1;
+  height: 80rpx;
+  background: #FFFDF8;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  color: #8C8780;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+  border: 2rpx solid #D4B8A5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.action-right-btn::after {
+  border: none;
+}
+
+.action-right-btn:active {
+  transform: scale(0.98);
+  background: #F2E6DF;
+}
+
+/* 底部功能导航 */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 140rpx;
+  background: white;
+  border-top: 1rpx solid #F2E6DF;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 16rpx 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: 0 -4rpx 20rpx rgba(212, 184, 165, 0.1);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.nav-item.active {
+  transform: scale(1.08);
+}
+
+.nav-icon-wrap {
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0.55;
+}
+
+.nav-item.active .nav-icon-wrap {
+  opacity: 1;
+}
+
+/* ========== 印记 —— 水滴涟漪 ========== */
+.icon-yinji {
+  width: 40rpx;
+  height: 40rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-yinji .ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5rpx solid #B8B2A7;
+}
+
+.icon-yinji .r1 {
+  width: 38rpx;
+  height: 38rpx;
+  opacity: 0.3;
+}
+
+.icon-yinji .r2 {
+  width: 24rpx;
+  height: 24rpx;
+  opacity: 0.55;
+}
+
+.icon-yinji .drop {
+  width: 10rpx;
+  height: 14rpx;
+  background: #B8B2A7;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-item.active .icon-yinji .ripple {
+  border-color: #D4B8A5;
+}
+
+.nav-item.active .icon-yinji .r1 {
+  opacity: 0.4;
+}
+
+.nav-item.active .icon-yinji .r2 {
+  opacity: 0.7;
+}
+
+.nav-item.active .icon-yinji .drop {
+  background: #D4B8A5;
+}
+
+/* ========== 言心小筑 —— 温暖小屋 ========== */
+.icon-yanxin {
+  width: 38rpx;
+  height: 36rpx;
+  position: relative;
+}
+
+.icon-yanxin .roof {
+  width: 0;
+  height: 0;
+  border-left: 21rpx solid transparent;
+  border-right: 21rpx solid transparent;
+  border-bottom: 16rpx solid #B8B2A7;
+  position: absolute;
+  top: 0;
+  left: -2rpx;
+  opacity: 0.7;
+}
+
+.icon-yanxin .wall {
+  width: 28rpx;
+  height: 18rpx;
+  border: 1.5rpx solid #B8B2A7;
+  border-top: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 0 0 3rpx 3rpx;
+}
+
+.icon-yanxin .door {
+  width: 10rpx;
+  height: 12rpx;
+  border: 1.5rpx solid #B8B2A7;
+  border-bottom: none;
+  border-radius: 10rpx 10rpx 0 0;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-item.active .icon-yanxin .roof {
+  border-bottom-color: #D4B8A5;
+  opacity: 0.9;
+}
+
+.nav-item.active .icon-yanxin .wall {
+  border-color: #D4B8A5;
+}
+
+.nav-item.active .icon-yanxin .door {
+  border-color: #C4A893;
+  background: rgba(212, 184, 165, 0.15);
+}
+
+/* ========== 心之笺语 —— 信封 + 心形封蜡 ========== */
+.icon-jianyu {
+  width: 38rpx;
+  height: 30rpx;
+  position: relative;
+}
+
+.icon-jianyu .envelope {
+  width: 100%;
+  height: 100%;
+  border: 1.5rpx solid #B8B2A7;
+  border-radius: 3rpx;
+  box-sizing: border-box;
+}
+
+.icon-jianyu .flap {
+  position: absolute;
+  top: -1rpx;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 22rpx;
+  height: 22rpx;
+  border-top: 1.5rpx solid #B8B2A7;
+  border-right: 1.5rpx solid #B8B2A7;
+  background: white;
+  border-radius: 0 3rpx 0 0;
+}
+
+.icon-jianyu .seal {
+  position: absolute;
+  bottom: 4rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8rpx;
+  height: 8rpx;
+  background: #B8B2A7;
+  opacity: 0.5;
+  border-radius: 50%;
+}
+
+.nav-item.active .icon-jianyu .envelope {
+  border-color: #D4B8A5;
+}
+
+.nav-item.active .icon-jianyu .flap {
+  border-color: #D4B8A5;
+}
+
+.nav-item.active .icon-jianyu .seal {
+  background: #C4A893;
+  opacity: 0.8;
+}
+
+/* ========== 吾境 —— 月牙 + 星辰 ========== */
+.icon-wujing {
+  width: 38rpx;
+  height: 38rpx;
+  position: relative;
+}
+
+.icon-wujing .moon {
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+  box-shadow: 8rpx -2rpx 0 0 #B8B2A7;
+  position: absolute;
+  top: 6rpx;
+  left: 0;
+}
+
+.icon-wujing .star {
+  position: absolute;
+  background: #B8B2A7;
+  border-radius: 50%;
+}
+
+.icon-wujing .s1 {
+  width: 5rpx;
+  height: 5rpx;
+  top: 4rpx;
+  right: 6rpx;
+  opacity: 0.8;
+}
+
+.icon-wujing .s2 {
+  width: 3rpx;
+  height: 3rpx;
+  top: 14rpx;
+  right: 2rpx;
+  opacity: 0.5;
+}
+
+.icon-wujing .s3 {
+  width: 4rpx;
+  height: 4rpx;
+  top: 24rpx;
+  right: 8rpx;
+  opacity: 0.6;
+}
+
+.nav-item.active .icon-wujing .moon {
+  box-shadow: 8rpx -2rpx 0 0 #D4B8A5;
+}
+
+.nav-item.active .icon-wujing .star {
+  background: #D4B8A5;
+}
+
+.nav-item.active .icon-wujing .s1 {
+  opacity: 1;
+}
+
+.nav-item.active .icon-wujing .s2 {
+  opacity: 0.7;
+}
+
+.nav-item.active .icon-wujing .s3 {
+  opacity: 0.85;
+}
+
+.nav-label {
+  font-size: 16rpx;
+  color: #B8B2A7;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  letter-spacing: 1rpx;
+}
+
+.nav-item.active .nav-label {
+  color: #D4B8A5;
+  font-weight: 600;
+}
+
+/* 小知中间突出按钮 */
+.nav-center-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  margin-top: -50rpx;
+}
+
+.center-btn-inner {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.4);
+  transition: all 0.3s ease;
+}
+
+.center-btn-inner:active {
+  transform: scale(0.92);
+}
+
+.center-btn-icon {
+  font-size: 44rpx;
+}
+
+.center-label {
+  color: #D4B8A5;
+  font-weight: 600;
+  margin-top: 6rpx;
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes thinking {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* "其他"身体感受 - 内联输入框 */
+.other-tag-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  width: 100%;
+  padding: 0 16rpx;
+}
+
+.other-inline-input {
+  flex: 1;
+  height: 56rpx;
+  padding: 0 24rpx;
+  background: white;
+  border-radius: 40rpx;
+  border: 2rpx solid #D4B8A5;
+  font-size: 26rpx;
+  color: #6D6A65;
+  box-sizing: border-box;
+  animation: fadeIn 0.3s ease;
+}
+
+.other-inline-input::placeholder {
+  color: #B8B2A7;
+}
+
+/* 情绪强度滑块弹窗 */
+.intensity-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  position: relative;
+  width: 640rpx;
+  background: white;
+  border-radius: 32rpx;
+  padding: 48rpx 32rpx 32rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+  z-index: 1;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.modal-title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 12rpx;
+}
+
+.modal-subtitle {
+  display: block;
+  font-size: 24rpx;
+  color: #B8B2A7;
+}
+
+/* 当前强度显示 */
+.current-intensity {
+  text-align: center;
+  padding: 32rpx 0;
+  margin-bottom: 24rpx;
+}
+
+.current-label {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 12rpx;
+}
+
+.current-level {
+  display: block;
+  font-size: 24rpx;
+  color: #B8B2A7;
+}
+
+/* 滑动条容器 */
+.slider-container {
+  padding: 0 32rpx;
+  margin-bottom: 40rpx;
+}
+
+.intensity-slider {
+  width: 100%;
+  margin-bottom: 24rpx;
+}
+
+/* 刻度标签 */
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8rpx;
+}
+
+.slider-label {
+  font-size: 20rpx;
+  color: #B8B2A7;
+  text-align: center;
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.label-active {
+  font-weight: 700;
+  font-size: 22rpx;
+  transform: scale(1.1);
+}
+
+/* 操作按钮 */
+.modal-actions {
+  display: flex;
+  gap: 16rpx;
+  padding: 0 32rpx 32rpx;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 24rpx;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.action-btn::after {
+  border: none;
+}
+
+.cancel-btn {
+  background: #F2E6DF;
+  color: #6D6A65;
+}
+
+.cancel-btn:active {
+  transform: scale(0.98);
+  background: #E8DDD4;
+}
+
+.confirm-btn {
+  color: white;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.3);
+}
+
+.confirm-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 16rpx rgba(212, 184, 165, 0.2);
+}
+
+/* ==================== 新手引导样式 ==================== */
+.guide-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60rpx;
+}
+
+.guide-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8rpx);
+}
+
+.guide-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 600rpx;
+}
+
+.guide-card {
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  padding: 60rpx 48rpx 48rpx;
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: guideSlideIn 0.4s ease-out;
+}
+
+@keyframes guideSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(40rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.guide-icon {
+  font-size: 80rpx;
+  margin-bottom: 32rpx;
+}
+
+.guide-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+
+.guide-text {
+  font-size: 28rpx;
+  color: #8C8780;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+
+.guide-hint {
+  font-size: 24rpx;
+  color: #B8B2A7;
+  text-align: center;
+  margin-bottom: 32rpx;
+  padding: 16rpx 24rpx;
+  background: #FAF9F7;
+  border-radius: 16rpx;
+}
+
+/* 场景列表 */
+.guide-scenarios {
+  width: 100%;
+  margin-bottom: 32rpx;
+}
+
+.scenario-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 24rpx;
+  background: #FAF9F7;
+  border-radius: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.scenario-item:last-child {
+  margin-bottom: 0;
+}
+
+.scenario-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.scenario-text {
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.5;
+}
+
+/* 功能列表 */
+.guide-features {
+  width: 100%;
+  margin-bottom: 32rpx;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 28rpx;
+}
+
+.feature-item:last-child {
+  margin-bottom: 0;
+}
+
+.feature-number {
+  width: 48rpx;
+  height: 48rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A895 100%);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 700;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.feature-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #6D6A65;
+  margin-bottom: 8rpx;
+}
+
+.feature-desc {
+  font-size: 24rpx;
+  color: #B8B2A7;
+  line-height: 1.5;
+}
+
+/* 引导按钮 */
+.guide-buttons {
+  width: 100%;
+  display: flex;
+  gap: 16rpx;
+}
+
+.guide-buttons.single {
+  justify-content: center;
+}
+
+.guide-btn {
+  flex: 1;
+  height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.guide-btn::after {
+  border: none;
+}
+
+.guide-btn.skip {
+  background: #F2E6DF;
+  color: #8C8780;
+}
+
+.guide-btn.skip:active {
+  background: #E8D4C8;
+}
+
+.guide-btn.next {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A895 100%);
+  color: #FFFFFF;
+}
+
+.guide-btn.next:active {
+  opacity: 0.9;
+}
+
+.guide-btn.start {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A895 100%);
+  color: #FFFFFF;
+  max-width: 400rpx;
+}
+
+.guide-btn.start:active {
+  opacity: 0.9;
+}
+
+/* ==================== 情绪卡片 CSS 图标 ==================== */
+.emotion-css-icon {
+  width: 56rpx;
+  height: 56rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+}
+
+/* --- 开心 happy: 微笑弧线 + 两只眼睛 --- */
+.emo-happy {
+  flex-direction: column;
+  gap: 6rpx;
+}
+.emo-happy .emo-eye {
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  position: absolute;
+  top: 14rpx;
+}
+.emo-happy .emo-eye.el {
+  left: 14rpx;
+}
+.emo-happy .emo-eye.er {
+  right: 14rpx;
+}
+.emo-happy .emo-smile {
+  width: 24rpx;
+  height: 12rpx;
+  border: 3rpx solid;
+  border-top: none;
+  border-radius: 0 0 24rpx 24rpx;
+  position: absolute;
+  bottom: 12rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- 平静 calm: 三道波浪线 --- */
+.emo-calm {
+  flex-direction: column;
+  gap: 8rpx;
+  align-items: center;
+  justify-content: center;
+}
+.emo-calm .emo-wave {
+  height: 3rpx;
+  border-radius: 3rpx;
+}
+.emo-calm .emo-wave.w1 {
+  width: 28rpx;
+  opacity: 0.5;
+}
+.emo-calm .emo-wave.w2 {
+  width: 34rpx;
+  opacity: 0.8;
+}
+.emo-calm .emo-wave.w3 {
+  width: 24rpx;
+  opacity: 0.5;
+}
+
+/* --- 难过 sad: 水滴 --- */
+.emo-sad .emo-drop {
+  width: 20rpx;
+  height: 28rpx;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+}
+
+/* --- 累 tired: 下垂弧线 + 圆点 --- */
+.emo-tired {
+  flex-direction: column;
+  align-items: center;
+}
+.emo-tired .emo-droop {
+  width: 28rpx;
+  height: 20rpx;
+  border: 3rpx solid;
+  border-bottom: none;
+  border-radius: 28rpx 28rpx 0 0;
+  position: absolute;
+  top: 10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.emo-tired .emo-droop-dot {
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 12rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- 烦躁 irritated: 锯齿线 --- */
+.emo-irritated {
+  flex-direction: row;
+  gap: 2rpx;
+  align-items: center;
+}
+.emo-irritated .emo-zig {
+  width: 4rpx;
+  border-radius: 2rpx;
+}
+.emo-irritated .emo-zig.z1 {
+  height: 20rpx;
+  transform: rotate(-25deg);
+}
+.emo-irritated .emo-zig.z2 {
+  height: 28rpx;
+  transform: rotate(25deg);
+}
+.emo-irritated .emo-zig.z3 {
+  height: 16rpx;
+  transform: rotate(-25deg);
+}
+
+/* --- 焦虑 anxious: 同心圈 + 缺口 --- */
+.emo-anxious {
+  align-items: center;
+  justify-content: center;
+}
+.emo-anxious .emo-spiral-outer {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2.5rpx solid;
+  border-radius: 50%;
+  border-top-color: transparent;
+  position: absolute;
+}
+.emo-anxious .emo-spiral-inner {
+  width: 20rpx;
+  height: 20rpx;
+  border: 2.5rpx solid;
+  border-radius: 50%;
+  border-bottom-color: transparent;
+  position: absolute;
+}
+.emo-anxious .emo-spiral-dot {
+  width: 5rpx;
+  height: 5rpx;
+  border-radius: 50%;
+  position: absolute;
+}
+
+/* --- 愤怒 angry: 闪电 --- */
+.emo-angry {
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.emo-angry .emo-bolt-top {
+  width: 16rpx;
+  height: 22rpx;
+  clip-path: polygon(50% 0%, 100% 100%, 30% 100%);
+  position: absolute;
+  top: 8rpx;
+  left: 50%;
+  transform: translateX(-40%);
+}
+.emo-angry .emo-bolt-bottom {
+  width: 16rpx;
+  height: 22rpx;
+  clip-path: polygon(70% 0%, 50% 100%, 0% 0%);
+  position: absolute;
+  bottom: 8rpx;
+  left: 50%;
+  transform: translateX(-60%);
+}
+
+/* --- 感动 touched: 心形（重绘为更明显的爱心） --- */
+.emo-touched {
+  align-items: center;
+  justify-content: center;
+}
+.emo-touched .emo-heart-l,
+.emo-touched .emo-heart-r {
+  width: 14rpx;
+  height: 20rpx;
+  border-radius: 14rpx 14rpx 0 0;
+  position: absolute;
+  top: 16rpx;
+}
+.emo-touched .emo-heart-l {
+  transform: rotate(-45deg);
+  left: 16rpx;
+}
+.emo-touched .emo-heart-r {
+  transform: rotate(45deg);
+  right: 16rpx;
+}
+.emo-touched .emo-heart-bottom {
+  width: 0;
+  height: 0;
+  border-left: 12rpx solid transparent;
+  border-right: 12rpx solid transparent;
+  border-top: 16rpx solid;
+  position: absolute;
+  bottom: 14rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- 困惑 confused: 问号（重绘为更清晰的问号） --- */
+.emo-confused {
+  align-items: center;
+  justify-content: center;
+}
+.emo-confused .emo-q-curve {
+  width: 16rpx;
+  height: 20rpx;
+  border: 3.5rpx solid;
+  border-left: none;
+  border-bottom: none;
+  border-radius: 0 16rpx 0 0;
+  position: absolute;
+  top: 12rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.emo-confused .emo-q-dot {
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 12rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- 无聊 bored: 水平线 + 下垂弧线（打哈欠/无精打采） --- */
+.emo-bored {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.emo-bored .emo-line {
+  width: 28rpx;
+  height: 3rpx;
+  border-radius: 2rpx;
+  position: absolute;
+  top: 16rpx;
+  opacity: 0.5;
+}
+.emo-bored .emo-yawn {
+  width: 18rpx;
+  height: 10rpx;
+  border: 3rpx solid;
+  border-top: none;
+  border-radius: 0 0 18rpx 18rpx;
+  position: absolute;
+  bottom: 14rpx;
+  opacity: 0.7;
+}
+
+/* --- 震惊 shocked: 放射星 --- */
+.emo-shocked {
+  align-items: center;
+  justify-content: center;
+}
+.emo-shocked .emo-star-circle {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  position: absolute;
+}
+.emo-shocked .emo-ray {
+  position: absolute;
+  width: 3rpx;
+  height: 12rpx;
+  border-radius: 2rpx;
+}
+.emo-shocked .emo-ray.r1 {
+  top: 6rpx;
+  transform: rotate(0deg);
+}
+.emo-shocked .emo-ray.r2 {
+  bottom: 6rpx;
+  transform: rotate(0deg);
+}
+.emo-shocked .emo-ray.r3 {
+  left: 8rpx;
+  transform: rotate(90deg);
+}
+.emo-shocked .emo-ray.r4 {
+  right: 8rpx;
+  transform: rotate(90deg);
+}
+
+/* --- 不知道 unknown: 迷雾云朵 --- */
+.emo-unknown {
+  align-items: center;
+  justify-content: center;
+}
+.emo-unknown .emo-cloud-main {
+  width: 26rpx;
+  height: 14rpx;
+  border-radius: 14rpx;
+  position: absolute;
+  bottom: 16rpx;
+  opacity: 0.5;
+}
+.emo-unknown .emo-cloud-top {
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  position: absolute;
+  top: 14rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.4;
+}
+.emo-unknown .emo-cloud-q {
+  width: 4rpx;
+  height: 4rpx;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.6;
+}
+
+/* --- 自定义 custom: 小星星 --- */
+.emo-custom .emo-star-custom {
+  width: 20rpx;
+  height: 20rpx;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* --- 添加 add: 加号 --- */
+.emo-add {
+  align-items: center;
+  justify-content: center;
+}
+.emo-add .emo-plus-h {
+  width: 24rpx;
+  height: 3rpx;
+  border-radius: 2rpx;
+  position: absolute;
+}
+.emo-add .emo-plus-v {
+  width: 3rpx;
+  height: 24rpx;
+  border-radius: 2rpx;
+  position: absolute;
+}
+
+/* ==================== 新手引导 CSS 图标 ==================== */
+.guide-css-icon {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+
+/* 挥手 gicon-wave */
+.gicon-wave {
+  width: 48rpx;
+  height: 48rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gicon-wave .wave-palm {
+  width: 24rpx;
+  height: 28rpx;
+  background: #D4B8A5;
+  border-radius: 12rpx 12rpx 8rpx 8rpx;
+  position: relative;
+}
+.gicon-wave .wave-line {
+  position: absolute;
+  border: 2rpx solid #D4B8A5;
+  border-radius: 50%;
+  border-left: none;
+  border-bottom: none;
+}
+.gicon-wave .wave-line.wl1 {
+  width: 36rpx;
+  height: 36rpx;
+  opacity: 0.4;
+}
+.gicon-wave .wave-line.wl2 {
+  width: 48rpx;
+  height: 48rpx;
+  opacity: 0.2;
+}
+
+/* 思维泡泡 gicon-thought */
+.gicon-thought {
+  width: 48rpx;
+  height: 48rpx;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.gicon-thought .thought-bubble {
+  width: 36rpx;
+  height: 28rpx;
+  background: #D4B8A5;
+  border-radius: 16rpx;
+  opacity: 0.7;
+}
+.gicon-thought .thought-dot {
+  position: absolute;
+  background: #D4B8A5;
+  border-radius: 50%;
+}
+.gicon-thought .thought-dot.td1 {
+  width: 8rpx;
+  height: 8rpx;
+  bottom: 8rpx;
+  left: 12rpx;
+  opacity: 0.5;
+}
+.gicon-thought .thought-dot.td2 {
+  width: 5rpx;
+  height: 5rpx;
+  bottom: 2rpx;
+  left: 6rpx;
+  opacity: 0.3;
+}
+
+/* 场景图标容器 */
+.scenario-css-icon {
+  width: 32rpx;
+  height: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+/* 月亮 sicon-moon */
+.sicon-moon {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  box-shadow: 6rpx -2rpx 0 0 #D4B8A5;
+}
+
+/* 思考 sicon-think */
+.sicon-think {
+  position: relative;
+  width: 24rpx;
+  height: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sicon-think .think-head {
+  width: 16rpx;
+  height: 16rpx;
+  border: 2rpx solid #D4B8A5;
+  border-radius: 50%;
+}
+.sicon-think .think-dot {
+  width: 4rpx;
+  height: 4rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+  position: absolute;
+  top: -2rpx;
+  right: 0;
+}
+
+/* 聊天气泡 sicon-chat */
+.sicon-chat {
+  position: relative;
+  width: 24rpx;
+  height: 20rpx;
+}
+.sicon-chat .chat-box {
+  width: 20rpx;
+  height: 14rpx;
+  background: #D4B8A5;
+  border-radius: 8rpx;
+  opacity: 0.7;
+}
+.sicon-chat .chat-tail {
+  position: absolute;
+  bottom: 0;
+  left: 4rpx;
+  width: 0;
+  height: 0;
+  border-left: 6rpx solid #D4B8A5;
+  border-bottom: 6rpx solid transparent;
+  opacity: 0.7;
+}
+
+/* 星火 sicon-sparkle */
+.sicon-sparkle {
+  position: relative;
+  width: 20rpx;
+  height: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sicon-sparkle .sparkle-v {
+  width: 3rpx;
+  height: 20rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx;
+  position: absolute;
+}
+.sicon-sparkle .sparkle-h {
+  width: 20rpx;
+  height: 3rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx;
+  position: absolute;
+}
+
+/* 靶心 gicon-target */
+.gicon-target {
+  width: 48rpx;
+  height: 48rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gicon-target .target-outer {
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid #D4B8A5;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0.4;
+}
+.gicon-target .target-inner {
+  width: 24rpx;
+  height: 24rpx;
+  border: 3rpx solid #D4B8A5;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0.7;
+}
+.gicon-target .target-center {
+  width: 10rpx;
+  height: 10rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+  position: absolute;
+}
+
+/* 星星 gicon-star */
+.gicon-star {
+  width: 48rpx;
+  height: 48rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gicon-star .star-body {
+  width: 16rpx;
+  height: 16rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+  position: absolute;
+}
+.gicon-star .star-ray {
+  position: absolute;
+  width: 3rpx;
+  height: 10rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx;
+}
+.gicon-star .star-ray.sr1 {
+  top: 4rpx;
+}
+.gicon-star .star-ray.sr2 {
+  bottom: 4rpx;
+}
+.gicon-star .star-ray.sr3 {
+  left: 8rpx;
+  transform: rotate(90deg);
+}
+.gicon-star .star-ray.sr4 {
+  right: 8rpx;
+  transform: rotate(90deg);
+}
+
+/* 提示灯泡 hint-row */
+.guide-hint-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 32rpx;
+  padding: 16rpx 24rpx;
+  background: #FAF9F7;
+  border-radius: 16rpx;
+}
+.hint-css-icon {
+  width: 24rpx;
+  height: 28rpx;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+.hint-css-icon .hint-bulb {
+  width: 16rpx;
+  height: 16rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+.hint-css-icon .hint-base {
+  width: 10rpx;
+  height: 4rpx;
+  background: #D4B8A5;
+  border-radius: 0 0 4rpx 4rpx;
+  margin-top: 1rpx;
+  opacity: 0.6;
+}
+.guide-hint-text {
+  font-size: 24rpx;
+  color: #B8B2A7;
+}
+
+/* ==================== 小知中间按钮 CSS 气泡图标 ==================== */
+.center-chat-icon {
+  width: 36rpx;
+  height: 32rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.center-chat-icon .cchat-bubble {
+  width: 32rpx;
+  height: 24rpx;
+  background: white;
+  border-radius: 12rpx;
+}
+.center-chat-icon .cchat-tail {
+  position: absolute;
+  bottom: -2rpx;
+  right: 4rpx;
+  width: 0;
+  height: 0;
+  border-left: 8rpx solid white;
+  border-bottom: 8rpx solid transparent;
+}
+
+/* ==================== 知识库浮窗按钮 ==================== */
+.knowledge-fab {
+  position: fixed;
+  right: 28rpx;
+  bottom: 200rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+}
+
+.fab-inner {
+  width: 88rpx;
+  height: 88rpx;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6rpx 24rpx rgba(212, 184, 165, 0.3);
+  border: 2rpx solid rgba(212, 184, 165, 0.2);
+}
+
+.fab-inner:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 16rpx rgba(212, 184, 165, 0.4);
+}
+
+/* 浮窗书本图标 */
+.fab-book-icon {
+  width: 36rpx;
+  height: 32rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.fab-book-icon .fbook-spine {
+  width: 4rpx;
+  height: 32rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx;
+  flex-shrink: 0;
+}
+.fab-book-icon .fbook-cover {
+  width: 26rpx;
+  height: 28rpx;
+  border: 3rpx solid #D4B8A5;
+  border-left: none;
+  border-radius: 0 6rpx 6rpx 0;
+  margin-left: 2rpx;
+}
+.fab-book-icon .fbook-line {
+  position: absolute;
+  right: 8rpx;
+  height: 2rpx;
+  background: #D4B8A5;
+  border-radius: 1rpx;
+  opacity: 0.5;
+}
+.fab-book-icon .fbook-line.fl1 {
+  top: 10rpx;
+  width: 14rpx;
+}
+.fab-book-icon .fbook-line.fl2 {
+  top: 18rpx;
+  width: 10rpx;
+}
+
+.fab-label {
+  font-size: 20rpx;
+  color: #B8B2A7;
+  margin-top: 6rpx;
+  font-weight: 500;
+}
+

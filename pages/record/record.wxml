@@ -1,0 +1,83 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">记录此刻情绪</text>
+    <text class="page-subtitle">给你的感受一个名字</text>
+  </view>
+
+  <!-- 情绪选择区域 -->
+  <view class="emotion-select-section">
+    <text class="section-label">此刻的情绪是？</text>
+    <scroll-view class="emotion-tags-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view class="emotion-tags">
+        <view
+          class="emotion-tag {{selectedEmotion === item ? 'active' : ''}}"
+          wx:for="{{emotionList}}"
+          wx:key="*this"
+          bindtap="selectEmotion"
+          data-emotion="{{item}}"
+        >
+          {{item}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 强度选择区域 -->
+  <view class="intensity-section" wx:if="{{selectedEmotion}}">
+    <text class="section-label">情绪强度</text>
+    <view class="intensity-slider">
+      <slider
+        value="{{intensity}}"
+        min="1"
+        max="10"
+        step="1"
+        show-value="{{true}}"
+        activeColor="#D4B8A5"
+        backgroundColor="#F2E6DF"
+        block-size="24"
+        bindchange="onIntensityChange"
+      />
+    </view>
+    <view class="intensity-labels">
+      <text class="intensity-label">轻微</text>
+      <text class="intensity-label">中等</text>
+      <text class="intensity-label">强烈</text>
+    </view>
+  </view>
+
+  <!-- 文字记录区域 -->
+  <view class="note-section">
+    <text class="section-label">想说的话（可选）</text>
+    <textarea
+      class="note-input"
+      placeholder="此刻的你，想说些什么..."
+      placeholder-style="color: #B8B2A7;"
+      maxlength="500"
+      value="{{noteText}}"
+      bindinput="onNoteInput"
+      auto-height
+    />
+    <text class="char-count">{{noteText.length}}/500</text>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="action-footer">
+    <button class="save-btn" bindtap="saveRecord" disabled="{{!selectedEmotion}}">
+      <text class="btn-text">保存记录</text>
+    </button>
+  </view>
+
+  <!-- 感官写作引导弹窗 -->
+  <view class="writing-prompt-mask" wx:if="{{showWritingPrompt}}" bindtap="dismissPrompt">
+    <view class="writing-prompt-card" catchtap="">
+      <view class="prompt-icon">✍️</view>
+      <text class="prompt-title">想用文字感受一下此刻吗？</text>
+      <text class="prompt-desc">用感官写作，把「{{selectedEmotion}}」变成一段属于你的文字</text>
+      <view class="prompt-buttons">
+        <button class="prompt-btn primary" catchtap="goToSensoryWriting">去写作</button>
+        <button class="prompt-btn secondary" catchtap="dismissPrompt">下次再说</button>
+      </view>
+    </view>
+  </view>
+</view>

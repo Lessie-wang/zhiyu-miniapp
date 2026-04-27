@@ -1,0 +1,123 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">陪伴者管理 👥</text>
+    <text class="page-subtitle">邀请信任的人，一起守护你的情绪健康</text>
+  </view>
+
+  <!-- 添加陪伴者卡片 -->
+  <view class="add-companion-card">
+    <view class="add-icon">➕</view>
+    <view class="add-content">
+      <text class="add-title">添加新的陪伴者</text>
+      <text class="add-desc">邀请家人、朋友或伴侣成为你的陪伴者</text>
+    </view>
+    <button class="add-btn" bindtap="addCompanion">
+      <text class="btn-text">添加</text>
+    </button>
+  </view>
+
+  <!-- 陪伴者列表 -->
+  <view class="companions-section" wx:if="{{companions.length > 0}}">
+    <text class="section-title">我的陪伴者 ({{companions.length}})</text>
+
+    <view class="companion-list">
+      <view
+        class="companion-card"
+        wx:for="{{companions}}"
+        wx:key="id"
+      >
+        <view class="companion-avatar">
+          <text class="avatar-text">{{item.name.charAt(0)}}</text>
+        </view>
+
+        <view class="companion-info">
+          <text class="companion-name">{{item.name}}</text>
+          <text class="companion-relation">{{item.relation}}</text>
+          <text class="companion-status">
+            <text class="status-dot {{item.status}}"></text>
+            {{item.status === 'active' ? '已接受邀请' : '等待接受'}}
+          </text>
+        </view>
+
+        <view class="companion-actions">
+          <button
+            class="action-btn settings-btn"
+            bindtap="editCompanion"
+            data-id="{{item.id}}"
+          >
+            <text class="action-icon">⚙️</text>
+          </button>
+          <button
+            class="action-btn remove-btn"
+            bindtap="removeCompanion"
+            data-id="{{item.id}}"
+          >
+            <text class="action-icon">🗑️</text>
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">💝</text>
+    <text class="empty-title">还没有陪伴者</text>
+    <text class="empty-desc">添加信任的人，让他们了解你的情绪状态，在需要时给予支持</text>
+  </view>
+
+  <!-- 权限设置说明 -->
+  <view class="permission-info-card">
+    <text class="info-title">🔒 隐私与权限</text>
+    <view class="info-list">
+      <view class="info-item">
+        <text class="info-icon">✓</text>
+        <text class="info-text">陪伴者可以看到你的情绪趋势和记录</text>
+      </view>
+      <view class="info-item">
+        <text class="info-icon">✓</text>
+        <text class="info-text">你可以随时调整分享的内容范围</text>
+      </view>
+      <view class="info-item">
+        <text class="info-icon">✓</text>
+        <text class="info-text">AI 对话内容默认不分享，需手动开启</text>
+      </view>
+      <view class="info-item">
+        <text class="info-icon">✓</text>
+        <text class="info-text">你可以随时移除陪伴者</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 陪伴者功能介绍 -->
+  <view class="features-section">
+    <text class="section-title">陪伴者能做什么？</text>
+
+    <view class="feature-grid">
+      <view class="feature-card">
+        <text class="feature-icon">📊</text>
+        <text class="feature-title">查看情绪趋势</text>
+        <text class="feature-desc">了解你的情绪变化模式</text>
+      </view>
+
+      <view class="feature-card">
+        <text class="feature-icon">🔔</text>
+        <text class="feature-title">接收关怀提醒</text>
+        <text class="feature-desc">当你情绪低落时收到通知</text>
+      </view>
+
+      <view class="feature-card">
+        <text class="feature-icon">💬</text>
+        <text class="feature-title">发送关怀消息</text>
+        <text class="feature-desc">在合适的时候给予支持</text>
+      </view>
+
+      <view class="feature-card">
+        <text class="feature-icon">📝</text>
+        <text class="feature-title">查看记录摘要</text>
+        <text class="feature-desc">了解你的日常状态</text>
+      </view>
+    </view>
+  </view>
+</view>

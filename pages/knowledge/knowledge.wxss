@@ -1,0 +1,392 @@
+/* 护理知识与社区页面样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #FAF9F7 0%, #F2E6DF 100%);
+  padding: 40rpx 40rpx 160rpx;
+}
+
+/* 页面标题 */
+.page-header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.page-title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 12rpx;
+}
+
+.page-subtitle {
+  display: block;
+  font-size: 26rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+}
+
+/* 分类标签 */
+.category-tabs {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 40rpx;
+  overflow-x: auto;
+  padding-bottom: 8rpx;
+}
+
+.category-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 16rpx 28rpx;
+  background: white;
+  border-radius: 40rpx;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.1);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.tab-item.active {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.3);
+}
+
+.tab-icon {
+  font-size: 28rpx;
+}
+
+.tab-name {
+  font-size: 26rpx;
+  color: #6D6A65;
+  font-weight: 600;
+}
+
+.tab-item.active .tab-name {
+  color: white;
+}
+
+/* 区域标题 */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+
+.section-badge {
+  padding: 6rpx 16rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  color: white;
+  font-weight: 600;
+}
+
+/* 专业知识区域 */
+.knowledge-section {
+  margin-bottom: 48rpx;
+}
+
+.knowledge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.knowledge-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  transition: all 0.3s ease;
+}
+
+.knowledge-card:active {
+  transform: scale(0.98);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.knowledge-icon {
+  width: 72rpx;
+  height: 72rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  flex-shrink: 0;
+}
+
+.knowledge-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.knowledge-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #6D6A65;
+  line-height: 1.4;
+}
+
+.knowledge-source {
+  font-size: 22rpx;
+  color: #B8B2A7;
+}
+
+.knowledge-summary {
+  display: block;
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.6;
+  margin-bottom: 16rpx;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.read-count {
+  font-size: 24rpx;
+  color: #B8B2A7;
+}
+
+.arrow {
+  font-size: 28rpx;
+  color: #D4B8A5;
+  font-weight: 700;
+}
+
+/* 社区经验分享 */
+.community-section {
+  margin-bottom: 48rpx;
+}
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.experience-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  transition: all 0.3s ease;
+}
+
+.experience-card:active {
+  transform: scale(0.98);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.user-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: white;
+  font-weight: 700;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.user-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #6D6A65;
+}
+
+.post-time {
+  font-size: 22rpx;
+  color: #B8B2A7;
+}
+
+.helpful-badge {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 8rpx 16rpx;
+  background: linear-gradient(135deg, #F5A623 0%, #F39C12 100%);
+  border-radius: 20rpx;
+}
+
+.badge-icon {
+  font-size: 20rpx;
+}
+
+.badge-text {
+  font-size: 22rpx;
+  color: white;
+  font-weight: 600;
+}
+
+.experience-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #6D6A65;
+  line-height: 1.4;
+  margin-bottom: 12rpx;
+}
+
+.experience-content {
+  display: block;
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.6;
+  margin-bottom: 16rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.experience-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.tag {
+  padding: 8rpx 16rpx;
+  background: #F2E6DF;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  color: #D4B8A5;
+  font-weight: 600;
+}
+
+.card-actions {
+  display: flex;
+  gap: 32rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #F2E6DF;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.action-icon {
+  font-size: 28rpx;
+}
+
+.action-count {
+  font-size: 24rpx;
+  color: #B8B2A7;
+}
+
+/* 分享按钮 */
+.share-section {
+  margin-bottom: 40rpx;
+}
+
+.share-btn {
+  width: 100%;
+  padding: 28rpx;
+  background: linear-gradient(90deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  box-shadow: 0 16rpx 48rpx rgba(212, 184, 165, 0.3);
+  border: none;
+}
+
+.share-btn::after {
+  border: none;
+}
+
+.btn-icon {
+  font-size: 32rpx;
+}
+
+.btn-text {
+  font-size: 30rpx;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+/* 温馨提示 */
+.tips-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  display: flex;
+  gap: 20rpx;
+}
+
+.tips-icon {
+  font-size: 40rpx;
+  flex-shrink: 0;
+}
+
+.tips-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.tips-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #6D6A65;
+}
+
+.tips-text {
+  font-size: 24rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+}

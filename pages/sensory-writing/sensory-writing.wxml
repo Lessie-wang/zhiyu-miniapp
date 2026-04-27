@@ -1,0 +1,417 @@
+<view class="container">
+
+  <!-- CSS 图标模板 -->
+  <template name="cssIcon">
+    <!-- 场景图标 -->
+    <block wx:if="{{type === 'rain'}}">
+      <view class="sicon sicon-rain">
+        <view class="rain-cloud"></view>
+        <view class="rain-drop rd1"></view>
+        <view class="rain-drop rd2"></view>
+        <view class="rain-drop rd3"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'star'}}">
+      <view class="sicon sicon-star">
+        <view class="star-body"></view>
+        <view class="star-dot sd1"></view>
+        <view class="star-dot sd2"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'moon'}}">
+      <view class="sicon sicon-moon">
+        <view class="moon-body"></view>
+        <view class="moon-crater"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'flower'}}">
+      <view class="sicon sicon-flower">
+        <view class="flower-petal fp1"></view>
+        <view class="flower-petal fp2"></view>
+        <view class="flower-petal fp3"></view>
+        <view class="flower-petal fp4"></view>
+        <view class="flower-center"></view>
+        <view class="flower-stem"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'flame'}}">
+      <view class="sicon sicon-flame">
+        <view class="flame-outer"></view>
+        <view class="flame-inner"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'sun'}}">
+      <view class="sicon sicon-sun">
+        <view class="sun-body"></view>
+        <view class="sun-ray sr1"></view>
+        <view class="sun-ray sr2"></view>
+        <view class="sun-ray sr3"></view>
+        <view class="sun-ray sr4"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'pen'}}">
+      <view class="sicon sicon-pen">
+        <view class="pen-body"></view>
+        <view class="pen-tip"></view>
+      </view>
+    </block>
+    <!-- 五感图标 -->
+    <block wx:elif="{{type === 'eye'}}">
+      <view class="sicon sicon-eye">
+        <view class="eye-outer"></view>
+        <view class="eye-pupil"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'ear'}}">
+      <view class="sicon sicon-ear">
+        <view class="ear-outer"></view>
+        <view class="ear-inner"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'hand'}}">
+      <view class="sicon sicon-hand">
+        <view class="hand-palm"></view>
+        <view class="hand-finger hf1"></view>
+        <view class="hand-finger hf2"></view>
+        <view class="hand-finger hf3"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'nose'}}">
+      <view class="sicon sicon-nose">
+        <view class="nose-bridge"></view>
+        <view class="nose-tip"></view>
+        <view class="nose-wave nw1"></view>
+        <view class="nose-wave nw2"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'drop'}}">
+      <view class="sicon sicon-drop">
+        <view class="drop-body"></view>
+        <view class="drop-ripple"></view>
+      </view>
+    </block>
+    <!-- 其他 -->
+    <block wx:elif="{{type === 'book'}}">
+      <view class="sicon sicon-book">
+        <view class="book-left"></view>
+        <view class="book-right"></view>
+        <view class="book-spine"></view>
+      </view>
+    </block>
+    <block wx:elif="{{type === 'sparkle'}}">
+      <view class="sicon sicon-sparkle">
+        <view class="sparkle-v"></view>
+        <view class="sparkle-h"></view>
+        <view class="sparkle-dot sp1"></view>
+        <view class="sparkle-dot sp2"></view>
+      </view>
+    </block>
+  </template>
+
+  <!-- Phase 1: 选择场景 -->
+  <view wx:if="{{currentPhase === 'select'}}">
+    <view class="page-header">
+      <text class="page-title">感官写作训练</text>
+      <text class="page-subtitle">选择一个最贴近你此刻感受的场景</text>
+    </view>
+
+    <view class="scenario-grid">
+      <view
+        class="scenario-card {{selectedScenario.id === item.id ? 'active' : ''}}"
+        wx:for="{{scenarios}}"
+        wx:key="id"
+        bindtap="selectScenario"
+        data-id="{{item.id}}"
+      >
+        <view class="scenario-icon">
+          <template is="cssIcon" data="{{type: item.iconType}}" />
+        </view>
+        <text class="scenario-title">{{item.title}}</text>
+        <text class="scenario-desc">{{item.description}}</text>
+      </view>
+    </view>
+
+    <!-- 模式选择 -->
+    <view class="mode-section" wx:if="{{selectedScenario && !selectedScenario.isCustom}}">
+      <text class="mode-label">写作模式</text>
+      <view class="mode-tabs">
+        <view class="mode-tab {{writeMode === 'quick' ? 'active' : ''}}" bindtap="switchMode" data-mode="quick">
+          <text class="mode-tab-title">轻松模式</text>
+          <text class="mode-tab-desc">选3个感官</text>
+        </view>
+        <view class="mode-tab {{writeMode === 'full' ? 'active' : ''}}" bindtap="switchMode" data-mode="full">
+          <text class="mode-tab-title">完整模式</text>
+          <text class="mode-tab-desc">5个感官</text>
+        </view>
+      </view>
+
+      <!-- 快速模式：选择感官 -->
+      <view class="sense-picker" wx:if="{{writeMode === 'quick'}}">
+        <text class="sense-picker-hint">选择你最想描写的 3 个感官：</text>
+        <view class="sense-picker-list">
+          <view
+            class="sense-picker-item {{selectedSensesMap[item.key] ? 'active' : ''}}"
+            wx:for="{{senses}}"
+            wx:key="key"
+            bindtap="toggleSense"
+            data-key="{{item.key}}"
+          >
+            <view class="sense-picker-icon">
+              <template is="cssIcon" data="{{type: item.iconType}}" />
+            </view>
+            <text class="sense-picker-name">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <button class="start-btn {{!selectedScenario ? 'disabled' : ''}} {{writeMode === 'quick' && selectedSenses.length < 3 ? 'disabled' : ''}}" bindtap="startWriting">
+      <text class="btn-text">开始写作</text>
+      <text class="btn-arrow">→</text>
+    </button>
+
+    <!-- 我的作品入口 -->
+    <view class="history-entry" bindtap="viewHistory">
+      <view class="history-entry-icon">
+        <template is="cssIcon" data="{{type: 'book'}}" />
+      </view>
+      <text class="history-entry-text">我的作品{{historyWritings.length > 0 ? '（' + historyWritings.length + '篇）' : ''}}</text>
+      <text class="history-entry-arrow">→</text>
+    </view>
+  </view>
+
+  <!-- Phase 2: 五感写作 -->
+  <view wx:if="{{currentPhase === 'writing'}}">
+    <!-- 当前场景提示 -->
+    <view class="scenario-reminder">
+      <view class="reminder-icon">
+        <template is="cssIcon" data="{{type: selectedScenario.iconType}}" />
+      </view>
+      <view class="reminder-text">
+        <text class="reminder-title">{{selectedScenario.title}}</text>
+        <text class="reminder-desc">{{selectedScenario.description}}</text>
+      </view>
+    </view>
+
+    <!-- 进度条 -->
+    <view class="progress-bar">
+      <view
+        class="progress-step {{index <= currentSenseIndex ? 'active' : ''}} {{index === currentSenseIndex ? 'current' : ''}}"
+        wx:for="{{activeSenses}}"
+        wx:key="key"
+      >
+        <view class="step-icon">
+          <template is="cssIcon" data="{{type: item.iconType}}" />
+        </view>
+        <text class="step-label">{{item.label}}</text>
+      </view>
+    </view>
+
+    <!-- 当前感官卡片 -->
+    <view class="sense-card">
+      <view class="sense-header">
+        <view class="sense-icon-large">
+          <template is="cssIcon" data="{{type: activeSenses[currentSenseIndex].iconType}}" />
+        </view>
+        <view class="sense-info">
+          <text class="sense-name">{{activeSenses[currentSenseIndex].label}}</text>
+          <text class="sense-count">{{currentSenseIndex + 1}} / {{activeSenses.length}}</text>
+        </view>
+      </view>
+
+      <!-- AI 引导语 -->
+      <view class="ai-guide" wx:if="{{aiGuideText && !isAIThinking}}">
+        <text class="guide-label">小知引导</text>
+        <text class="guide-text">{{aiGuideText}}</text>
+      </view>
+      <view class="ai-guide loading" wx:if="{{isAIThinking}}">
+        <text class="guide-label">小知引导</text>
+        <view class="thinking-row">
+          <text class="thinking-text">正在为你准备引导</text>
+          <view class="thinking-dots">
+            <view class="dot"></view>
+            <view class="dot"></view>
+            <view class="dot"></view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 示例模板 -->
+      <view class="example-template" wx:if="{{senseExample}}">
+        <text class="example-text">{{senseExample}}</text>
+      </view>
+
+      <!-- 词语卡片辅助 -->
+      <scroll-view class="chip-scroll" scroll-x="{{true}}" wx:if="{{currentChips.length > 0}}" show-scrollbar="{{false}}">
+        <view class="chip-list">
+          <view
+            class="chip-item {{usedChips[item] ? 'used' : ''}}"
+            wx:for="{{currentChips}}"
+            wx:key="*this"
+            bindtap="tapChip"
+            data-chip="{{item}}"
+          >{{item}}</view>
+        </view>
+      </scroll-view>
+
+      <!-- 写作区域 -->
+      <textarea
+        class="writing-input"
+        placeholder="{{activeSenses[currentSenseIndex].hint}}"
+        value="{{currentInput}}"
+        bindinput="onInputChange"
+        maxlength="500"
+        auto-height
+      />
+      <text class="char-count">{{currentInput.length}} / 500</text>
+    </view>
+
+    <!-- 导航按钮 -->
+    <view class="nav-buttons">
+      <button class="nav-btn prev" bindtap="prevSense" wx:if="{{currentSenseIndex > 0}}">
+        ← 上一步
+      </button>
+      <view wx:if="{{currentSenseIndex === 0}}" class="nav-spacer"></view>
+      <button class="nav-btn next" bindtap="nextSense">
+        {{currentSenseIndex < activeSenses.length - 1 ? '下一个感官 →' : '生成作品'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- Phase 3: 生成中 -->
+  <view wx:if="{{currentPhase === 'generating'}}" class="generating-view">
+    <view class="generating-icon">
+      <template is="cssIcon" data="{{type: 'sparkle'}}" />
+    </view>
+    <text class="generating-title">正在编织你的文字</text>
+    <text class="generating-subtitle">正在将你的感官描述融合成一段完整的作品...</text>
+    <view class="generating-dots">
+      <view class="dot"></view>
+      <view class="dot"></view>
+      <view class="dot"></view>
+    </view>
+  </view>
+
+  <!-- Phase 4: 完成 -->
+  <view wx:if="{{currentPhase === 'complete'}}">
+    <view class="page-header">
+      <text class="page-title">你的作品</text>
+    </view>
+
+    <!-- 最终作品卡片 -->
+    <view class="result-card">
+      <view class="result-header">
+        <view class="result-scenario-row">
+          <view class="result-scenario-icon">
+            <template is="cssIcon" data="{{type: selectedScenario.iconType}}" />
+          </view>
+          <text class="result-scenario">{{selectedScenario.description || selectedScenario.title}}</text>
+        </view>
+      </view>
+      <text class="result-text">{{combinedPiece}}</text>
+    </view>
+
+    <!-- 感官详情 -->
+    <view class="senses-detail">
+      <text class="detail-title">你的感官描述</text>
+      <view class="detail-list">
+        <view class="detail-item" wx:for="{{activeSenses}}" wx:key="key" wx:if="{{senseWritings[item.key]}}">
+          <view class="detail-label">
+            <view class="detail-icon">
+              <template is="cssIcon" data="{{type: item.iconType}}" />
+            </view>
+            <text class="detail-name">{{item.label}}</text>
+          </view>
+          <text class="detail-text">{{senseWritings[item.key]}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="action-btn save {{isSaved ? 'saved' : ''}}" bindtap="saveWriting" disabled="{{isSaved}}">
+        {{isSaved ? '已保存 ✓' : '保存作品'}}
+      </button>
+      <button class="action-btn restart" bindtap="startOver">再写一篇</button>
+      <button class="action-btn share" open-type="share">分享给朋友</button>
+    </view>
+
+    <!-- 我的作品入口 -->
+    <view class="history-entry" bindtap="viewHistory">
+      <view class="history-entry-icon">
+        <template is="cssIcon" data="{{type: 'book'}}" />
+      </view>
+      <text class="history-entry-text">查看我的作品{{historyWritings.length > 0 ? '（' + historyWritings.length + '篇）' : ''}}</text>
+      <text class="history-entry-arrow">→</text>
+    </view>
+  </view>
+
+  <!-- Phase: 历史作品列表 -->
+  <view wx:if="{{currentPhase === 'history'}}">
+    <view class="page-header">
+      <text class="page-title">我的作品</text>
+      <text class="page-subtitle">共 {{historyWritings.length}} 篇感官写作</text>
+    </view>
+
+    <view class="history-list">
+      <view
+        class="history-card"
+        wx:for="{{historyWritings}}"
+        wx:key="id"
+        bindtap="viewWritingDetail"
+        data-id="{{item.id}}"
+      >
+        <view class="history-card-header">
+          <view class="history-card-icon">
+            <template is="cssIcon" data="{{type: item.scenarioIcon || 'star'}}" />
+          </view>
+          <view class="history-card-info">
+            <text class="history-card-title">{{item.scenarioTitle}}</text>
+            <text class="history-card-date">{{item.createdAt}}</text>
+          </view>
+        </view>
+        <text class="history-card-preview">{{item.combinedPiece}}</text>
+      </view>
+    </view>
+
+    <view class="back-link" bindtap="backFromHistory">
+      <text>← 返回</text>
+    </view>
+  </view>
+
+  <!-- Phase: 作品详情 -->
+  <view wx:if="{{currentPhase === 'detail' && viewingWriting}}">
+    <view class="page-header">
+      <view class="page-title-row">
+        <view class="page-title-icon">
+          <template is="cssIcon" data="{{type: viewingWriting.scenarioIcon || 'star'}}" />
+        </view>
+        <text class="page-title">{{viewingWriting.scenarioTitle}}</text>
+      </view>
+    </view>
+
+    <view class="result-card">
+      <text class="result-text">{{viewingWriting.combinedPiece}}</text>
+    </view>
+
+    <view class="senses-detail">
+      <text class="detail-title">五感描述</text>
+      <view class="detail-list">
+        <view class="detail-item" wx:for="{{senses}}" wx:key="key">
+          <view class="detail-label">
+            <view class="detail-icon">
+              <template is="cssIcon" data="{{type: item.iconType}}" />
+            </view>
+            <text class="detail-name">{{item.label}}</text>
+          </view>
+          <text class="detail-text">{{viewingWriting.senseWritings[item.key]}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="action-buttons">
+      <button class="action-btn restart" bindtap="backFromDetail">← 返回列表</button>
+      <button class="action-btn delete" bindtap="deleteWriting" data-id="{{viewingWriting.id}}">删除作品</button>
+    </view>
+  </view>
+</view>

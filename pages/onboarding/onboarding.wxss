@@ -1,0 +1,418 @@
+/* 用户引导页面样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #FAF9F7 0%, #F2E6DF 100%);
+  padding: 60rpx 40rpx 120rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* 步骤1: 欢迎页 */
+.welcome-section {
+  text-align: center;
+  margin-bottom: 80rpx;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo-text {
+  display: block;
+  font-size: 80rpx;
+  font-weight: 800;
+  color: #D4B8A5;
+  letter-spacing: 8rpx;
+  margin-bottom: 16rpx;
+  text-shadow: 0 4rpx 8rpx rgba(212, 184, 165, 0.2);
+}
+
+.logo-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #B8B2A7;
+  letter-spacing: 4rpx;
+  margin-bottom: 60rpx;
+}
+
+.welcome-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 24rpx;
+}
+
+.welcome-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+}
+
+.welcome-features {
+  margin-bottom: 60rpx;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 20rpx;
+  margin-bottom: 16rpx;
+  backdrop-filter: blur(10rpx);
+}
+
+.feature-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.feature-text {
+  font-size: 28rpx;
+  color: #6D6A65;
+  font-weight: 500;
+}
+
+/* 步骤2: 授权页 */
+.auth-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.step-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #D4B8A5;
+  text-align: center;
+  margin-bottom: 24rpx;
+}
+
+.step-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #B8B2A7;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 60rpx;
+}
+
+.auth-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 48rpx 32rpx;
+  margin-bottom: 60rpx;
+  box-shadow: 0 10rpx 40rpx rgba(212, 184, 165, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 头像选择 */
+.avatar-wrapper {
+  margin-bottom: 40rpx;
+  text-align: center;
+}
+
+.avatar-btn {
+  position: relative;
+  width: 180rpx;
+  height: 180rpx;
+  padding: 0;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-btn::after {
+  border: none;
+}
+
+.avatar-img {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  border: 6rpx solid #F2E6DF;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.2);
+}
+
+.avatar-placeholder {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  border: 6rpx solid #F2E6DF;
+  background: #FAF9F7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.2);
+}
+
+.avatar-placeholder-icon {
+  font-size: 80rpx;
+}
+
+.avatar-edit-hint {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #B8B2A7;
+}
+
+/* 昵称输入 */
+.nickname-wrapper {
+  width: 100%;
+}
+
+.nickname-input {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 32rpx;
+  background: #FAF9F7;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  color: #6D6A65;
+  box-sizing: border-box;
+  margin-top: 16rpx;
+}
+
+/* 步骤3: 问卷页 */
+.survey-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.survey-form {
+  flex: 1;
+  margin-bottom: 40rpx;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.form-item {
+  margin-bottom: 48rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #6D6A65;
+  margin-bottom: 8rpx;
+}
+
+.form-hint {
+  display: block;
+  font-size: 22rpx;
+  color: #B8B2A7;
+  margin-bottom: 20rpx;
+}
+
+/* 隐私说明 */
+.privacy-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12rpx;
+  background: rgba(212, 184, 165, 0.1);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  margin-bottom: 32rpx;
+}
+
+.privacy-icon {
+  font-size: 28rpx;
+  flex-shrink: 0;
+  margin-top: 2rpx;
+}
+
+.privacy-text {
+  font-size: 22rpx;
+  color: #8A8580;
+  line-height: 1.6;
+}
+
+/* 日期选择器 */
+.picker-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 32rpx;
+  background: white;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.1);
+}
+
+.picker-value {
+  font-size: 28rpx;
+  color: #6D6A65;
+}
+
+.picker-placeholder {
+  font-size: 28rpx;
+  color: #B8B2A7;
+}
+
+.picker-arrow {
+  font-size: 32rpx;
+  color: #D4B8A5;
+  font-weight: 600;
+}
+
+/* 单选组 */
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 20rpx 28rpx;
+  background: white;
+  border-radius: 40rpx;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.1);
+  transition: all 0.3s ease;
+}
+
+.radio-item.active {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.3);
+}
+
+.radio-icon {
+  font-size: 28rpx;
+  color: #D4B8A5;
+}
+
+.radio-item.active .radio-icon {
+  color: white;
+}
+
+.radio-text {
+  font-size: 28rpx;
+  color: #6D6A65;
+}
+
+.radio-item.active .radio-text {
+  color: white;
+}
+
+/* 多选组 */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 24rpx 28rpx;
+  background: white;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.1);
+  transition: all 0.3s ease;
+}
+
+.checkbox-item.active {
+  background: linear-gradient(135deg, #F2E6DF 0%, #EAD5D1 100%);
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.2);
+}
+
+.checkbox-icon {
+  font-size: 32rpx;
+  color: #D4B8A5;
+  flex-shrink: 0;
+}
+
+.checkbox-text {
+  font-size: 28rpx;
+  color: #6D6A65;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* 主按钮 */
+.primary-btn {
+  width: 100%;
+  height: 100rpx;
+  background: linear-gradient(90deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20rpx 60rpx rgba(212, 184, 165, 0.3);
+  border: none;
+  margin-bottom: 24rpx;
+}
+
+.primary-btn::after {
+  border: none;
+}
+
+.btn-text {
+  font-size: 32rpx;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+
+/* 跳过文本 */
+.skip-text {
+  display: block;
+  text-align: center;
+  font-size: 28rpx;
+  color: #B8B2A7;
+  padding: 16rpx;
+}
+
+/* 进度指示器 */
+.progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 16rpx;
+  margin-top: 40rpx;
+}
+
+.progress-dots .dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #E8E8E8;
+  transition: all 0.3s ease;
+}
+
+.progress-dots .dot.active {
+  width: 40rpx;
+  border-radius: 8rpx;
+  background: #D4B8A5;
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

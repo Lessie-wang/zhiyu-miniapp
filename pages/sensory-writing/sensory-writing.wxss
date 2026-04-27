@@ -1,0 +1,1326 @@
+/* 感官写作训练页面样式 */
+page {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  width: 100%;
+  background: #FAF9F7;
+}
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #FAF9F7 0%, #F2E6DF 100%);
+  padding: 24rpx 48rpx 120rpx;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.container view,
+.container text,
+.container textarea,
+.container scroll-view {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* 页面标题 */
+.page-header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.page-title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 12rpx;
+}
+
+.page-subtitle {
+  display: block;
+  font-size: 26rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+}
+
+/* === 模式选择 === */
+.mode-section {
+  margin-bottom: 28rpx;
+  background: white;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+}
+
+.mode-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 20rpx;
+}
+
+.mode-tabs {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 4rpx;
+}
+
+.mode-tab {
+  flex: 1;
+  padding: 20rpx 16rpx;
+  background: #FAF9F7;
+  border-radius: 16rpx;
+  text-align: center;
+  border: 3rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.mode-tab.active {
+  border-color: #D4B8A5;
+  background: rgba(212, 184, 165, 0.1);
+}
+
+.mode-tab-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+
+.mode-tab-desc {
+  display: block;
+  font-size: 22rpx;
+  color: #B8B2A7;
+  margin-top: 4rpx;
+}
+
+/* 感官选择器 */
+.sense-picker {
+  margin-top: 24rpx;
+}
+
+.sense-picker-hint {
+  display: block;
+  font-size: 24rpx;
+  color: #B8B2A7;
+  margin-bottom: 16rpx;
+}
+
+.sense-picker-list {
+  display: flex;
+  gap: 16rpx;
+}
+
+.sense-picker-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 16rpx 8rpx;
+  background: #FAF9F7;
+  border-radius: 16rpx;
+  border: 3rpx solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.sense-picker-item.active {
+  border-color: #D4B8A5;
+  background: rgba(212, 184, 165, 0.15);
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.2);
+}
+
+.sense-picker-item.active .sense-picker-name {
+  color: #C4A893;
+}
+
+.sense-picker-item.active::after {
+  content: '';
+  position: absolute;
+  top: 6rpx;
+  right: 6rpx;
+  width: 20rpx;
+  height: 20rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+}
+
+.sense-picker-icon {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sense-picker-name {
+  font-size: 22rpx;
+  color: #6D6A65;
+  font-weight: 600;
+}
+
+/* === 词语卡片辅助 === */
+.chip-scroll {
+  width: 100%;
+  white-space: nowrap;
+  margin-bottom: 16rpx;
+}
+
+.chip-list {
+  display: inline-flex;
+  gap: 12rpx;
+  padding: 4rpx 0;
+}
+
+.chip-item {
+  display: inline-block;
+  padding: 12rpx 24rpx;
+  background: rgba(212, 184, 165, 0.12);
+  border-radius: 32rpx;
+  font-size: 24rpx;
+  color: #6D6A65;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  border: 2rpx solid rgba(212, 184, 165, 0.2);
+}
+
+.chip-item:active {
+  transform: scale(0.95);
+}
+
+.chip-item.used {
+  background: #F0EDEA;
+  color: #C4C0BB;
+  border-color: transparent;
+}
+
+/* === Phase 1: 场景选择 === */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.scenario-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 28rpx 20rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 3rpx solid transparent;
+}
+
+.scenario-card.active {
+  border-color: #D4B8A5;
+  background: linear-gradient(135deg, rgba(212, 184, 165, 0.08) 0%, rgba(196, 168, 147, 0.12) 100%);
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.25);
+}
+
+.scenario-card:active {
+  transform: scale(0.97);
+}
+
+.scenario-icon {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+  background: #FAF9F7;
+  border-radius: 20rpx;
+}
+
+.scenario-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 8rpx;
+}
+
+.scenario-desc {
+  font-size: 22rpx;
+  color: #B8B2A7;
+  line-height: 1.5;
+}
+
+.start-btn {
+  width: 100%;
+  padding: 28rpx;
+  background: linear-gradient(90deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  border: none;
+  box-shadow: 0 12rpx 32rpx rgba(212, 184, 165, 0.3);
+}
+
+.start-btn.disabled {
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+.start-btn::after {
+  border: none;
+}
+
+.start-btn .btn-text {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: white;
+}
+
+.start-btn .btn-arrow {
+  font-size: 32rpx;
+  color: white;
+}
+
+/* === Phase 2: 五感写作 === */
+
+/* 场景提示条 */
+.scenario-reminder {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx 24rpx;
+  background: white;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.1);
+}
+
+.reminder-icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FAF9F7;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+}
+
+.reminder-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.reminder-title {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+
+.reminder-desc {
+  font-size: 22rpx;
+  color: #B8B2A7;
+  margin-top: 2rpx;
+}
+
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32rpx;
+  padding: 0 8rpx;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+  opacity: 0.35;
+  transition: all 0.3s ease;
+}
+
+.progress-step.active {
+  opacity: 0.6;
+}
+
+.progress-step.current {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.step-icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-label {
+  font-size: 20rpx;
+  color: #6D6A65;
+  font-weight: 600;
+}
+
+/* 感官卡片 */
+.sense-card {
+  background: white;
+  border-radius: 28rpx;
+  padding: 32rpx;
+  box-shadow: 0 12rpx 32rpx rgba(212, 184, 165, 0.15);
+  margin-bottom: 32rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.sense-header {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
+}
+
+.sense-icon-large {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FAF9F7;
+  border-radius: 16rpx;
+  flex-shrink: 0;
+}
+
+.sense-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sense-name {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+
+.sense-count {
+  font-size: 24rpx;
+  color: #B8B2A7;
+  font-weight: 600;
+}
+
+/* AI 引导 */
+.ai-guide {
+  background: #F2E6DF;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+}
+
+.guide-label {
+  display: block;
+  font-size: 22rpx;
+  color: #D4B8A5;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+
+.guide-text {
+  display: block;
+  font-size: 28rpx;
+  color: #6D6A65;
+  line-height: 1.7;
+}
+
+.thinking-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.thinking-text {
+  font-size: 26rpx;
+  color: #B8B2A7;
+}
+
+.thinking-dots {
+  display: flex;
+  gap: 6rpx;
+  align-items: center;
+}
+
+.thinking-dots .dot,
+.generating-dots .dot {
+  width: 10rpx;
+  height: 10rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+  animation: thinking 1.4s infinite ease-in-out;
+}
+
+.thinking-dots .dot:nth-child(1),
+.generating-dots .dot:nth-child(1) { animation-delay: 0s; }
+.thinking-dots .dot:nth-child(2),
+.generating-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dots .dot:nth-child(3),
+.generating-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes thinking {
+  0%, 60%, 100% { transform: scale(1); opacity: 0.4; }
+  30% { transform: scale(1.6); opacity: 1; }
+}
+
+/* 示例模板 */
+.example-template {
+  background: rgba(212, 184, 165, 0.08);
+  border-radius: 12rpx;
+  padding: 16rpx 20rpx;
+  margin-bottom: 16rpx;
+  border-left: 4rpx solid #D4B8A5;
+}
+
+.example-text {
+  font-size: 22rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* 写作输入 */
+.writing-input {
+  width: 100%;
+  min-height: 200rpx;
+  padding: 24rpx;
+  background: #FAF9F7;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  color: #6D6A65;
+  line-height: 1.8;
+  box-sizing: border-box;
+}
+
+.char-count {
+  display: block;
+  text-align: right;
+  font-size: 22rpx;
+  color: #B8B2A7;
+  margin-top: 8rpx;
+}
+
+/* 导航按钮 */
+.nav-buttons {
+  display: flex;
+  gap: 16rpx;
+}
+
+.nav-spacer {
+  flex: 1;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 24rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  border: none;
+  text-align: center;
+}
+
+.nav-btn::after {
+  border: none;
+}
+
+.nav-btn.prev {
+  background: white;
+  color: #6D6A65;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.12);
+}
+
+.nav-btn.next {
+  background: linear-gradient(90deg, #D4B8A5 0%, #C4A893 100%);
+  color: white;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.3);
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+/* === Phase 3: 生成中 === */
+.generating-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 20rpx;
+}
+
+.generating-icon {
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+}
+
+.generating-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+
+.generating-subtitle {
+  font-size: 26rpx;
+  color: #B8B2A7;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.generating-dots {
+  display: flex;
+  gap: 10rpx;
+  margin-top: 24rpx;
+}
+
+.generating-dots .dot {
+  width: 14rpx;
+  height: 14rpx;
+}
+
+/* === Phase 4: 完成 === */
+.result-card {
+  background: white;
+  border-radius: 28rpx;
+  padding: 36rpx;
+  box-shadow: 0 12rpx 32rpx rgba(212, 184, 165, 0.15);
+  margin-bottom: 28rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.result-header {
+  margin-bottom: 20rpx;
+}
+
+.result-scenario {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #D4B8A5;
+}
+
+.result-text {
+  display: block;
+  font-size: 28rpx;
+  color: #6D6A65;
+  line-height: 2;
+  letter-spacing: 1rpx;
+  word-break: break-word;
+}
+
+/* 五感详情 */
+.senses-detail {
+  background: white;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  margin-bottom: 32rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.detail-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 20rpx;
+}
+
+.detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.detail-item {
+  padding: 16rpx;
+  background: #FAF9F7;
+  border-radius: 16rpx;
+}
+
+.detail-label {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-bottom: 8rpx;
+}
+
+.detail-icon {
+  width: 32rpx;
+  height: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-name {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #D4B8A5;
+}
+
+.detail-text {
+  display: block;
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.6;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 26rpx;
+  border-radius: 44rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  border: none;
+  text-align: center;
+}
+
+.action-btn::after {
+  border: none;
+}
+
+.action-btn.save {
+  background: linear-gradient(90deg, #D4B8A5 0%, #C4A893 100%);
+  color: white;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.3);
+}
+
+.action-btn.save.saved {
+  background: #E8E4DF;
+  color: #B8B2A7;
+  box-shadow: none;
+}
+
+.action-btn.restart {
+  background: white;
+  color: #6D6A65;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.12);
+}
+
+.action-btn.share {
+  background: white;
+  color: #D4B8A5;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.12);
+}
+
+.action-btn:active {
+  transform: scale(0.97);
+}
+
+/* === 我的作品入口 === */
+.history-entry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  padding: 28rpx;
+  margin-top: 24rpx;
+  background: white;
+  border-radius: 40rpx;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.1);
+}
+
+.history-entry:active {
+  transform: scale(0.97);
+}
+
+.history-entry-icon {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-entry-text {
+  font-size: 28rpx;
+  color: #6D6A65;
+  font-weight: 600;
+}
+
+.history-entry-arrow {
+  font-size: 28rpx;
+  color: #B8B2A7;
+}
+
+/* === 历史作品列表 === */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-bottom: 32rpx;
+}
+
+.history-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.history-card:active {
+  transform: scale(0.98);
+}
+
+.history-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.history-card-icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-card-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-card-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+
+.history-card-date {
+  font-size: 22rpx;
+  color: #B8B2A7;
+}
+
+.history-card-preview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  font-size: 26rpx;
+  color: #B8B2A7;
+  line-height: 1.7;
+}
+
+/* 返回链接 */
+.back-link {
+  text-align: center;
+  padding: 24rpx;
+  font-size: 28rpx;
+  color: #B8B2A7;
+}
+
+/* 删除按钮 */
+.action-btn.delete {
+  background: white;
+  color: #E07C6A;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.12);
+}
+
+/* 结果页场景行 */
+.result-scenario-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.result-scenario-icon {
+  width: 36rpx;
+  height: 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 详情页标题行 */
+.page-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.page-title-icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==================== CSS 手绘图标 ==================== */
+
+.sicon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- 雨天 rain --- */
+.sicon-rain {
+  width: 36rpx;
+  height: 36rpx;
+}
+.sicon-rain .rain-cloud {
+  width: 24rpx;
+  height: 12rpx;
+  background: #B8C8D8;
+  border-radius: 12rpx;
+  position: absolute;
+  top: 2rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.sicon-rain .rain-drop {
+  width: 3rpx;
+  height: 10rpx;
+  background: #B8D4E8;
+  border-radius: 0 0 3rpx 3rpx;
+  position: absolute;
+  bottom: 4rpx;
+}
+.sicon-rain .rd1 { left: 8rpx; bottom: 2rpx; }
+.sicon-rain .rd2 { left: 16rpx; bottom: 6rpx; }
+.sicon-rain .rd3 { left: 24rpx; bottom: 2rpx; }
+
+/* --- 星星 star --- */
+.sicon-star {
+  width: 32rpx;
+  height: 32rpx;
+}
+.sicon-star .star-body {
+  width: 16rpx;
+  height: 16rpx;
+  background: #E8D5C4;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-radius: 2rpx;
+}
+.sicon-star .star-dot {
+  width: 5rpx;
+  height: 5rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+  position: absolute;
+}
+.sicon-star .sd1 { top: 2rpx; right: 4rpx; }
+.sicon-star .sd2 { bottom: 4rpx; left: 2rpx; }
+
+/* --- 月亮 moon --- */
+.sicon-moon {
+  width: 32rpx;
+  height: 32rpx;
+}
+.sicon-moon .moon-body {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  background: #E8D5C4;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: inset -8rpx 2rpx 0 0 #D4C4B0;
+}
+.sicon-moon .moon-crater {
+  width: 6rpx;
+  height: 6rpx;
+  background: rgba(180, 160, 140, 0.3);
+  border-radius: 50%;
+  position: absolute;
+  top: 10rpx;
+  left: 11rpx;
+}
+
+/* --- 花朵 flower --- */
+.sicon-flower {
+  width: 36rpx;
+  height: 36rpx;
+}
+.sicon-flower .flower-petal {
+  width: 10rpx;
+  height: 10rpx;
+  background: #E8C4C4;
+  border-radius: 50% 50% 50% 0;
+  position: absolute;
+}
+.sicon-flower .fp1 { top: 4rpx; left: 13rpx; transform: rotate(0deg); }
+.sicon-flower .fp2 { top: 11rpx; right: 5rpx; transform: rotate(90deg); }
+.sicon-flower .fp3 { bottom: 10rpx; left: 13rpx; transform: rotate(180deg); }
+.sicon-flower .fp4 { top: 11rpx; left: 5rpx; transform: rotate(270deg); }
+.sicon-flower .flower-center {
+  width: 8rpx;
+  height: 8rpx;
+  background: #E8D5C4;
+  border-radius: 50%;
+  position: absolute;
+  top: 12rpx;
+  left: 14rpx;
+}
+.sicon-flower .flower-stem {
+  width: 3rpx;
+  height: 10rpx;
+  background: #C4D4B8;
+  border-radius: 2rpx;
+  position: absolute;
+  bottom: 2rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- 火焰 flame --- */
+.sicon-flame {
+  width: 28rpx;
+  height: 34rpx;
+}
+.sicon-flame .flame-outer {
+  width: 20rpx;
+  height: 26rpx;
+  background: #E8C4A5;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: absolute;
+  bottom: 2rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.sicon-flame .flame-inner {
+  width: 10rpx;
+  height: 14rpx;
+  background: #F2E6DF;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: absolute;
+  bottom: 2rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- 太阳 sun --- */
+.sicon-sun {
+  width: 34rpx;
+  height: 34rpx;
+}
+.sicon-sun .sun-body {
+  width: 16rpx;
+  height: 16rpx;
+  background: #E8D5C4;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.sicon-sun .sun-ray {
+  width: 3rpx;
+  height: 8rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx;
+  position: absolute;
+  left: 50%;
+  transform-origin: center 17rpx;
+}
+.sicon-sun .sr1 { top: 0; transform: translateX(-50%) rotate(0deg); }
+.sicon-sun .sr2 { top: 0; transform: translateX(-50%) rotate(90deg); }
+.sicon-sun .sr3 { top: 0; transform: translateX(-50%) rotate(45deg); }
+.sicon-sun .sr4 { top: 0; transform: translateX(-50%) rotate(135deg); }
+
+/* --- 笔 pen --- */
+.sicon-pen {
+  width: 30rpx;
+  height: 34rpx;
+}
+.sicon-pen .pen-body {
+  width: 6rpx;
+  height: 22rpx;
+  background: #D4B8A5;
+  border-radius: 3rpx 3rpx 0 0;
+  position: absolute;
+  top: 2rpx;
+  left: 50%;
+  transform: translateX(-50%) rotate(-20deg);
+}
+.sicon-pen .pen-tip {
+  width: 0;
+  height: 0;
+  border-left: 4rpx solid transparent;
+  border-right: 4rpx solid transparent;
+  border-top: 8rpx solid #C4A893;
+  position: absolute;
+  bottom: 2rpx;
+  left: 50%;
+  transform: translateX(-50%) rotate(-20deg);
+}
+
+/* --- 眼睛 eye --- */
+.sicon-eye {
+  width: 34rpx;
+  height: 24rpx;
+}
+.sicon-eye .eye-outer {
+  width: 28rpx;
+  height: 16rpx;
+  border: 3rpx solid #D4B8A5;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.sicon-eye .eye-pupil {
+  width: 8rpx;
+  height: 8rpx;
+  background: #C4A893;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* --- 耳朵 ear --- */
+.sicon-ear {
+  width: 26rpx;
+  height: 30rpx;
+}
+.sicon-ear .ear-outer {
+  width: 18rpx;
+  height: 24rpx;
+  border: 3rpx solid #D4B8A5;
+  border-radius: 50% 50% 0 0;
+  border-bottom: none;
+  position: absolute;
+  top: 2rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.sicon-ear .ear-inner {
+  width: 8rpx;
+  height: 10rpx;
+  border: 3rpx solid #E8D5C4;
+  border-radius: 50% 50% 0 0;
+  border-bottom: none;
+  position: absolute;
+  top: 10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- 手 hand --- */
+.sicon-hand {
+  width: 30rpx;
+  height: 30rpx;
+}
+.sicon-hand .hand-palm {
+  width: 18rpx;
+  height: 16rpx;
+  background: #E8D5C4;
+  border-radius: 10rpx 10rpx 6rpx 6rpx;
+  position: absolute;
+  bottom: 2rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.sicon-hand .hand-finger {
+  width: 4rpx;
+  height: 12rpx;
+  background: #D4B8A5;
+  border-radius: 3rpx;
+  position: absolute;
+  top: 2rpx;
+}
+.sicon-hand .hf1 { left: 8rpx; }
+.sicon-hand .hf2 { left: 13rpx; height: 14rpx; top: 0; }
+.sicon-hand .hf3 { left: 18rpx; }
+
+/* --- 鼻子 nose --- */
+.sicon-nose {
+  width: 28rpx;
+  height: 30rpx;
+}
+.sicon-nose .nose-bridge {
+  width: 3rpx;
+  height: 16rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx;
+  position: absolute;
+  top: 2rpx;
+  left: 10rpx;
+}
+.sicon-nose .nose-tip {
+  width: 12rpx;
+  height: 8rpx;
+  border: 3rpx solid #D4B8A5;
+  border-top: none;
+  border-radius: 0 0 8rpx 8rpx;
+  position: absolute;
+  bottom: 6rpx;
+  left: 4rpx;
+}
+.sicon-nose .nose-wave {
+  width: 6rpx;
+  height: 6rpx;
+  border: 2rpx solid #E8D5C4;
+  border-radius: 50%;
+  border-left: none;
+  border-bottom: none;
+  position: absolute;
+}
+.sicon-nose .nw1 { right: 2rpx; top: 8rpx; }
+.sicon-nose .nw2 { right: 0; top: 16rpx; width: 4rpx; height: 4rpx; }
+
+/* --- 水滴 drop --- */
+.sicon-drop {
+  width: 26rpx;
+  height: 32rpx;
+}
+.sicon-drop .drop-body {
+  width: 16rpx;
+  height: 20rpx;
+  background: #D4C4D8;
+  border-radius: 50% 50% 50% 50% / 30% 30% 60% 60%;
+  position: absolute;
+  top: 2rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.sicon-drop .drop-ripple {
+  width: 20rpx;
+  height: 6rpx;
+  border: 2rpx solid #D4C4D8;
+  border-top: none;
+  border-radius: 0 0 12rpx 12rpx;
+  position: absolute;
+  bottom: 2rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- 书本 book --- */
+.sicon-book {
+  width: 30rpx;
+  height: 24rpx;
+}
+.sicon-book .book-left {
+  width: 12rpx;
+  height: 18rpx;
+  border: 2rpx solid #D4B8A5;
+  border-right: none;
+  border-radius: 4rpx 0 0 4rpx;
+  position: absolute;
+  top: 50%;
+  left: 2rpx;
+  transform: translateY(-50%) skewY(-3deg);
+  background: rgba(232, 213, 196, 0.3);
+}
+.sicon-book .book-right {
+  width: 12rpx;
+  height: 18rpx;
+  border: 2rpx solid #D4B8A5;
+  border-left: none;
+  border-radius: 0 4rpx 4rpx 0;
+  position: absolute;
+  top: 50%;
+  right: 2rpx;
+  transform: translateY(-50%) skewY(3deg);
+  background: rgba(232, 213, 196, 0.3);
+}
+.sicon-book .book-spine {
+  width: 3rpx;
+  height: 20rpx;
+  background: #D4B8A5;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 2rpx;
+}
+
+/* --- 闪烁 sparkle --- */
+.sicon-sparkle {
+  width: 36rpx;
+  height: 36rpx;
+}
+.sicon-sparkle .sparkle-v {
+  width: 4rpx;
+  height: 24rpx;
+  background: #D4B8A5;
+  border-radius: 3rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.sicon-sparkle .sparkle-h {
+  width: 24rpx;
+  height: 4rpx;
+  background: #D4B8A5;
+  border-radius: 3rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.sicon-sparkle .sparkle-dot {
+  width: 5rpx;
+  height: 5rpx;
+  background: #E8D5C4;
+  border-radius: 50%;
+  position: absolute;
+}
+.sicon-sparkle .sp1 { top: 4rpx; right: 4rpx; }
+.sicon-sparkle .sp2 { bottom: 4rpx; left: 4rpx; }
+
+/* 生成中页大图标 */
+.generating-view .sicon-sparkle {
+  width: 80rpx;
+  height: 80rpx;
+}
+.generating-view .sicon-sparkle .sparkle-v {
+  width: 8rpx;
+  height: 52rpx;
+}
+.generating-view .sicon-sparkle .sparkle-h {
+  width: 52rpx;
+  height: 8rpx;
+}
+.generating-view .sicon-sparkle .sparkle-dot {
+  width: 10rpx;
+  height: 10rpx;
+}
+.generating-view .sicon-sparkle .sp1 { top: 8rpx; right: 8rpx; }
+.generating-view .sicon-sparkle .sp2 { bottom: 8rpx; left: 8rpx; }

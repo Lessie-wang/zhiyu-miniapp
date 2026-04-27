@@ -1,0 +1,1165 @@
+/* 心之笺语页面样式 - 全面优化 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(165deg, #FAF9F7 0%, #F5EDE7 40%, #EDE3DB 100%);
+  padding: 24rpx 32rpx 120rpx;
+}
+
+/* ==================== 使用统计条 ==================== */
+.usage-stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  padding: 20rpx 0 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.usage-stat {
+  font-size: 26rpx;
+  color: #8A857E;
+  font-weight: 500;
+  letter-spacing: 1rpx;
+}
+
+.usage-divider {
+  font-size: 26rpx;
+  color: #D4B8A5;
+}
+
+/* ==================== 统计入口卡片（通用） ==================== */
+.stats-entry {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 24rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 20rpx rgba(212, 184, 165, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(10rpx);
+  transition: all 0.2s ease;
+}
+
+.stats-entry:active {
+  background: rgba(255, 255, 255, 0.7);
+  transform: scale(0.99);
+}
+
+.stats-entry-left {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.stats-entry-text {
+  font-size: 28rpx;
+  color: #6D6A65;
+  font-weight: 600;
+}
+
+.stats-entry-arrow {
+  font-size: 28rpx;
+  color: #C8C2BB;
+  font-weight: 500;
+  transition: transform 0.3s ease;
+}
+
+.stats-entry-arrow.expanded {
+  transform: rotate(90deg);
+}
+
+/* 月度报告入口 */
+.report-entry-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.report-entry-hint {
+  font-size: 22rpx;
+  color: #B8B2A7;
+  letter-spacing: 0.5rpx;
+}
+
+/* ==================== 日历模块 ==================== */
+.calendar-section {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 24rpx;
+  padding: 32rpx 32rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 20rpx rgba(212, 184, 165, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10rpx);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.calendar-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  letter-spacing: 2rpx;
+}
+
+.month-selector {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.month-btn {
+  width: 48rpx;
+  height: 48rpx;
+  background: rgba(242, 230, 223, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.month-btn:active {
+  background: #D4B8A5;
+}
+
+.month-btn:active .arrow {
+  color: white;
+}
+
+.arrow {
+  font-size: 24rpx;
+  color: #8A857E;
+  font-weight: 600;
+}
+
+.month-text {
+  font-size: 26rpx;
+  color: #6D6A65;
+  font-weight: 600;
+  min-width: 160rpx;
+  text-align: center;
+}
+
+.calendar-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.weekday-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8rpx;
+  margin-bottom: 12rpx;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 22rpx;
+  color: #B8B2A7;
+  font-weight: 600;
+  padding: 8rpx 0;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10rpx;
+}
+
+.day-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14rpx;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.day-cell.empty {
+  visibility: hidden;
+}
+
+.day-cell.today {
+  background: rgba(212, 184, 165, 0.15);
+  border: 1rpx solid rgba(212, 184, 165, 0.3);
+}
+
+.day-cell.has-record {
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+  border-radius: 14rpx;
+}
+
+.day-cell.has-record:active {
+  transform: scale(0.93);
+}
+
+.day-number {
+  font-size: 26rpx;
+  color: #6D6A65;
+  font-weight: 500;
+}
+
+.day-cell.has-record .day-number {
+  color: white;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.day-emotion {
+  font-size: 32rpx;
+  margin-top: 4rpx;
+}
+
+.record-dot {
+  position: absolute;
+  top: 2rpx;
+  right: 2rpx;
+  width: 22rpx;
+  height: 22rpx;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1rpx 4rpx rgba(0,0,0,0.1);
+}
+
+.dot-count {
+  font-size: 16rpx;
+  color: #D4B8A5;
+  font-weight: 700;
+}
+
+/* ==================== CSS 图标 ==================== */
+
+/* 收藏金句 - 五角星 */
+.icon-css-star {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-css-star .star-fill {
+  width: 28rpx;
+  height: 28rpx;
+  background: #D4B8A5;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* 月度报告 - 三根柱状图 */
+.icon-css-report {
+  width: 40rpx;
+  height: 32rpx;
+  display: flex;
+  align-items: flex-end;
+  gap: 4rpx;
+  padding: 0 2rpx;
+}
+
+.icon-css-report .rpt-bar {
+  flex: 1;
+  border-radius: 3rpx 3rpx 0 0;
+}
+
+.icon-css-report .b1 {
+  height: 14rpx;
+  background: #C4B5D8;
+}
+
+.icon-css-report .b2 {
+  height: 24rpx;
+  background: #D4B8A5;
+}
+
+.icon-css-report .b3 {
+  height: 18rpx;
+  background: #B8D4E8;
+}
+
+/* 统计柱状图图标 */
+.icon-css-stats {
+  width: 40rpx;
+  height: 28rpx;
+  display: flex;
+  align-items: flex-end;
+  gap: 3rpx;
+  padding: 0 2rpx;
+}
+
+.icon-css-stats .sts-bar {
+  flex: 1;
+  border-radius: 2rpx 2rpx 0 0;
+}
+
+.icon-css-stats .sb1 {
+  height: 10rpx;
+  background: #E8A5A5;
+}
+
+.icon-css-stats .sb2 {
+  height: 20rpx;
+  background: #D4B8A5;
+}
+
+.icon-css-stats .sb3 {
+  height: 14rpx;
+  background: #B8D4E8;
+}
+
+.icon-css-stats .sb4 {
+  height: 24rpx;
+  background: #C4B5D8;
+}
+
+/* 思维泡泡图标 */
+.icon-css-thought {
+  width: 32rpx;
+  height: 32rpx;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.icon-css-thought .tht-bubble {
+  width: 26rpx;
+  height: 18rpx;
+  background: #D4B8A5;
+  border-radius: 12rpx;
+  opacity: 0.7;
+}
+
+.icon-css-thought .tht-dot {
+  position: absolute;
+  background: #D4B8A5;
+  border-radius: 50%;
+}
+
+.icon-css-thought .tht-dot.td1 {
+  width: 6rpx;
+  height: 6rpx;
+  bottom: 6rpx;
+  left: 8rpx;
+  opacity: 0.5;
+}
+
+.icon-css-thought .tht-dot.td2 {
+  width: 4rpx;
+  height: 4rpx;
+  bottom: 2rpx;
+  left: 4rpx;
+  opacity: 0.3;
+}
+
+/* 导出箭头图标 */
+.icon-css-export {
+  width: 28rpx;
+  height: 28rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-css-export .exp-box {
+  width: 20rpx;
+  height: 14rpx;
+  border: 2rpx solid #D4B8A5;
+  border-top: none;
+  border-radius: 0 0 4rpx 4rpx;
+  position: absolute;
+  bottom: 2rpx;
+}
+
+.icon-css-export .exp-arrow {
+  width: 2.5rpx;
+  height: 16rpx;
+  background: #D4B8A5;
+  position: absolute;
+  top: 4rpx;
+}
+
+.icon-css-export .exp-arrow-head {
+  width: 0;
+  height: 0;
+  border-left: 5rpx solid transparent;
+  border-right: 5rpx solid transparent;
+  border-bottom: 6rpx solid #D4B8A5;
+  position: absolute;
+  top: 2rpx;
+}
+
+/* ==================== 统计详情展开区 ==================== */
+.stats-detail {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 情绪统计汇总区 */
+.stats-section {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 24rpx;
+  padding: 32rpx 32rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 20rpx rgba(212, 184, 165, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+}
+
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+
+.time-range-tabs {
+  display: flex;
+  gap: 4rpx;
+  background: rgba(242, 230, 223, 0.6);
+  border-radius: 20rpx;
+  padding: 4rpx;
+}
+
+.range-tab {
+  padding: 8rpx 20rpx;
+  font-size: 22rpx;
+  color: #8A857E;
+  border-radius: 16rpx;
+  transition: all 0.3s ease;
+}
+
+.range-tab.active {
+  background: white;
+  color: #D4B8A5;
+  font-weight: 600;
+  box-shadow: 0 2rpx 8rpx rgba(212, 184, 165, 0.2);
+}
+
+.stats-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.emotion-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.stat-left {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  width: 140rpx;
+  flex-shrink: 0;
+}
+
+.stat-color-dot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.stat-name {
+  font-size: 26rpx;
+  color: #6D6A65;
+  font-weight: 500;
+}
+
+.stat-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.stat-bar {
+  flex: 1;
+  height: 20rpx;
+  background: rgba(242, 230, 223, 0.5);
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 10rpx;
+  transition: width 0.5s ease;
+}
+
+.stat-count {
+  font-size: 22rpx;
+  color: #B8B2A7;
+  width: 72rpx;
+  text-align: right;
+}
+
+.stats-empty {
+  text-align: center;
+  padding: 48rpx 0;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #B8B2A7;
+}
+
+/* ==================== AI情绪报告 ==================== */
+.ai-report-section {
+  margin-bottom: 16rpx;
+}
+
+.report-card {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 20rpx rgba(212, 184, 165, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+}
+
+.report-header {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.report-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+
+.report-summary {
+  display: block;
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.8;
+  margin-bottom: 24rpx;
+}
+
+.view-report-btn {
+  width: 100%;
+  padding: 20rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.25);
+}
+
+.view-report-btn::after {
+  border: none;
+}
+
+.btn-text {
+  font-size: 28rpx;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-arrow {
+  font-size: 28rpx;
+  color: white;
+  font-weight: 700;
+}
+
+/* ==================== 数据导出 ==================== */
+.export-section {
+  margin-bottom: 16rpx;
+}
+
+.export-btn {
+  width: 100%;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1.5rpx solid rgba(212, 184, 165, 0.4);
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  backdrop-filter: blur(10rpx);
+}
+
+.export-btn::after {
+  border: none;
+}
+
+.export-btn:active {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.export-text {
+  font-size: 28rpx;
+  color: #C8A692;
+  font-weight: 500;
+}
+
+/* ==================== 日期详情弹窗（信纸风格） ==================== */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(100rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.day-detail-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 40rpx 32rpx;
+  box-sizing: border-box;
+  backdrop-filter: blur(4rpx);
+}
+
+.letter-container {
+  width: 100%;
+  max-height: 80vh;
+  margin: 0 auto;
+  background: #FFFDF8;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 16rpx 48rpx rgba(180, 160, 140, 0.3);
+  animation: slideUp 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  border-left: 6rpx solid #E8C4B8;
+  box-sizing: border-box;
+}
+
+.letter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 32rpx 24rpx;
+  border-bottom: 1rpx dashed #E0D5C8;
+}
+
+.letter-date-badge {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  padding: 10rpx 28rpx;
+  border-radius: 24rpx;
+}
+
+.letter-date {
+  font-size: 26rpx;
+  color: white;
+  font-weight: 600;
+}
+
+.letter-close {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #B8B2A7;
+  border-radius: 50%;
+}
+
+.letter-close:active {
+  background: #F2E6DF;
+}
+
+.letter-body {
+  flex: 1;
+  padding: 28rpx 32rpx;
+  overflow-y: auto;
+  box-sizing: border-box;
+  font-family: 'STKaiti', 'KaiTi', '楷体', 'STFangsong', 'FangSong', '仿宋', serif;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 59rpx,
+    #EDE7DF 59rpx,
+    #EDE7DF 60rpx
+  );
+  background-position: 0 0;
+}
+
+.letter-record {
+  margin-bottom: 16rpx;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* 时间线 */
+.letter-time-line {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.time-dot {
+  width: 12rpx;
+  height: 12rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.letter-time {
+  font-size: 24rpx;
+  color: #B8B2A7;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+/* 情绪行 */
+.letter-emotion-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.emotion-tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.emotion-tag-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  background: rgba(242, 230, 223, 0.6);
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.letter-emotion-dot {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.letter-emotion-name {
+  font-size: 28rpx;
+  color: #6D6A65;
+  font-weight: 600;
+  font-family: 'STKaiti', 'KaiTi', '楷体', 'STFangsong', 'FangSong', '仿宋', serif;
+}
+
+/* 字段行 */
+.letter-field {
+  margin-bottom: 16rpx;
+  padding-left: 8rpx;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.letter-label {
+  display: block;
+  font-size: 22rpx;
+  color: #B8B2A7;
+  margin-bottom: 6rpx;
+  font-weight: 600;
+}
+
+.letter-value {
+  display: block;
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.7;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  width: 100%;
+}
+
+/* AI对话区 */
+.letter-conversation {
+  margin-bottom: 16rpx;
+  padding-left: 8rpx;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.conversation-list {
+  margin-top: 8rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.conversation-item {
+  margin-bottom: 14rpx;
+  padding: 16rpx 20rpx;
+  background: rgba(212, 184, 165, 0.08);
+  border-radius: 16rpx;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.conv-role {
+  display: block;
+  font-size: 20rpx;
+  color: #D4B8A5;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.conv-content {
+  display: block;
+  font-size: 24rpx;
+  color: #6D6A65;
+  line-height: 1.7;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  width: 100%;
+}
+
+/* 分隔线 */
+.letter-divider {
+  height: 1rpx;
+  background: linear-gradient(to right, transparent, #E0D5C8, transparent);
+  margin: 28rpx 0;
+}
+
+/* 信纸底部 */
+.letter-footer {
+  text-align: center;
+  padding: 32rpx 0 16rpx;
+}
+
+.letter-sign {
+  font-size: 22rpx;
+  color: #C4B5A5;
+  font-style: italic;
+  font-family: 'STKaiti', 'KaiTi', '楷体', 'STFangsong', 'FangSong', '仿宋', serif;
+}
+
+/* ==================== 旧样式兼容 ==================== */
+.user-info-section { margin-bottom: 32rpx; }
+.user-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  transition: all 0.3s ease;
+}
+.user-card:active { transform: scale(0.98); }
+.user-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.avatar-icon { font-size: 48rpx; color: white; }
+.user-avatar .avatar-img { width: 96rpx; height: 96rpx; border-radius: 50%; }
+.user-details { flex: 1; display: flex; flex-direction: column; gap: 8rpx; }
+.user-name { font-size: 32rpx; font-weight: 600; color: #6D6A65; }
+.user-motto { font-size: 24rpx; color: #B8B2A7; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 400rpx; }
+.user-stats { display: flex; align-items: center; gap: 12rpx; }
+.stat-item { font-size: 24rpx; color: #B8B2A7; }
+.stat-divider { font-size: 24rpx; color: #D4B8A5; }
+.settings-icon { font-size: 32rpx; color: #B8B2A7; }
+.stats-entry-icon { font-size: 36rpx; }
+.report-icon { font-size: 32rpx; }
+.stat-icon { font-size: 32rpx; }
+.export-icon { font-size: 32rpx; }
+
+/* ==================== 新版三段式布局 ==================== */
+.calendar-section-hero {
+  padding: 36rpx 28rpx 28rpx;
+  margin-bottom: 28rpx;
+  border-radius: 32rpx;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,250,247,0.92) 100%);
+  box-shadow: 0 10rpx 36rpx rgba(212, 184, 165, 0.16);
+}
+
+.calendar-hero-top {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  margin-bottom: 28rpx;
+}
+
+.calendar-hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.calendar-tag {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  background: rgba(212, 184, 165, 0.16);
+  color: #B9927A;
+  font-size: 22rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+
+.calendar-section-hero .calendar-title {
+  font-size: 42rpx;
+  line-height: 1.2;
+  letter-spacing: 1rpx;
+}
+
+.calendar-subtitle {
+  font-size: 24rpx;
+  line-height: 1.7;
+  color: #9B958D;
+}
+
+.calendar-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  padding: 22rpx 24rpx;
+  border-radius: 24rpx;
+  background: rgba(250, 244, 239, 0.88);
+}
+
+.calendar-meta-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.calendar-meta-value {
+  font-size: 36rpx;
+  line-height: 1;
+  color: #6D6A65;
+  font-weight: 700;
+}
+
+.calendar-meta-label {
+  font-size: 22rpx;
+  color: #A49B92;
+}
+
+.calendar-meta-divider {
+  width: 1rpx;
+  height: 52rpx;
+  background: rgba(212, 184, 165, 0.35);
+}
+
+.calendar-month-label {
+  font-size: 28rpx;
+  color: #6D6A65;
+  font-weight: 700;
+}
+
+.calendar-section-hero .month-btn {
+  width: 56rpx;
+  height: 56rpx;
+  background: rgba(242, 230, 223, 0.9);
+}
+
+.calendar-section-hero .weekday-header {
+  gap: 10rpx;
+  margin-bottom: 16rpx;
+}
+
+.calendar-section-hero .weekday {
+  font-size: 24rpx;
+  padding: 10rpx 0;
+}
+
+.calendar-section-hero .days-grid {
+  gap: 12rpx;
+}
+
+.calendar-section-hero .day-cell {
+  min-height: 84rpx;
+  border-radius: 20rpx;
+}
+
+.calendar-section-hero .day-number {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.calendar-section-hero .day-cell.has-record .day-number {
+  font-size: 24rpx;
+}
+
+.calendar-footnote {
+  display: block;
+  margin-top: 20rpx;
+  font-size: 22rpx;
+  color: #B5AEA6;
+}
+
+.content-section {
+  margin-bottom: 28rpx;
+}
+
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  margin-bottom: 16rpx;
+  padding: 0 4rpx;
+}
+
+.section-tag {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+
+.section-caption {
+  font-size: 22rpx;
+  color: #A49B92;
+}
+
+.report-card-main {
+  border-radius: 28rpx;
+  padding: 32rpx;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,247,243,0.92) 100%);
+  box-shadow: 0 8rpx 30rpx rgba(212, 184, 165, 0.14);
+}
+
+.report-card-main .report-header {
+  margin-bottom: 18rpx;
+}
+
+.report-card-main .icon-css-report {
+  width: 44rpx;
+  height: 36rpx;
+}
+
+.report-card-main .report-title {
+  font-size: 30rpx;
+}
+
+.report-card-main .report-summary {
+  min-height: 120rpx;
+  font-size: 26rpx;
+  line-height: 1.9;
+  color: #736E68;
+  margin-bottom: 28rpx;
+}
+
+.report-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.report-action-btn {
+  width: 100%;
+  min-height: 88rpx;
+  border-radius: 999rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 28rpx;
+}
+
+.report-action-btn::after {
+  border: none;
+}
+
+.report-action-btn-primary {
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #D6B19A 0%, #C79A83 100%);
+  box-shadow: 0 10rpx 24rpx rgba(212, 184, 165, 0.24);
+}
+
+.report-action-btn-secondary {
+  color: #B28771;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1.5rpx solid rgba(212, 184, 165, 0.42);
+}
+
+.quote-library-card {
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 28rpx;
+  padding: 30rpx 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1rpx solid rgba(255,255,255,0.7);
+  box-shadow: 0 6rpx 22rpx rgba(212, 184, 165, 0.1);
+}
+
+.quote-library-card:active {
+  transform: scale(0.99);
+}
+
+.quote-library-left {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  flex: 1;
+}
+
+.quote-library-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.quote-library-title {
+  font-size: 30rpx;
+  color: #6D6A65;
+  font-weight: 700;
+}
+
+.quote-library-desc {
+  font-size: 22rpx;
+  line-height: 1.7;
+  color: #A49B92;
+}

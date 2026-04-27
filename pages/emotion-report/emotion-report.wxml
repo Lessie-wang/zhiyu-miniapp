@@ -1,0 +1,158 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">经期情绪监测报告 📊</text>
+    <text class="page-subtitle">AI 分析你的情绪模式，提供个性化建议</text>
+  </view>
+
+  <!-- 报告周期选择 -->
+  <view class="period-selector">
+    <view
+      class="period-tab {{selectedPeriod === item.value ? 'active' : ''}}"
+      wx:for="{{periodOptions}}"
+      wx:key="value"
+      bindtap="selectPeriod"
+      data-value="{{item.value}}"
+    >
+      {{item.label}}
+    </view>
+  </view>
+
+  <!-- 情绪总览卡片 -->
+  <view class="overview-card">
+    <view class="card-header">
+      <text class="card-title">情绪总览</text>
+      <text class="date-range">{{dateRange}}</text>
+    </view>
+
+    <view class="emotion-stats">
+      <view class="stat-item">
+        <text class="stat-value">{{totalRecords}}</text>
+        <text class="stat-label">记录次数</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-value">{{avgMood}}</text>
+        <text class="stat-label">平均心情</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-value">{{moodTrend}}</text>
+        <text class="stat-label">情绪趋势</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 情绪分布图 -->
+  <view class="chart-card">
+    <text class="card-title">情绪分布</text>
+    <view class="emotion-distribution">
+      <view
+        class="emotion-bar"
+        wx:for="{{emotionDistribution}}"
+        wx:key="name"
+      >
+        <view class="bar-info">
+          <text class="emotion-icon">{{item.icon}}</text>
+          <text class="emotion-name">{{item.name}}</text>
+        </view>
+        <view class="bar-container">
+          <view class="bar-fill" style="width: {{item.percentage}}%"></view>
+        </view>
+        <text class="bar-count">{{item.count}}次</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 经期情绪关联分析 -->
+  <view class="correlation-card">
+    <view class="card-header">
+      <text class="card-title">经期情绪关联</text>
+      <text class="ai-badge">AI 分析</text>
+    </view>
+
+    <view class="correlation-content">
+      <text class="insight-text">{{periodInsight}}</text>
+
+      <view class="phase-emotions">
+        <view
+          class="phase-item"
+          wx:for="{{phaseEmotions}}"
+          wx:key="phase"
+        >
+          <view class="phase-header">
+            <text class="phase-icon">{{item.icon}}</text>
+            <text class="phase-name">{{item.phase}}</text>
+          </view>
+          <view class="phase-emotions-list">
+            <text
+              class="emotion-tag"
+              wx:for="{{item.emotions}}"
+              wx:key="*this"
+              wx:for-item="emotion"
+            >
+              {{emotion}}
+            </text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 个性化建议 -->
+  <view class="suggestions-card">
+    <view class="card-header">
+      <text class="card-title">个性化建议</text>
+      <text class="ai-badge">AI 推荐</text>
+    </view>
+
+    <view class="suggestions-list">
+      <view
+        class="suggestion-item"
+        wx:for="{{suggestions}}"
+        wx:key="id"
+      >
+        <view class="suggestion-icon">{{item.icon}}</view>
+        <view class="suggestion-content">
+          <text class="suggestion-title">{{item.title}}</text>
+          <text class="suggestion-desc">{{item.description}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 情绪触发因素 -->
+  <view class="triggers-card">
+    <text class="card-title">常见触发因素</text>
+    <text class="card-hint">了解什么影响了你的情绪</text>
+
+    <view class="triggers-grid">
+      <view
+        class="trigger-item"
+        wx:for="{{triggers}}"
+        wx:key="name"
+      >
+        <text class="trigger-icon">{{item.icon}}</text>
+        <text class="trigger-name">{{item.name}}</text>
+        <text class="trigger-count">{{item.count}}次</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 导出报告按钮 -->
+  <view class="export-section">
+    <button class="export-btn" bindtap="exportReport">
+      <text class="btn-icon">📤</text>
+      <text class="btn-text">导出完整报告</text>
+    </button>
+  </view>
+
+  <!-- 温馨提示 -->
+  <view class="tips-card">
+    <text class="tips-icon">💡</text>
+    <view class="tips-content">
+      <text class="tips-title">关于报告</text>
+      <text class="tips-text">此报告基于你的情绪记录和经期数据，由 AI 智能分析生成。建议持续记录至少一个月经周期，以获得更准确的分析结果。</text>
+    </view>
+  </view>
+</view>

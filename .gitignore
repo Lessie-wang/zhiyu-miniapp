@@ -1,0 +1,23 @@
+# 微信小程序
+node_modules/
+miniprogram_npm/
+.DS_Store
+
+# 私密配置
+project.private.config.json
+
+# 日志文件
+*.log
+npm-debug.log*
+
+# 临时文件
+*.tmp
+*.temp
+.cache/
+
+# IDE
+.vscode/
+.idea/
+
+# 云开发相关（如果不需要同步）
+cloudfunctions/*/node_modules/

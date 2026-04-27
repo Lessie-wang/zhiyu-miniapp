@@ -1,0 +1,554 @@
+/* ========== 页面容器 ========== */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FAF9F7 0%, #F5EDE7 40%, #F2E6DF 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========== 粒子画布 ========== */
+.particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 750rpx;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ========== 用户卡片 ========== */
+.user-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 28rpx;
+  padding: 32rpx;
+  margin: 40rpx 32rpx 0;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(212, 184, 165, 0.15);
+  border: 1rpx solid rgba(212, 184, 165, 0.2);
+  transition: all 0.2s ease;
+}
+.card-hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4rpx 16rpx rgba(212, 184, 165, 0.2);
+}
+
+.user-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.avatar-img {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+}
+.avatar-css-icon {
+  width: 96rpx;
+  height: 96rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rpx;
+}
+.avatar-css-icon .avi-head {
+  width: 28rpx;
+  height: 28rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}
+.avatar-css-icon .avi-body {
+  width: 40rpx;
+  height: 20rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 20rpx 20rpx 0 0;
+}
+
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+.user-name {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #6D6A65;
+}
+.user-motto {
+  font-size: 24rpx;
+  color: #B8B2A7;
+}
+.edit-profile {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.edit-icon {
+  font-size: 36rpx;
+  color: #B8B2A7;
+  font-weight: 700;
+}
+
+/* ========== 知愈之树功能区 ========== */
+.tree-section {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 800rpx;
+  margin-top: 20rpx;
+}
+
+/* 树冠光晕 */
+.tree-crown {
+  position: absolute;
+  left: 50%;
+  top: -30rpx;
+  width: 260rpx;
+  height: 180rpx;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(212, 184, 165, 0.12) 0%, rgba(212, 184, 165, 0.04) 50%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* ========== 树干 ========== */
+.tree-trunk {
+  position: absolute;
+  left: 50%;
+  top: 50rpx;
+  bottom: 80rpx;
+  width: 24rpx;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg,
+    rgba(175, 150, 130, 0.15) 0%,
+    rgba(175, 150, 130, 0.45) 10%,
+    rgba(170, 145, 125, 0.6) 30%,
+    rgba(165, 138, 118, 0.7) 50%,
+    rgba(160, 132, 112, 0.65) 70%,
+    rgba(158, 130, 110, 0.55) 85%,
+    rgba(155, 128, 108, 0.25) 100%
+  );
+  border-radius: 12rpx 12rpx 6rpx 6rpx;
+  clip-path: polygon(22% 0%, 78% 0%, 100% 100%, 0% 100%);
+}
+
+/* 树干纹理 */
+.trunk-tex {
+  position: absolute;
+  height: 2rpx;
+  background: rgba(135, 110, 90, 0.15);
+  border-radius: 1rpx;
+}
+.trunk-tex.t1 { top: 18%; width: 55%; left: 22%; }
+.trunk-tex.t2 { top: 38%; width: 45%; left: 28%; }
+.trunk-tex.t3 { top: 58%; width: 55%; left: 22%; }
+.trunk-tex.t4 { top: 78%; width: 40%; left: 30%; }
+
+/* ========== 树枝 ========== */
+.branch {
+  position: absolute;
+  height: 5rpx;
+  border-radius: 3rpx;
+  z-index: 0;
+}
+
+/* 左上枝 → 她的时间 */
+.branch-1 {
+  left: 219rpx;
+  top: 130rpx;
+  width: 156rpx;
+  background: linear-gradient(to right, rgba(175, 150, 130, 0.08), rgba(175, 150, 130, 0.5));
+  transform: rotate(10deg);
+  transform-origin: right center;
+}
+
+/* 右上枝 → 情绪库 */
+.branch-2 {
+  left: 375rpx;
+  top: 160rpx;
+  width: 156rpx;
+  background: linear-gradient(to right, rgba(175, 150, 130, 0.5), rgba(175, 150, 130, 0.08));
+  transform: rotate(5deg);
+  transform-origin: left center;
+}
+
+/* 左中枝 → 疗愈商店 */
+.branch-3 {
+  left: 209rpx;
+  top: 400rpx;
+  width: 166rpx;
+  background: linear-gradient(to right, rgba(175, 150, 130, 0.08), rgba(175, 150, 130, 0.5));
+  transform: rotate(9deg);
+  transform-origin: right center;
+}
+
+/* 右中枝 → 设置 */
+.branch-4 {
+  left: 375rpx;
+  top: 435rpx;
+  width: 171rpx;
+  background: linear-gradient(to right, rgba(175, 150, 130, 0.5), rgba(175, 150, 130, 0.08));
+  transform: rotate(3deg);
+  transform-origin: left center;
+}
+
+/* ========== 枝节点（树干分叉处） ========== */
+.branch-joint {
+  position: absolute;
+  width: 14rpx;
+  height: 14rpx;
+  background: rgba(170, 145, 125, 0.35);
+  border-radius: 50%;
+  left: 50%;
+  transform: translateX(-50%) scale(1);
+  z-index: 1;
+  animation: jointPulse 4s ease-in-out infinite;
+}
+.joint-top { top: 145rpx; }
+.joint-mid { top: 418rpx; animation-delay: 2s; }
+
+@keyframes jointPulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.4);
+    opacity: 0.6;
+  }
+}
+
+/* ========== 树叶装饰 ========== */
+.leaf {
+  position: absolute;
+  background: rgba(170, 150, 130, 0.3);
+  border-radius: 0 50% 50% 50%;
+  z-index: 0;
+  animation: leafBreath 5s ease-in-out infinite;
+}
+
+@keyframes leafBreath {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.35; }
+}
+
+.lf1 {
+  width: 14rpx; height: 9rpx;
+  left: 350rpx; top: 35rpx;
+  transform: rotate(-25deg);
+  animation-delay: 0s;
+}
+.lf2 {
+  width: 12rpx; height: 8rpx;
+  left: 400rpx; top: 50rpx;
+  transform: rotate(155deg);
+  animation-delay: 0.8s;
+}
+.lf3 {
+  width: 13rpx; height: 8rpx;
+  left: 270rpx; top: 115rpx;
+  transform: rotate(40deg);
+  animation-delay: 1.5s;
+  background: rgba(170, 150, 130, 0.22);
+}
+.lf4 {
+  width: 11rpx; height: 7rpx;
+  left: 490rpx; top: 175rpx;
+  transform: rotate(-55deg);
+  animation-delay: 0.4s;
+}
+.lf5 {
+  width: 14rpx; height: 9rpx;
+  left: 362rpx; top: 260rpx;
+  transform: rotate(50deg);
+  animation-delay: 2.2s;
+  background: rgba(170, 150, 130, 0.2);
+}
+.lf6 {
+  width: 10rpx; height: 7rpx;
+  left: 395rpx; top: 310rpx;
+  transform: rotate(-130deg);
+  animation-delay: 3s;
+}
+.lf7 {
+  width: 12rpx; height: 8rpx;
+  left: 260rpx; top: 370rpx;
+  transform: rotate(65deg);
+  animation-delay: 1.8s;
+  background: rgba(170, 150, 130, 0.22);
+}
+.lf8 {
+  width: 13rpx; height: 8rpx;
+  left: 505rpx; top: 440rpx;
+  transform: rotate(-40deg);
+  animation-delay: 0.6s;
+}
+.lf9 {
+  width: 10rpx; height: 6rpx;
+  left: 355rpx; top: 510rpx;
+  transform: rotate(-60deg);
+  animation-delay: 2.8s;
+}
+.lf10 {
+  width: 11rpx; height: 7rpx;
+  left: 400rpx; top: 570rpx;
+  transform: rotate(140deg);
+  animation-delay: 3.5s;
+  background: rgba(170, 150, 130, 0.18);
+}
+
+/* ========== 树根 ========== */
+.tree-roots {
+  position: absolute;
+  bottom: 50rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140rpx;
+  height: 44rpx;
+}
+.root {
+  position: absolute;
+  top: 0;
+  height: 3rpx;
+  background: rgba(155, 128, 108, 0.25);
+  border-radius: 2rpx;
+  transform-origin: top center;
+}
+.root.r1 {
+  left: 50%;
+  width: 48rpx;
+  transform: translateX(-20%) rotate(28deg);
+}
+.root.r2 {
+  left: 50%;
+  width: 55rpx;
+  transform: translateX(-80%) rotate(-22deg);
+}
+.root.r3 {
+  left: 50%;
+  width: 38rpx;
+  transform: translateX(5%) rotate(12deg);
+}
+
+/* ========== 功能按钮 ========== */
+.tree-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  z-index: 2;
+  transform: translateX(-50%);
+  transition: all 0.25s ease;
+}
+.node-active {
+  transform: translateX(-50%) scale(1.08);
+}
+
+.node-circle {
+  width: 108rpx;
+  height: 108rpx;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 8rpx 24rpx rgba(212, 184, 165, 0.2),
+    0 2rpx 8rpx rgba(212, 184, 165, 0.1),
+    inset 0 1rpx 3rpx rgba(255, 255, 255, 0.9);
+  border: 2rpx solid rgba(212, 184, 165, 0.25);
+  transition: all 0.25s ease;
+}
+.node-active .node-circle {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-color: #C4A893;
+  box-shadow: 0 12rpx 32rpx rgba(212, 184, 165, 0.45);
+}
+
+.node-label {
+  font-size: 24rpx;
+  color: #6D6A65;
+  font-weight: 600;
+  white-space: nowrap;
+  text-shadow: 0 1rpx 4rpx rgba(255, 255, 255, 0.8);
+}
+
+/* 按钮位置 */
+.node-1 { left: 165rpx; top: 50rpx; }
+.node-2 { left: 585rpx; top: 120rpx; }
+.node-3 { left: 155rpx; top: 320rpx; }
+.node-4 { left: 595rpx; top: 390rpx; }
+.node-5 { left: 375rpx; top: 580rpx; }
+
+/* ========== 图标容器 ========== */
+.node-icon {
+  width: 44rpx;
+  height: 44rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 按下时图标变白 */
+.node-active .sflower-center,
+.node-active .sflower-petal,
+.node-active .sbook-spine,
+.node-active .sbook-line,
+.node-active .sgear-tooth,
+.node-active .sabout-bubble,
+.node-active .sabout-dot {
+  background: rgba(255, 255, 255, 0.75);
+}
+.node-active .sbook-body,
+.node-active .sshop-bag,
+.node-active .sshop-handle,
+.node-active .sgear-center {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* ========== CSS 图标 ========== */
+
+/* 花朵 - 她的时间 */
+.sflower-center {
+  width: 12rpx;
+  height: 12rpx;
+  background: #D4B8A5;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 1;
+}
+.sflower-petal {
+  width: 12rpx;
+  height: 16rpx;
+  background: #E8C4D8;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0.7;
+}
+.sflower-petal.sp1 { top: 2rpx; }
+.sflower-petal.sp2 { bottom: 2rpx; }
+.sflower-petal.sp3 { left: 4rpx; transform: rotate(90deg); }
+.sflower-petal.sp4 { right: 4rpx; transform: rotate(90deg); }
+
+/* 书本 - 情绪库 */
+.sbook-spine {
+  width: 4rpx;
+  height: 30rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx;
+  position: absolute;
+  left: 6rpx;
+}
+.sbook-body {
+  width: 26rpx;
+  height: 26rpx;
+  border: 2.5rpx solid #D4B8A5;
+  border-left: none;
+  border-radius: 0 6rpx 6rpx 0;
+  position: absolute;
+  left: 10rpx;
+}
+.sbook-line {
+  position: absolute;
+  height: 2rpx;
+  background: #D4B8A5;
+  opacity: 0.4;
+  border-radius: 1rpx;
+}
+.sbook-line.bl1 { width: 14rpx; left: 14rpx; top: 15rpx; }
+.sbook-line.bl2 { width: 10rpx; left: 14rpx; top: 21rpx; }
+
+/* 购物袋 - 疗愈商店 */
+.sshop-bag {
+  width: 26rpx;
+  height: 22rpx;
+  border: 2.5rpx solid #D4B8A5;
+  border-radius: 0 0 8rpx 8rpx;
+  position: absolute;
+  bottom: 6rpx;
+}
+.sshop-handle {
+  width: 16rpx;
+  height: 12rpx;
+  border: 2.5rpx solid #D4B8A5;
+  border-bottom: none;
+  border-radius: 16rpx 16rpx 0 0;
+  position: absolute;
+  top: 6rpx;
+}
+
+/* 齿轮 - 设置 */
+.sgear-center {
+  width: 14rpx;
+  height: 14rpx;
+  border: 2.5rpx solid #D4B8A5;
+  border-radius: 50%;
+  position: absolute;
+}
+.sgear-tooth {
+  width: 30rpx;
+  height: 4rpx;
+  background: #D4B8A5;
+  border-radius: 2rpx;
+  position: absolute;
+  opacity: 0.6;
+}
+.sgear-tooth.gt1 { transform: rotate(0deg); }
+.sgear-tooth.gt2 { transform: rotate(60deg); }
+.sgear-tooth.gt3 { transform: rotate(120deg); }
+
+/* 思维泡 - 关于知愈 */
+.sabout-bubble {
+  width: 30rpx;
+  height: 22rpx;
+  background: #D4B8A5;
+  border-radius: 14rpx;
+  position: absolute;
+  top: 4rpx;
+  opacity: 0.6;
+}
+.sabout-dot {
+  background: #D4B8A5;
+  border-radius: 50%;
+  position: absolute;
+}
+.sabout-dot.sad1 {
+  width: 6rpx;
+  height: 6rpx;
+  bottom: 8rpx;
+  left: 8rpx;
+  opacity: 0.4;
+}
+.sabout-dot.sad2 {
+  width: 4rpx;
+  height: 4rpx;
+  bottom: 4rpx;
+  left: 4rpx;
+  opacity: 0.25;
+}
+
+/* ========== 版本信息 ========== */
+.version-info {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 16rpx 0 60rpx;
+}
+.version-text {
+  font-size: 22rpx;
+  color: #B8B2A7;
+}

@@ -1,0 +1,60 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">为你的感受，找到一个名字</text>
+    <text class="page-subtitle">点击情绪卡片，探索更多衍生情绪</text>
+    <view class="ai-tip">
+      <text class="tip-icon">💡</text>
+      <text class="tip-text">在主页选择情绪后，AI 会开始引导</text>
+    </view>
+  </view>
+
+  <!-- 8种核心情绪网格 -->
+  <view class="emotions-grid">
+    <view
+      class="emotion-card {{selectedEmotion === item.name ? 'active' : ''}}"
+      wx:for="{{emotions}}"
+      wx:key="name"
+      bindtap="selectEmotion"
+      data-emotion="{{item.name}}"
+    >
+      <view class="emotion-icon">{{item.icon}}</view>
+      <text class="emotion-name">{{item.name}}</text>
+      <text class="emotion-definition">{{item.definition}}</text>
+
+      <!-- 显示衍生情绪数量 -->
+      <view class="derivatives-count">
+        <text class="count-text">{{item.derivatives.length}} 种衍生</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 衍生情绪展示 -->
+  <view class="derivatives-section" wx:if="{{selectedEmotion}}">
+    <view class="derivatives-header">
+      <text class="derivatives-title">{{selectedEmotion}}的衍生情绪</text>
+      <text class="derivatives-desc">这些都是{{selectedEmotion}}的不同表现形式</text>
+    </view>
+
+    <view class="derivatives-grid">
+      <view
+        class="derivative-tag"
+        wx:for="{{currentDerivatives}}"
+        wx:key="*this"
+      >
+        <text class="derivative-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作按钮 -->
+  <view class="action-footer">
+    <button class="action-btn primary" bindtap="goToMain">
+      <text class="btn-text">开始情绪记录</text>
+      <text class="btn-arrow">→</text>
+    </button>
+    <button class="action-btn secondary" bindtap="goToMethodology">
+      <text class="btn-text">了解表达训练方法</text>
+    </button>
+  </view>
+</view>

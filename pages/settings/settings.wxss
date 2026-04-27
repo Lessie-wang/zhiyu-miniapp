@@ -1,0 +1,245 @@
+/* 个人设置页面样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #FAF9F7 0%, #F2E6DF 100%);
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* 页面标题 */
+.page-header {
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+
+.page-title {
+  display: block;
+  font-size: 52rpx;
+  font-weight: 700;
+  color: #D4B8A5;
+  margin-bottom: 16rpx;
+  letter-spacing: 2rpx;
+}
+
+.page-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+}
+
+/* 卡片区域 */
+.section-card {
+  background: white;
+  border-radius: 28rpx;
+  padding: 40rpx 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 10rpx 40rpx rgba(212, 184, 165, 0.15);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 12rpx;
+}
+
+.section-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #B8B2A7;
+  margin-bottom: 24rpx;
+  line-height: 1.6;
+}
+
+/* 头像区域 */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 32rpx;
+}
+
+.avatar-section .section-title {
+  margin-bottom: 32rpx;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 180rpx;
+  height: 180rpx;
+}
+
+.avatar-img {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  border: 4rpx solid #F2E6DF;
+}
+
+.avatar-placeholder {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  background: #F2E6DF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-placeholder-icon {
+  font-size: 72rpx;
+}
+
+.avatar-edit-badge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 56rpx;
+  height: 56rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4rpx solid white;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.3);
+}
+
+.edit-icon {
+  font-size: 28rpx;
+}
+
+/* 输入组 */
+.input-group {
+  position: relative;
+}
+
+.text-input {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 100rpx 0 24rpx;
+  background: #F2E6DF;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  color: #6D6A65;
+  box-sizing: border-box;
+}
+
+.motto-input {
+  width: 100%;
+  min-height: 88rpx;
+  padding: 24rpx 100rpx 24rpx 24rpx;
+  background: #F2E6DF;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  color: #6D6A65;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+.input-count {
+  position: absolute;
+  right: 24rpx;
+  bottom: 16rpx;
+  font-size: 22rpx;
+  color: #B8B2A7;
+}
+
+/* 按钮 */
+.button-group {
+  margin-top: 24rpx;
+  padding-bottom: 60rpx;
+}
+
+.save-btn {
+  width: 100%;
+  height: 96rpx;
+  background: linear-gradient(90deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: 0 16rpx 48rpx rgba(212, 184, 165, 0.3);
+}
+
+.save-btn::after {
+  border: none;
+}
+
+.btn-text {
+  color: white;
+  font-size: 32rpx;
+  font-weight: 600;
+  letter-spacing: 4rpx;
+}
+
+/* 功能开关 */
+.switch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 0;
+}
+
+.switch-item:not(:last-child) {
+  border-bottom: 1rpx solid #F2E6DF;
+  margin-bottom: 16rpx;
+  padding-bottom: 24rpx;
+}
+
+.switch-left {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.switch-icon {
+  font-size: 32rpx;
+}
+
+.switch-label {
+  font-size: 28rpx;
+  color: #6D6A65;
+  font-weight: 500;
+}
+
+/* 菜单项 */
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #F2E6DF;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.menu-icon {
+  font-size: 36rpx;
+}
+
+.menu-label {
+  font-size: 28rpx;
+  color: #6D6A65;
+  font-weight: 500;
+}
+
+.menu-arrow {
+  font-size: 28rpx;
+  color: #B8B2A7;
+}

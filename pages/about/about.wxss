@@ -1,0 +1,598 @@
+/* 关于知愈页面样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #FAF9F7 0%, #F2E6DF 100%);
+  padding: 40rpx 32rpx 80rpx;
+}
+
+/* 页面标题 */
+.page-header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.page-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 12rpx;
+}
+
+.page-subtitle {
+  display: block;
+  font-size: 26rpx;
+  color: #B8B2A7;
+}
+
+/* 作者介绍卡片 */
+.author-card {
+  background: white;
+  border-radius: 28rpx;
+  padding: 48rpx 32rpx 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 10rpx 40rpx rgba(212, 184, 165, 0.15);
+  text-align: center;
+}
+
+.author-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  margin: 0 auto 24rpx;
+  background: linear-gradient(135deg, #E8C4D8 0%, #D4B8E8 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.2);
+}
+
+.avatar-icon {
+  font-size: 56rpx;
+}
+
+.author-name {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 8rpx;
+}
+
+.author-role {
+  display: block;
+  font-size: 24rpx;
+  color: #B8B2A7;
+  margin-bottom: 24rpx;
+  letter-spacing: 2rpx;
+}
+
+.author-bio {
+  display: block;
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.8;
+  text-align: justify;
+  margin-bottom: 32rpx;
+}
+
+/* 给使用者的话按钮 */
+.letter-btn {
+  width: 100%;
+  padding: 24rpx;
+  background: linear-gradient(135deg, #F5D4C4 0%, #E8C4D8 100%);
+  border-radius: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  box-shadow: 0 8rpx 24rpx rgba(232, 196, 216, 0.3);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.letter-btn::after {
+  border: none;
+}
+
+.letter-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 16rpx rgba(232, 196, 216, 0.2);
+}
+
+.letter-icon {
+  font-size: 32rpx;
+}
+
+.letter-text {
+  font-size: 28rpx;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+
+/* 功能菜单区域 */
+.menu-section {
+  background: white;
+  border-radius: 28rpx;
+  margin-bottom: 32rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36rpx 24rpx;
+  background: white;
+  border: none;
+  border-bottom: 1rpx solid #F2E6DF;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  position: relative;
+}
+
+.menu-item::after {
+  border: none;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:active {
+  background: #FAF9F7;
+}
+
+/* 隐藏的原生按钮（用于 open-type） */
+.hidden-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  z-index: 2;
+}
+
+.hidden-btn::after {
+  border: none;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  flex: 1;
+  min-width: 0;
+  margin-right: 16rpx;
+}
+
+.menu-icon {
+  font-size: 40rpx;
+  flex-shrink: 0;
+  width: 48rpx;
+  text-align: center;
+}
+
+.menu-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.menu-title {
+  font-size: 30rpx;
+  color: #6D6A65;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-desc {
+  font-size: 24rpx;
+  color: #B8B2A7;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-right {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.new-badge {
+  padding: 4rpx 12rpx;
+  background: linear-gradient(135deg, #E8C4D8 0%, #D4B8E8 100%);
+  color: white;
+  font-size: 20rpx;
+  font-weight: 700;
+  border-radius: 20rpx;
+}
+
+.menu-arrow {
+  font-size: 28rpx;
+  color: #C4BDB5;
+  font-weight: 600;
+}
+
+/* BGM 开关 */
+.bgm-switch {
+  width: 88rpx;
+  height: 48rpx;
+  background: #E8E8E8;
+  border-radius: 24rpx;
+  position: relative;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.bgm-switch.on {
+  background: linear-gradient(90deg, #D4B8A5 0%, #C4A893 100%);
+}
+
+.bgm-switch-dot {
+  width: 40rpx;
+  height: 40rpx;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 4rpx;
+  left: 4rpx;
+  transition: all 0.3s ease;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+}
+
+.bgm-switch.on .bgm-switch-dot {
+  left: 44rpx;
+}
+
+/* 联系方式区域 */
+.contact-section {
+  background: white;
+  border-radius: 28rpx;
+  margin-bottom: 32rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+}
+
+/* 危险操作区域 */
+.danger-section {
+  background: white;
+  border-radius: 28rpx;
+  margin-bottom: 32rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+}
+
+.menu-item.danger {
+  border-bottom: none;
+}
+
+.menu-item.danger:active {
+  background: #FFF5F5;
+}
+
+.menu-item.danger .menu-title {
+  color: #E8836B;
+}
+
+/* 版本信息 */
+.version-info {
+  text-align: center;
+  padding: 40rpx 0 20rpx;
+}
+
+.version-text {
+  display: block;
+  font-size: 24rpx;
+  color: #B8B2A7;
+  margin-bottom: 8rpx;
+}
+
+.copyright-text {
+  display: block;
+  font-size: 22rpx;
+  color: #C4BDB5;
+}
+
+/* 信封弹窗 */
+.letter-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  animation: fadeIn 0.3s ease;
+}
+
+.letter-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 800rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40rpx;
+  box-sizing: border-box;
+}
+
+/* 信封样式 */
+.envelope {
+  position: absolute;
+  width: 500rpx;
+  height: 320rpx;
+  transition: all 0.6s ease;
+  cursor: pointer;
+}
+
+.envelope-body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #F5D4C4 0%, #E8C4D8 100%);
+  border-radius: 16rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.envelope-icon {
+  font-size: 120rpx;
+  opacity: 0.9;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 160rpx;
+  background: linear-gradient(135deg, #E8C4D8 0%, #D4B8E8 100%);
+  transform-origin: top center;
+  border-radius: 16rpx 16rpx 0 0;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.2);
+  transition: all 0.6s ease;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.envelope-opened .envelope-flap {
+  transform: rotateX(180deg);
+  transform-origin: top center;
+}
+
+.envelope-opened {
+  transform: translateY(-100rpx) scale(0.9);
+  opacity: 0.3;
+}
+
+/* 信纸内容 */
+.letter-content {
+  position: absolute;
+  width: 100%;
+  max-width: 620rpx;
+  height: 0;
+  opacity: 0;
+  transition: all 0.6s ease 0.3s;
+  pointer-events: none;
+}
+
+.letter-visible {
+  height: 800rpx;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.letter-paper {
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 24rpx;
+  padding: 40rpx 36rpx 28rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.6s ease;
+  box-sizing: border-box;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.letter-title {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  text-align: center;
+  margin-bottom: 28rpx;
+  font-family: 'STKaiti', 'KaiTi', '楷体', 'STFangsong', 'FangSong', '仿宋', serif;
+}
+
+.letter-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.letter-text {
+  display: block;
+  font-size: 24rpx;
+  color: #6D6A65;
+  line-height: 2;
+  text-align: justify;
+  white-space: pre-line;
+  font-family: 'STFangsong', 'FangSong', '仿宋', 'STKaiti', 'KaiTi', '楷体', serif;
+}
+
+.letter-signature {
+  display: block;
+  font-size: 22rpx;
+  color: #B8B2A7;
+  text-align: right;
+  margin-top: 24rpx;
+  font-style: italic;
+  font-family: 'STFangsong', 'FangSong', '仿宋', 'STKaiti', 'KaiTi', '楷体', serif;
+}
+
+.close-letter-btn {
+  width: 100%;
+  padding: 20rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 50rpx;
+  color: white;
+  font-size: 26rpx;
+  font-weight: 600;
+  border: none;
+  margin-top: 20rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.3);
+}
+
+.close-letter-btn::after {
+  border: none;
+}
+
+.close-letter-btn:active {
+  transform: scale(0.98);
+}
+
+/* 通用信息弹窗 */
+.info-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease;
+}
+
+.info-modal-content {
+  width: 620rpx;
+  max-height: 75vh;
+  background: white;
+  border-radius: 28rpx;
+  padding: 48rpx 40rpx 36rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+}
+
+.info-modal-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+
+.info-modal-scroll {
+  flex: 1;
+  max-height: 50vh;
+  margin-bottom: 32rpx;
+}
+
+.info-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.info-item-text {
+  font-size: 28rpx;
+  color: #6D6A65;
+  line-height: 1.8;
+}
+
+.info-item.highlight .info-item-text {
+  font-weight: 600;
+  color: #D4B8A5;
+}
+
+.info-item.warn .info-item-text {
+  color: #E8836B;
+}
+
+.info-modal-btn {
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(90deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 44rpx;
+  color: white;
+  font-size: 30rpx;
+  font-weight: 600;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.3);
+}
+
+.info-modal-btn::after {
+  border: none;
+}
+
+.info-modal-btn:active {
+  transform: scale(0.98);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

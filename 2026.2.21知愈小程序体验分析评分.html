@@ -1,0 +1,750 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title></title><script defer="defer" src="index.231ab8a68844b9077c14.js"></script><style>.dropzone-container {
+  min-height: 100vh;
+}
+
+.hidden-input {
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+}
+
+.file-label {
+  font-size: 20px;
+  display: block;
+  cursor: pointer;
+}
+
+.preview-container {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.preview-card {
+  display: flex;
+  border: 1px solid #a2a2a2;
+  padding: 5px;
+  margin-left: 5px;
+}
+
+.preview-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #a2a2a2;
+  background-color: #a2a2a2;
+}</style><style>.chart-wrap {
+  position: relative;
+}
+
+.chart {
+  width: 100%;
+  height: 300px;
+  margin: 24px 0;
+  background-color: #fff;
+}
+
+.chart-replacer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+}
+
+.tableContainer table {
+  border-collapse: collapse;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.tableContainer table,
+.tableContainer th,
+.tableContainer td {
+  border: 1px solid #ccc;
+}
+
+.tableContainer th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
+}
+
+.tableContainer td {
+  padding: 10px;
+  color: #555;
+}
+
+.tableContainer tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* 下拉按钮样式 */
+.dropbtn {
+  position: relative;
+  color: var(--global-text-color);
+  margin: 24px 0 0;
+  background-color: transparent;
+  padding: 12px 16px;
+  padding-right: 24px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px; /* 增加圆角，更显柔和 */
+  border: 1px solid #e8e8e8;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* 下拉内容（默认隐藏） */
+.dropdown-content {
+  max-height: 240px;
+  overflow-y: auto;
+  display: none;
+  background-color: #FFF;
+  position: absolute;
+  min-width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1); /* 阴影颜色变浅，更柔和 */
+  z-index: 1;
+  border-radius: 4px; /* 下拉菜单也添加圆角 */
+}
+
+/* 下拉选项样式 */
+.dropdown-content div {
+  cursor: pointer;
+  color: #555; /* 选项文字颜色，稍深以保证可读性 */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  transition: background-color 0.3s ease; /* 选项背景色变化也添加过渡效果 */
+}
+
+/* 鼠标悬停在选项上的样式 */
+.dropdown-content div:hover {
+  background-color: #e8e8e8; /* 悬停时的浅灰色背景，突出选中状态 */
+}
+
+/* 显示下拉菜单 */
+.dropdown:hover.dropdown-content {
+  display: block;
+}
+
+.expanded-dropdown {
+  display: block;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.space-between-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.open [class^="ui-icon-arrow"] {
+  transform-origin: 50% 50%;
+  transform: rotate(180deg);
+}
+
+.folded {
+  display: none;
+}
+</style><style>
+</style><style>.progne-report {
+  margin: 35px;
+}
+
+.audit-result-bd {
+  margin-top: 35px;
+}
+
+.audit-result-desc span {
+  display: inline-block;
+  min-width: 25%;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}</style><style>
+</style><style>html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-decoration: none;
+}
+a:visited {
+  color: inherit;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Source Han Sans CN", sans-serif;
+  /* user-select: none; */
+}
+label {
+  cursor: pointer;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+a {
+  color: #000000;
+  cursor: pointer;
+}
+img {
+  -webkit-user-drag: none;
+}
+body {
+  font-size: 14px;
+}
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #c3c3c3;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.ui-selectable {
+  user-select: text;
+}
+.ui-desc {
+  color: #888888;
+}
+.ui-button {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 25px 4px;
+  vertical-align: middle;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 3px;
+  outline: 0;
+  border: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5), 0 1px 1px 0 rgba(0, 0, 0, 0.01);
+}
+.ui-button[disabled] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.ui-button:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  transition: background-color ease 0.2s;
+}
+.ui-button-default {
+  color: #000;
+  background: linear-gradient(to bottom, #fcfcfc, #f5f5f5);
+}
+.ui-button-default:not([disabled]):hover:before {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+.ui-button-default:not([disabled]):active:before {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.ui-button-mini {
+  padding: 4px 10px;
+  font-size: 10px;
+}
+.ui-button-primary {
+  color: #fff;
+  background: linear-gradient(to bottom, #00c777, #00ba70);
+}
+.ui-button-primary:not([disabled]):hover:before {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+.ui-button-primary:not([disabled]):active:before {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.ui-button-warn {
+  color: #d94e4e;
+  background: linear-gradient(to bottom, #fcfcfc, #f5f5f5);
+}
+.ui-button-warn:hover:before {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+.ui-button-warn:active:before {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+body.dark .ui-button-default {
+  background: linear-gradient(to bottom, #7b7b7b, #737373);
+  color: rgba(255, 255, 255, 0.8);
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  line-height: 1.6;
+  color: #000;
+  font-family: 'Helvetica Neue', Helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  font-size: 13px;
+}
+body {
+  --primary-color: #07c160;
+  --global-text-color: #222;
+  --global-font-size: 13px;
+  --global-link-text-color: #10aeff;
+  --text-warn-color: #d94e4e;
+  --background-color: #fff;
+}
+body.dark {
+  --primary-color: #07c160;
+  --global-text-color: #fff;
+  --text-warn-color: #d94e4e;
+  --background-color: #1e1e1e;
+}
+a {
+  color: var(--global-link-text-color);
+}
+body {
+  color: var(--global-text-color);
+}
+.audit {
+  padding: 35px;
+}
+.audit-title {
+  font-weight: normal;
+  font-size: 17px;
+}
+.audit-desc {
+  font-size: 13px;
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+.device-info-item {
+  display: flex;
+}
+.device-info-key {
+  width: 8em;
+  margin-right: 1em;
+  color: #7f7f7f;
+}
+.device-info-value {
+  flex: 1;
+}
+.device-info-tips {
+  color: #7f7f7f;
+}
+.audit-result-desc {
+  font-size: 13px;
+  margin-top: 6px;
+  color: #7f7f7f;
+}
+.audit-result-desc > span {
+  margin-right: 28px;
+}
+.audit-action-area {
+  margin-top: 35px;
+}
+.audit-result {
+  padding: 35px;
+}
+.audit-result-summary {
+  display: flex;
+}
+.audit-result-summary–primary {
+  flex: 1;
+}
+.audit-icon-dot-red,
+.audit-icon-dot-yellow,
+.audit-icon-dot-green {
+  display: inline-block;
+  vertical-align: middle;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+.audit-icon-dot-red {
+  background-color: #c14b4b;
+}
+.audit-icon-dot-yellow {
+  background-color: #c59b12;
+}
+.audit-icon-dot-green {
+  background-color: #179955;
+}
+.audit-icon-color-remark {
+  color: #7f7f7f;
+  font-size: 11px;
+}
+.audit-icon-color-remark + .audit-icon-color-remark {
+  margin-left: 10px;
+}
+.audit-result-summary-extra {
+  text-align: right;
+}
+.audit-result-summary-extra > p:first-child {
+  margin-bottom: 9px;
+}
+.audit-result-summary-extra a {
+  color: #10aeff;
+}
+.audit-result-score {
+  display: flex;
+  padding: 50px 0;
+  user-select: none;
+}
+.audit-score-item {
+  flex: 1;
+}
+.audit-score-item-icon {
+  text-align: center;
+  position: relative;
+  font-size: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.audit-score-item-icon-circle {
+  cx: 7;
+  cy: 7;
+  r: 6;
+  fill: none;
+  stroke-width: 1;
+  stroke: #ffc300;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease-in-out;
+}
+.audit-score-item-icon-circle-bg {
+  cx: 7;
+  cy: 7;
+  r: 6;
+  fill: none;
+  stroke-width: 1;
+  stroke: #d3d3d3;
+}
+.audit-score-item-icon-yellow {
+  color: #ffc300;
+}
+.audit-score-item-icon-yellow .audit-score-item-icon-circle {
+  stroke: #ffc300;
+}
+.audit-score-item-icon-green {
+  color: #07c160;
+}
+.audit-score-item-icon-green .audit-score-item-icon-circle {
+  stroke: #07c160;
+}
+.audit-score-item-icon-red {
+  color: #fa5151;
+}
+.audit-score-item-icon-red .audit-score-item-icon-circle {
+  stroke: #fa5151;
+}
+.audit-score-value {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+}
+.audit-score-item-desc {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 13px;
+}
+.audit-result-group + .audit-result-group {
+  margin-top: 48px;
+}
+.audit-result-group-title {
+  font-size: 15px;
+  position: relative;
+  padding-left: 10px;
+}
+.audit-result-group-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+}
+.audit-result-group-title-green::before {
+  background-color: #07c160;
+}
+.audit-result-group-title-yellow::before {
+  background-color: #ffc300;
+}
+.audit-result-group-title-red::before {
+  background-color: #fa5151;
+}
+.audit-result-group-score {
+  font-size: 15px;
+  margin-left: 5px;
+}
+.audit-result-group-desc {
+  color: #7f7f7f;
+}
+.audit-result-items + .audit-result-items {
+  margin-top: 20px;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+details [class^="ui-icon-arrow"] {
+  margin-left: 5px;
+}
+details[open] > summary > [class^="ui-icon-arrow"],
+details[open] > summary > p > [class^="ui-icon-arrow"] {
+  transform-origin: 50% 50%;
+  transform: rotate(180deg);
+}
+details > summary {
+  outline: 0;
+}
+.audit-result-table {
+  width: 100%;
+  font-size: 13px;
+  table-layout: fixed;
+}
+.audit-result-table * {
+  vertical-align: middle;
+}
+.audit-result-table thead th {
+  padding: 9px 0;
+  text-align: right;
+  border-bottom: 1px solid #dadada;
+}
+.audit-result-table thead th:first-child {
+  text-align: left;
+}
+.audit-result-table tbody td {
+  padding: 9px 0;
+  text-align: right;
+  border-bottom: 1px solid #dadada;
+}
+.audit-result-table tbody td:first-child {
+  text-align: left;
+}
+.audit-result-table tbody td p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.audit-result-table a {
+  color: #10aeff;
+}
+.audit-result-item-summary {
+  display: flex;
+  padding: 15px 0;
+  border-bottom: 1px solid #dadada;
+  outline: 0;
+  align-items: center;
+  color: #7f7f77;
+}
+.audit-result-item-summary [class^="ui-icon"] {
+  background-color: #7f7f7f;
+}
+.audit-result-item-summary-content {
+  flex: 1;
+  font-size: 13px;
+  padding-left: 10px;
+}
+.audit-result-item-content {
+  font-size: 13px;
+  flex: 1;
+}
+.audit-result-item {
+  display: flex;
+  padding: 15px 0;
+  margin-left: 20px;
+  border-bottom: 1px solid #dadada;
+  outline: 0;
+}
+.audit-result-item-detail {
+  margin-left: 25px;
+  padding: 10px 0;
+  color: #7f7f7f;
+}
+.audit-result-item-ext {
+  font-size: 11px;
+  color: #fa5151;
+}
+body.dark .audit-result-item-summary,
+body.dark .audit-result-item {
+  border-color: #3a3a3a;
+}
+body.dark .audit-result-table thead th {
+  border-color: #3a3a3a;
+}
+body.dark .audit-result-table tbody td {
+  border-color: #3a3a3a;
+}
+body.dark [class^="ui-icon-arrow"] {
+  background-color: #ccc;
+}
+body.dark .audit-score-item-icon-circle-bg {
+  stroke: #3e3e3e;
+}
+.ui-icon-arrow-up-o {
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 8px;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 xmlns:xlink=%27http://www.w3.org/1999/xlink%27 width=%2711%27 height=%277%27 viewBox=%270 0 11 7%27%3E  %3Cdefs%3E    %3ClinearGradient id=%27384e65d3-3eba-457c-b069-e5afe8f816fe-c%27 x1=%2750%25%27 x2=%2750%25%27 y1=%270%25%27 y2=%27100%25%27%3E      %3Cstop offset=%270%25%27 stop-color=%27%23FCFCFC%27/%3E      %3Cstop offset=%27100%25%27 stop-color=%27%23F1F1F1%27/%3E    %3C/linearGradient%3E    %3Cpath id=%27384e65d3-3eba-457c-b069-e5afe8f816fe-b%27 d=%27M5.058 8.287l-.707.707L.5 5.14a.664.664 0 0 1 0-.942L4.35.347l.707.707L1.442 4.67l3.616 3.617z%27/%3E    %3Cfilter id=%27384e65d3-3eba-457c-b069-e5afe8f816fe-a%27 width=%27184.1%25%27 height=%27146.3%25%27 x=%27-42.1%25%27 y=%27-11.6%25%27 filterUnits=%27objectBoundingBox%27%3E      %3CfeOffset dy=%271%27 in=%27SourceAlpha%27 result=%27shadowOffsetOuter1%27/%3E      %3CfeGaussianBlur in=%27shadowOffsetOuter1%27 result=%27shadowBlurOuter1%27 stdDeviation=%27.5%27/%3E      %3CfeColorMatrix in=%27shadowBlurOuter1%27 values=%270 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0612828351 0%27/%3E    %3C/filter%3E    %3Cfilter id=%27384e65d3-3eba-457c-b069-e5afe8f816fe-d%27 width=%27163.1%25%27 height=%27134.7%25%27 x=%27-31.5%25%27 y=%27-5.8%25%27 filterUnits=%27objectBoundingBox%27%3E      %3CfeGaussianBlur in=%27SourceAlpha%27 result=%27shadowBlurInner1%27 stdDeviation=%27.5%27/%3E      %3CfeOffset in=%27shadowBlurInner1%27 result=%27shadowOffsetInner1%27/%3E      %3CfeComposite in=%27shadowOffsetInner1%27 in2=%27SourceAlpha%27 k2=%27-1%27 k3=%271%27 operator=%27arithmetic%27 result=%27shadowInnerInner1%27/%3E      %3CfeColorMatrix in=%27shadowInnerInner1%27 values=%270 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0%27/%3E    %3C/filter%3E  %3C/defs%3E  %3Cg fill=%27none%27 fill-rule=%27evenodd%27 opacity=%27.5%27 transform=%27matrix%280 1 1 0 .326 .306%29%27%3E    %3Cuse fill=%27%23000%27 filter=%27url%28%23384e65d3-3eba-457c-b069-e5afe8f816fe-a%29%27 xlink:href=%27%23384e65d3-3eba-457c-b069-e5afe8f816fe-b%27/%3E    %3Cuse fill=%27url%28%23384e65d3-3eba-457c-b069-e5afe8f816fe-c%29%27 xlink:href=%27%23384e65d3-3eba-457c-b069-e5afe8f816fe-b%27/%3E    %3Cuse fill=%27%23000%27 filter=%27url%28%23384e65d3-3eba-457c-b069-e5afe8f816fe-d%29%27 xlink:href=%27%23384e65d3-3eba-457c-b069-e5afe8f816fe-b%27/%3E  %3C/g%3E%3C/svg%3E") no-repeat 50% 50%;
+          mask: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 xmlns:xlink=%27http://www.w3.org/1999/xlink%27 width=%2711%27 height=%277%27 viewBox=%270 0 11 7%27%3E  %3Cdefs%3E    %3ClinearGradient id=%27384e65d3-3eba-457c-b069-e5afe8f816fe-c%27 x1=%2750%25%27 x2=%2750%25%27 y1=%270%25%27 y2=%27100%25%27%3E      %3Cstop offset=%270%25%27 stop-color=%27%23FCFCFC%27/%3E      %3Cstop offset=%27100%25%27 stop-color=%27%23F1F1F1%27/%3E    %3C/linearGradient%3E    %3Cpath id=%27384e65d3-3eba-457c-b069-e5afe8f816fe-b%27 d=%27M5.058 8.287l-.707.707L.5 5.14a.664.664 0 0 1 0-.942L4.35.347l.707.707L1.442 4.67l3.616 3.617z%27/%3E    %3Cfilter id=%27384e65d3-3eba-457c-b069-e5afe8f816fe-a%27 width=%27184.1%25%27 height=%27146.3%25%27 x=%27-42.1%25%27 y=%27-11.6%25%27 filterUnits=%27objectBoundingBox%27%3E      %3CfeOffset dy=%271%27 in=%27SourceAlpha%27 result=%27shadowOffsetOuter1%27/%3E      %3CfeGaussianBlur in=%27shadowOffsetOuter1%27 result=%27shadowBlurOuter1%27 stdDeviation=%27.5%27/%3E      %3CfeColorMatrix in=%27shadowBlurOuter1%27 values=%270 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0612828351 0%27/%3E    %3C/filter%3E    %3Cfilter id=%27384e65d3-3eba-457c-b069-e5afe8f816fe-d%27 width=%27163.1%25%27 height=%27134.7%25%27 x=%27-31.5%25%27 y=%27-5.8%25%27 filterUnits=%27objectBoundingBox%27%3E      %3CfeGaussianBlur in=%27SourceAlpha%27 result=%27shadowBlurInner1%27 stdDeviation=%27.5%27/%3E      %3CfeOffset in=%27shadowBlurInner1%27 result=%27shadowOffsetInner1%27/%3E      %3CfeComposite in=%27shadowOffsetInner1%27 in2=%27SourceAlpha%27 k2=%27-1%27 k3=%271%27 operator=%27arithmetic%27 result=%27shadowInnerInner1%27/%3E      %3CfeColorMatrix in=%27shadowInnerInner1%27 values=%270 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0%27/%3E    %3C/filter%3E  %3C/defs%3E  %3Cg fill=%27none%27 fill-rule=%27evenodd%27 opacity=%27.5%27 transform=%27matrix%280 1 1 0 .326 .306%29%27%3E    %3Cuse fill=%27%23000%27 filter=%27url%28%23384e65d3-3eba-457c-b069-e5afe8f816fe-a%29%27 xlink:href=%27%23384e65d3-3eba-457c-b069-e5afe8f816fe-b%27/%3E    %3Cuse fill=%27url%28%23384e65d3-3eba-457c-b069-e5afe8f816fe-c%29%27 xlink:href=%27%23384e65d3-3eba-457c-b069-e5afe8f816fe-b%27/%3E    %3Cuse fill=%27%23000%27 filter=%27url%28%23384e65d3-3eba-457c-b069-e5afe8f816fe-d%29%27 xlink:href=%27%23384e65d3-3eba-457c-b069-e5afe8f816fe-b%27/%3E  %3C/g%3E%3C/svg%3E") no-repeat 50% 50%;
+  -webkit-mask-size: cover;
+          mask-size: cover;
+  background-color: currentColor;
+}
+.ui-icon-arrow-down-o {
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 8px;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 xmlns:xlink=%27http://www.w3.org/1999/xlink%27 width=%2711%27 height=%277%27 viewBox=%270 0 11 7%27%3E  %3Cdefs%3E    %3ClinearGradient id=%2727ae5ee4-2566-47d2-9f7f-6fb2b19d956e-c%27 x1=%2750%25%27 x2=%2750%25%27 y1=%270%25%27 y2=%27100%25%27%3E      %3Cstop offset=%270%25%27 stop-color=%27%23FCFCFC%27/%3E      %3Cstop offset=%27100%25%27 stop-color=%27%23F1F1F1%27/%3E    %3C/linearGradient%3E    %3Cpath id=%2727ae5ee4-2566-47d2-9f7f-6fb2b19d956e-b%27 d=%27M5.058 8.287l-.707.707L.5 5.14a.664.664 0 0 1 0-.942L4.35.347l.707.707L1.442 4.67l3.616 3.617z%27/%3E    %3Cfilter id=%2727ae5ee4-2566-47d2-9f7f-6fb2b19d956e-a%27 width=%27184.1%25%27 height=%27146.3%25%27 x=%27-42.1%25%27 y=%27-11.6%25%27 filterUnits=%27objectBoundingBox%27%3E      %3CfeOffset dy=%271%27 in=%27SourceAlpha%27 result=%27shadowOffsetOuter1%27/%3E      %3CfeGaussianBlur in=%27shadowOffsetOuter1%27 result=%27shadowBlurOuter1%27 stdDeviation=%27.5%27/%3E      %3CfeColorMatrix in=%27shadowBlurOuter1%27 values=%270 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0612828351 0%27/%3E    %3C/filter%3E    %3Cfilter id=%2727ae5ee4-2566-47d2-9f7f-6fb2b19d956e-d%27 width=%27163.1%25%27 height=%27134.7%25%27 x=%27-31.5%25%27 y=%27-5.8%25%27 filterUnits=%27objectBoundingBox%27%3E      %3CfeGaussianBlur in=%27SourceAlpha%27 result=%27shadowBlurInner1%27 stdDeviation=%27.5%27/%3E      %3CfeOffset in=%27shadowBlurInner1%27 result=%27shadowOffsetInner1%27/%3E      %3CfeComposite in=%27shadowOffsetInner1%27 in2=%27SourceAlpha%27 k2=%27-1%27 k3=%271%27 operator=%27arithmetic%27 result=%27shadowInnerInner1%27/%3E      %3CfeColorMatrix in=%27shadowInnerInner1%27 values=%270 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0%27/%3E    %3C/filter%3E  %3C/defs%3E  %3Cg fill=%27none%27 fill-rule=%27evenodd%27 opacity=%27.5%27 transform=%27rotate%28-90 3.51 3.184%29%27%3E    %3Cuse fill=%27%23000%27 filter=%27url%28%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-a%29%27 xlink:href=%27%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-b%27/%3E    %3Cuse fill=%27url%28%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-c%29%27 xlink:href=%27%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-b%27/%3E    %3Cuse fill=%27%23000%27 filter=%27url%28%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-d%29%27 xlink:href=%27%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-b%27/%3E  %3C/g%3E%3C/svg%3E") no-repeat 50% 50%;
+          mask: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 xmlns:xlink=%27http://www.w3.org/1999/xlink%27 width=%2711%27 height=%277%27 viewBox=%270 0 11 7%27%3E  %3Cdefs%3E    %3ClinearGradient id=%2727ae5ee4-2566-47d2-9f7f-6fb2b19d956e-c%27 x1=%2750%25%27 x2=%2750%25%27 y1=%270%25%27 y2=%27100%25%27%3E      %3Cstop offset=%270%25%27 stop-color=%27%23FCFCFC%27/%3E      %3Cstop offset=%27100%25%27 stop-color=%27%23F1F1F1%27/%3E    %3C/linearGradient%3E    %3Cpath id=%2727ae5ee4-2566-47d2-9f7f-6fb2b19d956e-b%27 d=%27M5.058 8.287l-.707.707L.5 5.14a.664.664 0 0 1 0-.942L4.35.347l.707.707L1.442 4.67l3.616 3.617z%27/%3E    %3Cfilter id=%2727ae5ee4-2566-47d2-9f7f-6fb2b19d956e-a%27 width=%27184.1%25%27 height=%27146.3%25%27 x=%27-42.1%25%27 y=%27-11.6%25%27 filterUnits=%27objectBoundingBox%27%3E      %3CfeOffset dy=%271%27 in=%27SourceAlpha%27 result=%27shadowOffsetOuter1%27/%3E      %3CfeGaussianBlur in=%27shadowOffsetOuter1%27 result=%27shadowBlurOuter1%27 stdDeviation=%27.5%27/%3E      %3CfeColorMatrix in=%27shadowBlurOuter1%27 values=%270 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0612828351 0%27/%3E    %3C/filter%3E    %3Cfilter id=%2727ae5ee4-2566-47d2-9f7f-6fb2b19d956e-d%27 width=%27163.1%25%27 height=%27134.7%25%27 x=%27-31.5%25%27 y=%27-5.8%25%27 filterUnits=%27objectBoundingBox%27%3E      %3CfeGaussianBlur in=%27SourceAlpha%27 result=%27shadowBlurInner1%27 stdDeviation=%27.5%27/%3E      %3CfeOffset in=%27shadowBlurInner1%27 result=%27shadowOffsetInner1%27/%3E      %3CfeComposite in=%27shadowOffsetInner1%27 in2=%27SourceAlpha%27 k2=%27-1%27 k3=%271%27 operator=%27arithmetic%27 result=%27shadowInnerInner1%27/%3E      %3CfeColorMatrix in=%27shadowInnerInner1%27 values=%270 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0%27/%3E    %3C/filter%3E  %3C/defs%3E  %3Cg fill=%27none%27 fill-rule=%27evenodd%27 opacity=%27.5%27 transform=%27rotate%28-90 3.51 3.184%29%27%3E    %3Cuse fill=%27%23000%27 filter=%27url%28%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-a%29%27 xlink:href=%27%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-b%27/%3E    %3Cuse fill=%27url%28%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-c%29%27 xlink:href=%27%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-b%27/%3E    %3Cuse fill=%27%23000%27 filter=%27url%28%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-d%29%27 xlink:href=%27%2327ae5ee4-2566-47d2-9f7f-6fb2b19d956e-b%27/%3E  %3C/g%3E%3C/svg%3E") no-repeat 50% 50%;
+  -webkit-mask-size: cover;
+          mask-size: cover;
+  background-color: currentColor;
+}
+.export-btn {
+  margin-right: 15px;
+}
+</style></head><body><div class="audit-result"><div><div class="audit-result-hd"><div class="audit-result-summary"><div class="audit-result-summary–primary"><h3 class="audit-title">体验评分</h3> <p class="audit-result-desc"><span>设备类型：iPhone 12/13 Pro Max</span> <span>网络类型：wifi</span> <span>基础库版本：3.14.2</span></p></div> <div class="audit-result-summary-extra"> <div><span class="audit-icon-color-remark"><i class="audit-icon-dot-red"></i> <span>0 - 59</span></span> <span class="audit-icon-color-remark"><i class="audit-icon-dot-yellow"></i> <span>60 - 89</span></span> <span class="audit-icon-color-remark"><i class="audit-icon-dot-green"></i> <span>90 - 100</span></span></div></div></div> <div class="audit-result-score"><div class="audit-score-item"><div class="audit-score-item-icon audit-score-item-icon-yellow"><svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 14 14"><circle class="audit-score-item-icon-circle-bg"></circle> <circle cx="7" cy="7" r="6" fill="none" stroke-width="1" transform="rotate(-90 7 7)" class="audit-score-item-icon-circle" style="stroke-dasharray: 30.16, 7.54;"></circle></svg> <span class="audit-score-value">80</span></div> <div class="audit-score-item-desc">总分</div></div> <div class="audit-score-item"><div class="audit-score-item-icon audit-score-item-icon-green"><svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 14 14"><circle class="audit-score-item-icon-circle-bg"></circle> <circle cx="7" cy="7" r="6" fill="none" stroke-width="1" stroke="#11E299" transform="rotate(-90 7 7)" class="audit-score-item-icon-circle" style="stroke-dasharray: 37.7, 0;"></circle></svg> <span class="audit-score-value">100</span></div> <div class="audit-score-item-desc">性能</div></div><div class="audit-score-item"><div class="audit-score-item-icon audit-score-item-icon-red"><svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 14 14"><circle class="audit-score-item-icon-circle-bg"></circle> <circle cx="7" cy="7" r="6" fill="none" stroke-width="1" stroke="#11E299" transform="rotate(-90 7 7)" class="audit-score-item-icon-circle" style="stroke-dasharray: 10.179, 27.521;"></circle></svg> <span class="audit-score-value">27</span></div> <div class="audit-score-item-desc">体验</div></div><div class="audit-score-item"><div class="audit-score-item-icon audit-score-item-icon-green"><svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0 0 14 14"><circle class="audit-score-item-icon-circle-bg"></circle> <circle cx="7" cy="7" r="6" fill="none" stroke-width="1" stroke="#11E299" transform="rotate(-90 7 7)" class="audit-score-item-icon-circle" style="stroke-dasharray: 34.307, 3.393;"></circle></svg> <span class="audit-score-value">91</span></div> <div class="audit-score-item-desc">最佳实践</div></div></div></div> <div class="audit-result-bd"><div class="audit-result-group"><div class="audit-result-group-hd"><h3 class="audit-result-group-title audit-result-group-title-green">性能 <span class="audit-result-group-score">100</span></h3> <p class="audit-result-group-desc">从页面渲染、网络、JS脚本等方面评估小程序的性能</p></div> <div class="audit-result-group-bd"><!----> <!----> <details class="audit-result-items"><summary class="audit-result-item-summary"><p class="audit-result-item-summary-content">已通过</p> <span>10 项&nbsp;</span> <i class="ui-icon-arrow-down-o"></i></summary> <div><details><summary class="audit-result-item"><p class="audit-result-item-content">1 避免过大的 WXML 节点数目</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>建议一个页面使用少于 1000 个 WXML 节点，节点树深度少于 30 层，子节点数不大于 60 个。一个太大的 WXML 节点树会增加内存的使用，样式重排时间也会更长。&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">2 避免执行脚本的耗时过长的情况</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>执行脚本的耗时过长会让用户觉得卡顿，体验较差，出现这一情况时，需要确认并优化脚本的逻辑&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">3 避免首屏时间太长的情况</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>首屏时间是指用户开始看到第一屏的内容的时间，首屏时间太长会导致用户长时间看到的都是白屏，会一直等待有意义的内容展示出来。出现这一情况，应仔细检查这个过程都有哪个操作，一般来说，可能是请求数据的时间太长，或者是一次渲染的数据太大导致渲染时间太长。&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">4 避免渲染界面的耗时过长的情况</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>渲染界面的耗时过长会让用户觉得卡顿，体验较差，出现这一情况时，需要校验下是否同时渲染的区域太大&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">5 对网络请求做必要的缓存以避免多余的请求</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>发起网络请求总会让用户等待，可能造成不好的体验，应尽量避免多余的请求，比如对同样的请求进行缓存&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">6 所有请求的耗时不应太久</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>请求的耗时太长会让用户一直等待甚至离开，应当优化好服务器处理时间、减小回包大小，让请求快速响应&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">7 避免 setData 的调用过于频繁</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>setData接口的调用涉及逻辑层与渲染层间的线程通过，通信过于频繁可能导致处理队列阻塞，界面渲染不及时而导致卡顿，应避免无用的频繁调用&nbsp;</p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">8 避免 setData 的数据过大</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>由于小程序运行逻辑线程与渲染线程之上，setData的调用会把数据从逻辑层传到渲染层，数据太大会增加通信时间&nbsp;</p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">9 避免短时间内发起太多的图片请求</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>短时间内发起太多图片请求会触发浏览器并行加载的限制，可能导致图片加载慢，用户一直处理等待。应该合理控制数量，可考虑使用 HTTP/2 多路复用、雪碧图技术、拆分域名或在屏幕外的图片使用懒加载&nbsp;</p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">10 避免短时间内发起太多的请求</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>短时间内发起太多请求会触发小程序并行请求数量的限制，同时太多请求也可能导致加载慢等问题，应合理控制请求数量，可考虑使用 HTTP/2 多路复用，甚至做请求的合并等&nbsp;<!----></p></div></details></div></details></div></div><div class="audit-result-group"><div class="audit-result-group-hd"><h3 class="audit-result-group-title audit-result-group-title-red">体验 <span class="audit-result-group-score">27</span></h3> <p class="audit-result-group-desc">从视觉、交互等方面评估小程序的体验是否足够好</p></div> <div class="audit-result-group-bd"><details open="open" class="audit-result-items"><summary class="audit-result-item-summary"><p class="audit-result-item-summary-content">没通过</p> <span>2 项&nbsp;</span> <i class="ui-icon-arrow-down-o"></i></summary> <div><details open="open"><summary class="audit-result-item"><p class="audit-result-item-content">1 存在使用 css ':active' 伪类来实现点击态 <!----></p> <p class="audit-result-item-ext"><!----><i class="ui-icon-arrow-down-o"></i></p></summary> <details class="audit-result-item-detail"><summary>使用 css ':active' 伪类来实现点击态，很容易触发，并且滚动或滑动时点击态不会消失，体验较差。建议使用小程序内置组件的 'hover-*' 属性来实现&nbsp;<i class="ui-icon-arrow-down-o"></i></summary> <div><table class="audit-result-table"><thead><tr><th>选择器</th><th>文件</th><th>页面</th></tr></thead> <tbody><tr><td><p title=".option-card:active">.option-card:active</p></td><td><p title="/pages/dialogue-training/dialogue-training.wxss">/pages/dialogue-training/dialogue-training.wxss</p></td><td><p title="pages/dialogue-training/dialogue-training">pages/dialogue-training/dialogue-training</p></td></tr><tr><td><p title=".history-entry:active">.history-entry:active</p></td><td><p title="/pages/sensory-writing/sensory-writing.wxss">/pages/sensory-writing/sensory-writing.wxss</p></td><td><p title="pages/sensory-writing/sensory-writing">pages/sensory-writing/sensory-writing</p></td></tr><tr><td><p title=".start-btn:active">.start-btn:active</p></td><td><p title="/pages/training/training.wxss">/pages/training/training.wxss</p></td><td><p title="pages/training/training">pages/training/training</p></td></tr><tr><td><p title=".close-letter-btn:active">.close-letter-btn:active</p></td><td><p title="/pages/about/about.wxss">/pages/about/about.wxss</p></td><td><p title="pages/about/about">pages/about/about</p></td></tr><tr><td><p title=".experience-card:active">.experience-card:active</p></td><td><p title="/pages/knowledge/knowledge.wxss">/pages/knowledge/knowledge.wxss</p></td><td><p title="pages/knowledge/knowledge">pages/knowledge/knowledge</p></td></tr><tr><td><p title=".view-report-btn:active">.view-report-btn:active</p></td><td><p title="/pages/women/women.wxss">/pages/women/women.wxss</p></td><td><p title="pages/women/women">pages/women/women</p></td></tr><tr><td><p title=".day-cell.has-record:active">.day-cell.has-record:active</p></td><td><p title="/pages/history/history.wxss">/pages/history/history.wxss</p></td><td><p title="pages/history/history">pages/history/history</p></td></tr><tr><td><p title=".bgm-toggle:active">.bgm-toggle:active</p></td><td><p title="/pages/index/index.wxss">/pages/index/index.wxss</p></td><td><p title="pages/index/index">pages/index/index</p></td></tr><tr><td><p title=".start-ai-btn:active">.start-ai-btn:active</p></td><td><p title="/pages/main/main.wxss">/pages/main/main.wxss</p></td><td><p title="pages/main/main">pages/main/main</p></td></tr></tbody></table></div></details> <!----></details><details open="open"><summary class="audit-result-item"><p class="audit-result-item-content">2 滚动区域没有开启惯性滚动 <!----></p> <p class="audit-result-item-ext"><!----><i class="ui-icon-arrow-down-o"></i></p></summary> <details class="audit-result-item-detail"><summary>惯性滚动会使滚动比较顺畅，在安卓下默认有惯性滚动，而在 iOS 下需要额外设置 `-webkit-overflow-scrolling: touch` 的样式&nbsp;<!----><i class="ui-icon-arrow-down-o"></i></summary> <div><table class="audit-result-table"><thead><tr><th>选择器</th><th>文件</th><th>页面</th></tr></thead> <tbody><tr><td><p title=".letter-scroll">.letter-scroll</p></td><td><p title="/pages/about/about.wxss">/pages/about/about.wxss</p></td><td><p title="pages/about/about">pages/about/about</p></td></tr><tr><td><p title=".category-tabs">.category-tabs</p></td><td><p title="/pages/knowledge/knowledge.wxss">/pages/knowledge/knowledge.wxss</p></td><td><p title="pages/knowledge/knowledge">pages/knowledge/knowledge</p></td></tr><tr><td><p title=".chat-messages">.chat-messages</p></td><td><p title="/pages/main/main.wxss">/pages/main/main.wxss</p></td><td><p title="pages/main/main">pages/main/main</p></td></tr></tbody></table></div></details> <!----></details></div></details> <!----> <details class="audit-result-items"><summary class="audit-result-item-summary"><p class="audit-result-item-summary-content">已通过</p> <span>3 项&nbsp;</span> <i class="ui-icon-arrow-down-o"></i></summary> <div><details><summary class="audit-result-item"><p class="audit-result-item-content">1 固定底部的可点击组件都在iPhone X安全区域内</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>底部的可交互组件如果渲染在iPhone X的安全区域外，容易误触Home Indicator&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">2 合理设置可点击元素的响应区域大小</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>我们应该合理地设置好可点击元素的响应区域大小，如果过小会导致用户很难点中，体验很差&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">3 文字颜色与背景色搭配较好，适宜的颜色对比度更方便用户阅读</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>文字颜色与背景色需要搭配得当，适宜的颜色对比度可以让用户更好地阅读，提升小程序的用户体验&nbsp;</p></div></details></div></details></div></div><div class="audit-result-group"><div class="audit-result-group-hd"><h3 class="audit-result-group-title audit-result-group-title-green">最佳实践 <span class="audit-result-group-score">91</span></h3> <p class="audit-result-group-desc"></p></div> <div class="audit-result-group-bd"><details open="open" class="audit-result-items"><summary class="audit-result-item-summary"><p class="audit-result-item-summary-content">没通过</p> <span>3 项&nbsp;</span> <i class="ui-icon-arrow-down-o"></i></summary> <div><details open="open"><summary class="audit-result-item"><p class="audit-result-item-content">1 存在将未绑定在 WXML 的变量传入 setData <!----></p> <p class="audit-result-item-ext"><!----><i class="ui-icon-arrow-down-o"></i></p></summary> <details class="audit-result-item-detail"><summary>setData操作会引起框架处理一些渲染界面相关的工作，一个未绑定的变量意味着与界面渲染无关，传入setData会造成不必要的性能消耗&nbsp;<i class="ui-icon-arrow-down-o"></i></summary> <div><table class="audit-result-table"><thead><tr><th>变量名</th><th>调用堆栈</th><th>页面</th></tr></thead> <tbody><tr><td><p title="emotionIntensities">emotionIntensities</p></td><td></td><td><p title="pages/main/main">pages/main/main</p></td></tr><tr><td><p title="selectedBodyFeelings">selectedBodyFeelings</p></td><td></td><td><p title="pages/main/main">pages/main/main</p></td></tr><tr><td><p title="records">records</p></td><td></td><td><p title="pages/history/history">pages/history/history</p></td></tr><tr><td><p title="periodLength">periodLength</p></td><td></td><td><p title="pages/women/women">pages/women/women</p></td></tr><tr><td><p title="records">records</p></td><td></td><td><p title="pages/general-report/general-report">pages/general-report/general-report</p></td></tr></tbody></table></div></details> <!----></details><details open="open"><summary class="audit-result-item"><p class="audit-result-item-content">2 wxss 覆盖率较低，存在大量未使用的样式 </p> <p class="audit-result-item-ext"><span>大约可以节省 4 KB</span><i class="ui-icon-arrow-down-o"></i></p></summary> <details class="audit-result-item-detail"><summary>我们应该按需引入 wxss 资源，如果小程序中存在大量未使用的样式，会增加小程序包体积大小，从而在一定程度上影响加载速度&nbsp;<!----><i class="ui-icon-arrow-down-o"></i></summary> <div><table class="audit-result-table"><thead><tr><th>文件名</th><th>原文件大小</th><th>可节省</th></tr></thead> <tbody><tr><td><p title="/pages/sensory-writing/sensory-writing.wxss">/pages/sensory-writing/sensory-writing.wxss</p></td><td><p title="8.1 KB">8.1 KB</p></td><td><p title="3.6 KB(44%)">3.6 KB(44%)</p></td></tr></tbody></table></div></details> <!----></details><details open="open"><summary class="audit-result-item"><p class="audit-result-item-content">3 存在将不可能被访问到的页面打包在小程序包里 </p> <p class="audit-result-item-ext"><span>1 个页面可能不会被访问到</span><i class="ui-icon-arrow-down-o"></i></p></summary> <details class="audit-result-item-detail"><summary>小程序的包大小会影响加载时间，应该尽量控制包体积大小，避免将不会被使用的文件打包进去&nbsp;<!----><i class="ui-icon-arrow-down-o"></i></summary> <div><table class="audit-result-table"><thead><tr><th>文件</th></tr></thead> <tbody><tr><td><p title="/components/navigation-bar/navigation-bar.wxml">/components/navigation-bar/navigation-bar.wxml</p></td></tr></tbody></table></div></details> <!----></details></div></details> <!----> <details class="audit-result-items"><summary class="audit-result-item-summary"><p class="audit-result-item-summary-content">已通过</p> <span>6 项&nbsp;</span> <i class="ui-icon-arrow-down-o"></i></summary> <div><details><summary class="audit-result-item"><p class="audit-result-item-content">1 未发现使用废弃接口</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>使用即将废弃或已废弃接口，可能导致小程序运行不正常。一般而言，接口不会立即去掉，但保险起见，建议不要使用，避免后续小程序突然运行异常。&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">2 应避免出现任何 JavaScript 异常</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>出现 JavaScript 异常可能导致程序的交互无法进行下去，我们应当追求零异常，保证程序的高鲁棒性和高可用性&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">3 所有请求应响应正常</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>请求失败可能导致程序的交互无法进行下去，应当保证所有请求都能成功&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">4 避免定时器未跟随页面回收</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>定时器是全局的，并不是跟页面绑定的，当小程序从一个页面路由到另一个页面之后，前一个页面定时器应注意手动回收&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">5 所有资源请求都建议使用 HTTPS</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>使用 HTTPS，可以让你的小程序更加安全，而 HTTP 是明文传输的，存在可能被篡改内容的风险&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">6 避免将多余的组件声明在usingComponents中</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>组件/页面的usingComponents会影响启动速度，应避免将多余的组件声明在usingComponents中&nbsp;<!----></p></div></details></div></details></div></div> <div><details class="audit-result-items"><summary class="audit-result-item-summary"><p class="audit-result-item-summary-content">不适用当前小程序</p> <span>5 项&nbsp;</span> <i class="ui-icon-arrow-down-o"></i></summary> <div><details><summary class="audit-result-item"><p class="audit-result-item-content">1 网络图片资源应开启 HTTP 缓存控制</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>开启 HTTP 缓存控制后，下一次加载同样的图片，会直接从缓存读取，提升加载速度&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">2 应让图片按原图宽高比例显示</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>图片若没有按原图宽高比例显示，可能导致图片歪曲，不美观，甚至导致用户识别困难。可根据情况设置 image 组件的 mode 属性，以保持原图宽高比。&nbsp;</p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">3 合理控制图片的大小</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>图片太大会增加下载时间和内存的消耗，应根据显示区域大小合理控制图片大小&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">4 窗口大小改变时进行了良好的UI适配</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>可改变窗口大小的小程序需要对不同窗口尺寸进行UI适配，以达到最佳体验&nbsp;<!----></p></div></details><details><summary class="audit-result-item"><p class="audit-result-item-content">5 未发现正在使用组件/API的最低支持版本高于线上最低基础库版本</p> <p class="audit-result-item-ext"><i class="ui-icon-arrow-down-o"></i></p></summary> <div class="audit-result-item-detail"><p>使用低版本不支持的组件或API可能导致小程序无法正常运行，推荐使用支持对应组件/API的最低或更高版本&nbsp;</p></div></details></div></details></div> <!----></div></div></div></body></html>

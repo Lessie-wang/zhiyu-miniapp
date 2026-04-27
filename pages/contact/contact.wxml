@@ -1,0 +1,124 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">联系知愈</text>
+    <text class="page-subtitle">我们在这里，随时倾听你的声音</text>
+  </view>
+
+  <!-- 功能列表 -->
+  <view class="menu-list">
+
+    <!-- 意见反馈 -->
+    <button class="menu-item" open-type="contact">
+      <view class="menu-left">
+        <text class="menu-icon">💬</text>
+        <view class="menu-text">
+          <text class="menu-title">意见反馈</text>
+          <text class="menu-desc">直接与知愈客服对话</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+    </button>
+
+    <!-- 小程序更新日志 -->
+    <view class="menu-item" bindtap="goToChangelog">
+      <view class="menu-left">
+        <text class="menu-icon">📋</text>
+        <view class="menu-text">
+          <text class="menu-title">更新日志</text>
+          <text class="menu-desc">查看最新功能与改进</text>
+        </view>
+      </view>
+      <view class="menu-right">
+        <text class="new-badge" wx:if="{{hasNewUpdate}}">NEW</text>
+        <text class="menu-arrow">→</text>
+      </view>
+    </view>
+
+    <!-- 重要提醒 -->
+    <view class="menu-item" bindtap="goToNotices">
+      <view class="menu-left">
+        <text class="menu-icon">🔔</text>
+        <view class="menu-text">
+          <text class="menu-title">重要提醒</text>
+          <text class="menu-desc">公告与重要通知</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+    </view>
+
+    <!-- 数据隐私 -->
+    <view class="menu-item" bindtap="goToPrivacy">
+      <view class="menu-left">
+        <text class="menu-icon">🔒</text>
+        <view class="menu-text">
+          <text class="menu-title">数据隐私</text>
+          <text class="menu-desc">了解我们如何保护你的数据</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+    </view>
+
+    <!-- 添加到桌面 -->
+    <view class="menu-item" bindtap="addToDesktop">
+      <view class="menu-left">
+        <text class="menu-icon">📱</text>
+        <view class="menu-text">
+          <text class="menu-title">添加到桌面</text>
+          <text class="menu-desc">快速打开知愈</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+    </view>
+
+    <!-- 个性化设置 -->
+    <view class="menu-item" bindtap="goToPersonalize">
+      <view class="menu-left">
+        <text class="menu-icon">🎨</text>
+        <view class="menu-text">
+          <text class="menu-title">个性化设置</text>
+          <text class="menu-desc">调整你的使用偏好</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+    </view>
+
+    <!-- 分享有礼 -->
+    <button class="menu-item" open-type="share">
+      <view class="menu-left">
+        <text class="menu-icon">🎁</text>
+        <view class="menu-text">
+          <text class="menu-title">分享有礼</text>
+          <text class="menu-desc">邀请好友一起养育情绪</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+    </button>
+
+  </view>
+
+  <!-- 底部危险操作区 -->
+  <view class="danger-section">
+    <view class="menu-item danger" bindtap="logout">
+      <view class="menu-left">
+        <text class="menu-icon">🚪</text>
+        <view class="menu-text">
+          <text class="menu-title">退出登录</text>
+        </view>
+      </view>
+    </view>
+    <view class="menu-item danger" bindtap="deleteAccount">
+      <view class="menu-left">
+        <text class="menu-icon">⚠️</text>
+        <view class="menu-text">
+          <text class="menu-title danger-text">注销账号</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text class="version-text">知愈 FeelingMosaic v1.0.0</text>
+  </view>
+</view>

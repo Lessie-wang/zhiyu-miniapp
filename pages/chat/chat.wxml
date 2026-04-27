@@ -1,0 +1,202 @@
+<view class="container">
+  <!-- 历史对话侧边栏 -->
+  <view class="sidebar-mask" wx:if="{{showHistorySidebar}}" bindtap="closeSidebar"></view>
+  <view class="history-sidebar {{showHistorySidebar ? 'show' : ''}}">
+    <view class="sidebar-header">
+      <text class="sidebar-title">对话历史</text>
+      <view class="sidebar-close" bindtap="closeSidebar">
+        <text class="close-icon">✕</text>
+      </view>
+    </view>
+
+    <view class="sidebar-body">
+      <!-- 新对话按钮 -->
+      <view class="new-conversation-btn" bindtap="startNewConversation">
+        <text class="new-icon">+</text>
+        <text class="new-text">开始新对话</text>
+      </view>
+
+      <!-- 对话历史列表 -->
+      <scroll-view class="conversation-list" scroll-y>
+        <view
+          class="conversation-item"
+          wx:for="{{conversationHistory}}"
+          wx:key="_id"
+          bindtap="switchToConversation"
+          data-id="{{item._id}}"
+        >
+          <view class="conv-emotions">
+            <text class="conv-emotion-tag" wx:for="{{item.emotions}}" wx:for-item="emotion" wx:key="*this">{{emotion}}</text>
+          </view>
+          <text class="conv-preview">{{item.preview}}</text>
+          <text class="conv-time">{{item.recordTime}}</text>
+        </view>
+
+        <view class="conversation-empty" wx:if="{{conversationHistory.length === 0}}">
+          <text class="empty-text">暂无历史对话</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 小知介绍 -->
+  <view class="ai-profile">
+    <view class="ai-center">
+      <image class="ai-avatar" src="/images/xiaozhi-avatar.jpg" mode="aspectFill"></image>
+      <view class="ai-info">
+        <text class="ai-name">小知</text>
+        <text class="ai-desc">陪你聊聊心事</text>
+      </view>
+    </view>
+    <view class="header-actions">
+      <view class="history-btn" bindtap="viewHistory">
+        <view class="history-css-icon">
+          <view class="hbook-spine"></view>
+          <view class="hbook-body"></view>
+        </view>
+      </view>
+      <view class="end-btn" bindtap="endConversation">
+        <text class="end-icon">✓</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 情绪标签 -->
+  <view class="emotion-tags">
+    <text class="tag" wx:for="{{emotions}}" wx:key="*this">{{item}}</text>
+    <text class="tag body-tag" wx:for="{{bodyFeelings}}" wx:key="*this">{{item}}</text>
+  </view>
+
+  <!-- 对话区域 -->
+  <scroll-view
+    class="chat-area"
+    scroll-y
+    scroll-into-view="{{scrollToView}}"
+    scroll-with-animation
+  >
+    <view class="chat-messages {{messages.length <= 1 ? 'chat-messages-bottom' : ''}}">
+      <view
+        class="message {{item.role === 'ai' ? 'ai-message' : 'user-message'}} {{item.isWelcome ? 'welcome-message' : ''}}"
+        wx:for="{{messages}}"
+        wx:key="id"
+        id="msg-{{item.id}}"
+      >
+        <view class="message-content {{item.isWelcome ? 'welcome-message-content' : ''}}">
+          <!-- 非编辑状态：显示消息内容 -->
+          <view wx:if="{{editingIndex !== index}}">
+            <view wx:if="{{item.role === 'ai' && item.isWelcome}}" class="welcome-card">
+              <text class="welcome-label">小知</text>
+              <rich-text class="message-text welcome-text" nodes="{{item.formattedContent || item.content}}" bindlongpress="onLongPressMessage" data-index="{{index}}" data-content="{{item.content}}"></rich-text>
+            </view>
+            <rich-text wx:else class="message-text" nodes="{{item.formattedContent || item.content}}" bindlongpress="onLongPressMessage" data-index="{{index}}" data-content="{{item.content}}"></rich-text>
+            <!-- 版本号显示和切换 -->
+            <view class="version-indicator" wx:if="{{item.role === 'user' && item.versionCount > 1}}">
+              <view class="version-nav">
+                <view class="version-btn" bindtap="previousVersion" data-index="{{index}}">
+                  <text class="version-arrow">‹</text>
+                </view>
+                <text class="version-text">{{(currentVersionIndex[index] !== undefined ? currentVersionIndex[index] : item.versionCount - 1) + 1}}/{{item.versionCount}}</text>
+                <view class="version-btn" bindtap="nextVersion" data-index="{{index}}">
+                  <text class="version-arrow">›</text>
+                </view>
+              </view>
+            </view>
+            <!-- 消息操作按钮组 -->
+            <view class="message-actions">
+              <!-- 复制按钮 -->
+              <view class="copy-btn" bindtap="copyMessage" data-content="{{item.content}}">
+                <view class="copy-css-icon">
+                  <view class="clipboard-back"></view>
+                  <view class="clipboard-front"></view>
+                </view>
+                <text class="copy-text">复制</text>
+              </view>
+              <!-- AI消息的收藏按钮 -->
+              <view class="favorite-btn {{favoriteMessages[item.id] ? 'favorited' : ''}}" wx:if="{{item.role === 'ai' && !item.isWelcome}}" bindtap="toggleFavorite" data-index="{{index}}" data-id="{{item.id}}" data-content="{{item.content}}">
+                <view class="star-css-icon">
+                  <view class="star-shape"></view>
+                </view>
+                <text class="favorite-text">收藏</text>
+              </view>
+              <!-- AI消息的重新生成按钮 -->
+              <view class="regenerate-btn" wx:if="{{item.role === 'ai' && !item.isWelcome && index === messages.length - 1 && !isAIThinking}}" bindtap="regenerateResponse">
+                <view class="regen-css-icon">
+                  <view class="regen-circle"></view>
+                  <view class="regen-arrow"></view>
+                </view>
+                <text class="regenerate-text">换一条</text>
+              </view>
+              <!-- 用户消息的编辑按钮 -->
+              <view class="edit-btn" wx:if="{{item.role === 'user' && !isAIThinking}}" bindtap="editMessage" data-index="{{index}}">
+                <view class="edit-css-icon">
+                  <view class="pencil-body"></view>
+                  <view class="pencil-tip"></view>
+                </view>
+                <text class="edit-text">编辑</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 编辑状态：显示编辑框 -->
+          <view wx:if="{{editingIndex === index}}" class="editing-container">
+            <textarea
+              class="edit-textarea"
+              value="{{editingText}}"
+              bindinput="onEditInput"
+              auto-focus
+              auto-height
+              maxlength="500"
+              placeholder="编辑你的消息..."
+            />
+            <view class="edit-actions">
+              <view class="edit-action-btn cancel-btn" bindtap="cancelEdit">
+                <text>取消</text>
+              </view>
+              <view class="edit-action-btn confirm-btn" bindtap="confirmEdit">
+                <text>重新发送</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 小知思考中 -->
+      <view class="message ai-message thinking" wx:if="{{isAIThinking}}" id="thinking">
+        <view class="thinking-bubble">
+          <text class="thinking-text">小知正在思考</text>
+          <view class="thinking-dots">
+            <view class="dot"></view>
+            <view class="dot"></view>
+            <view class="dot"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部输入区域 -->
+  <view class="input-area">
+    <!-- 文字输入 -->
+    <view class="chat-input-wrap">
+      <textarea
+        class="chat-input"
+        placeholder="说说你的感受..."
+        placeholder-style="font-size:28rpx;color:#B8B2A7;"
+        value="{{inputText}}"
+        bindinput="onInputChange"
+        confirm-type="return"
+        adjust-position="{{true}}"
+        cursor-spacing="20"
+        auto-height
+        maxlength="500"
+        show-confirm-bar="{{false}}"
+        disable-default-padding="{{true}}"
+        style="max-height:200rpx;"
+      />
+    </view>
+
+    <view class="send-btn" bindtap="sendMessage">
+      <text class="send-icon">↑</text>
+    </view>
+  </view>
+</view>
