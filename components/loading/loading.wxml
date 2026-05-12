@@ -1,0 +1,29 @@
+<!--
+  知愈小程序 - 加载组件
+  支持多种加载样式
+-->
+<view class="zh-loading zh-loading--{{type}} {{customClass}}">
+  <!-- 旋转加载 -->
+  <view wx:if="{{type === 'spinner'}}" class="zh-loading__spinner">
+    <view class="zh-loading__spinner-icon" style="border-color: {{color}}; border-top-color: transparent;"></view>
+  </view>
+
+  <!-- 点点加载 -->
+  <view wx:elif="{{type === 'dots'}}" class="zh-loading__dots">
+    <view class="zh-loading__dot" style="background: {{color}};"></view>
+    <view class="zh-loading__dot" style="background: {{color}};"></view>
+    <view class="zh-loading__dot" style="background: {{color}};"></view>
+  </view>
+
+  <!-- 波浪加载 -->
+  <view wx:elif="{{type === 'wave'}}" class="zh-loading__wave">
+    <view class="zh-loading__wave-bar" style="background: {{color}};"></view>
+    <view class="zh-loading__wave-bar" style="background: {{color}};"></view>
+    <view class="zh-loading__wave-bar" style="background: {{color}};"></view>
+    <view class="zh-loading__wave-bar" style="background: {{color}};"></view>
+    <view class="zh-loading__wave-bar" style="background: {{color}};"></view>
+  </view>
+
+  <!-- 加载文字 -->
+  <text wx:if="{{text}}" class="zh-loading__text" style="color: {{color}};">{{text}}</text>
+</view>

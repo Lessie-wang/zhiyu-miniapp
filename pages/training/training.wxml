@@ -1,5 +1,4 @@
 <view class="container">
-
   <!-- ===== 主视图 ===== -->
   <block wx:if="{{!showHistory}}">
     <!-- 页面标题 -->
@@ -13,10 +12,7 @@
       <!-- 模拟对话入口 -->
       <view class="entry-card dialogue-card" bindtap="showDialogueOptions">
         <view class="card-icon-wrap">
-          <view class="ci-dialogue">
-            <view class="ci-d-bubble1"></view>
-            <view class="ci-d-bubble2"></view>
-          </view>
+          <image class="card-icon-img" src="/assets/images/icons/icon-dialogue-training.jpg" mode="aspectFit"></image>
         </view>
         <text class="card-title">模拟对话</text>
         <text class="card-desc">真实场景练习</text>
@@ -25,11 +21,7 @@
       <!-- 感官写作入口 -->
       <view class="entry-card writing-card" bindtap="showWritingOptions">
         <view class="card-icon-wrap">
-          <view class="ci-writing">
-            <view class="ci-w-pen"></view>
-            <view class="ci-w-line1"></view>
-            <view class="ci-w-line2"></view>
-          </view>
+          <image class="card-icon-img" src="/assets/images/icons/icon-sensory-writing.jpg" mode="aspectFit"></image>
         </view>
         <text class="card-title">感官写作</text>
         <text class="card-desc">五感描述情绪</text>
@@ -98,6 +90,9 @@
             value="{{customSceneText}}"
             maxlength="100"
             auto-height
+            adjust-position="{{true}}"
+            cursor-spacing="150"
+            hold-keyboard="{{true}}"
           />
           <button class="custom-submit-btn" bindtap="submitCustomScene">
             <text class="btn-text">开始训练</text>

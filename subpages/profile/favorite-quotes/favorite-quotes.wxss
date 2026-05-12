@@ -1,0 +1,165 @@
+/* 收藏金句页面样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #FAF9F7 0%, #F2E6DF 100%);
+  padding: calc(env(safe-area-inset-top) + 60rpx) 32rpx 120rpx;
+}
+
+/* 收藏列表 */
+.quotes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+/* 金句卡片 */
+.quote-card {
+  background: #FFFDF8;
+  border-radius: 20rpx;
+  padding: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  border-left: 6rpx solid #D4B8A5;
+}
+
+.quote-content {
+  margin-bottom: 20rpx;
+}
+
+.quote-text {
+  font-size: 28rpx;
+  color: #6D6A65;
+  line-height: 1.8;
+  font-family: 'STKaiti', 'KaiTi', '楷体', 'STFangsong', 'FangSong', '仿宋', serif;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* 编辑模式文本框 */
+.quote-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  font-size: 28rpx;
+  color: #6D6A65;
+  line-height: 1.8;
+  font-family: 'STKaiti', 'KaiTi', '楷体', 'STFangsong', 'FangSong', '仿宋', serif;
+  background: rgba(242, 230, 223, 0.3);
+  border-radius: 12rpx;
+  padding: 16rpx;
+  border: 1rpx solid rgba(212, 184, 165, 0.3);
+}
+
+/* 情绪标签 */
+.quote-emotions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-bottom: 16rpx;
+}
+
+.quote-emotion-tag {
+  padding: 6rpx 16rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  color: white;
+  font-size: 20rpx;
+  font-weight: 600;
+  border-radius: 16rpx;
+}
+
+/* 底部操作栏 */
+.quote-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1rpx solid rgba(212, 184, 165, 0.15);
+  padding-top: 16rpx;
+}
+
+.quote-time {
+  font-size: 22rpx;
+  color: #B8B2A7;
+}
+
+.quote-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.quote-action-btn {
+  padding: 8rpx 20rpx;
+  border-radius: 16rpx;
+  background: #F2E6DF;
+}
+
+.quote-action-btn:active {
+  background: #D4B8A5;
+}
+
+.action-text {
+  font-size: 22rpx;
+  color: #6D6A65;
+  font-weight: 600;
+}
+
+.delete-btn {
+  background: transparent;
+}
+
+.delete-btn:active {
+  background: rgba(232, 165, 165, 0.15);
+}
+
+.delete-text {
+  color: #E8A5A5;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+}
+
+.save-btn:active {
+  background: linear-gradient(135deg, #C4A893 0%, #B49883 100%);
+}
+
+.save-text {
+  color: white;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 200rpx 0;
+}
+
+.empty-star {
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+
+.empty-star-shape {
+  width: 80rpx;
+  height: 80rpx;
+  background: #E0D5C8;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  opacity: 0.5;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  color: #6D6A65;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+
+.empty-hint {
+  font-size: 26rpx;
+  color: #B8B2A7;
+  text-align: center;
+  line-height: 1.6;
+}

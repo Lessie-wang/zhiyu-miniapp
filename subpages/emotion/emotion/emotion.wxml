@@ -1,0 +1,65 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">为你的感受，找到一个名字</text>
+    <text class="page-subtitle">点击情绪卡片，探索更多衍生情绪</text>
+    <view class="ai-tip">
+      <text class="tip-icon">💡</text>
+      <text class="tip-text">在主页选择情绪后，AI 会开始引导</text>
+    </view>
+  </view>
+
+  <!-- 8种核心情绪网格 -->
+  <view class="emotions-grid">
+    <card
+      type="{{selectedEmotion === item.name ? 'elevated' : 'default'}}"
+      shadow="{{true}}"
+      custom-class="emotion-card {{selectedEmotion === item.name ? 'active' : ''}}"
+      wx:for="{{emotions}}"
+      wx:key="name"
+      bind:tap="selectEmotion"
+      data-emotion="{{item.name}}"
+    >
+      <view class="emotion-content">
+        <view class="emotion-icon">{{item.icon}}</view>
+        <text class="emotion-name">{{item.name}}</text>
+        <text class="emotion-definition">{{item.definition}}</text>
+
+        <!-- 显示衍生情绪数量 -->
+        <view class="derivatives-count">
+          <text class="count-text">{{item.derivatives.length}} 种衍生</text>
+        </view>
+      </view>
+    </card>
+  </view>
+
+  <!-- 衍生情绪展示 -->
+  <view class="derivatives-section" wx:if="{{selectedEmotion}}">
+    <card type="glass" shadow="{{true}}" custom-class="derivatives-card">
+      <view class="derivatives-header">
+        <text class="derivatives-title">{{selectedEmotion}}的衍生情绪</text>
+        <text class="derivatives-desc">这些都是{{selectedEmotion}}的不同表现形式</text>
+      </view>
+
+      <view class="derivatives-grid">
+        <view
+          class="derivative-tag"
+          wx:for="{{currentDerivatives}}"
+          wx:key="*this"
+        >
+          <text class="derivative-text">{{item}}</text>
+        </view>
+      </view>
+    </card>
+  </view>
+
+  <!-- 底部操作按钮 -->
+  <view class="action-footer">
+    <zh-button type="primary" size="large" custom-class="action-btn-primary" bind:tap="goToMain">
+      开始情绪记录 →
+    </zh-button>
+    <zh-button type="secondary" size="large" custom-class="action-btn-secondary" bind:tap="goToMethodology">
+      了解表达训练方法
+    </zh-button>
+  </view>
+</view>

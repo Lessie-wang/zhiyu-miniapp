@@ -1,0 +1,87 @@
+/**
+ * 知愈小程序 - 情绪标签组件样式
+ */
+
+.zh-emotion-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-all);
+  box-sizing: border-box;
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
+}
+
+/* ==================== 尺寸 ==================== */
+
+.zh-emotion-tag--small {
+  padding: 6rpx var(--spacing-sm);
+  font-size: var(--font-size-xs);
+}
+
+.zh-emotion-tag--small .zh-emotion-tag__icon {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 6rpx;
+}
+
+.zh-emotion-tag--medium {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.zh-emotion-tag--medium .zh-emotion-tag__icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: var(--spacing-sm);
+}
+
+.zh-emotion-tag--large {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-base);
+}
+
+.zh-emotion-tag--large .zh-emotion-tag__icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: var(--spacing-sm);
+}
+
+/* ==================== 交互效果 ==================== */
+
+.zh-emotion-tag--active {
+  transform: scale(0.92);
+  opacity: 0.8;
+}
+
+/* ==================== 元素 ==================== */
+
+.zh-emotion-tag__icon {
+  flex-shrink: 0;
+}
+
+.zh-emotion-tag__text {
+  flex: 1;
+  white-space: nowrap;
+}
+
+.zh-emotion-tag__close {
+  margin-left: var(--spacing-sm);
+  width: 32rpx;
+  height: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  line-height: 1;
+  opacity: 0.6;
+  transition: var(--transition-all);
+}
+
+.zh-emotion-tag__close:active {
+  opacity: 1;
+  transform: scale(1.2);
+}

@@ -1,0 +1,104 @@
+[
+  {
+    "prompt": "Happy emotion icon, simple minimalist style, warm smile face, watercolor hand-painted, soft pink #FFD4D8 and cream colors, gentle glow, healing feeling, 256x256, clean background",
+    "filename": "happy",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Calm emotion icon, simple minimalist style, peaceful serene face, watercolor hand-painted, soft blue #C8E0F0 colors, gentle glow, tranquil feeling, 256x256, clean background",
+    "filename": "calm",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Sad emotion icon, simple minimalist style, tearful melancholy face, watercolor hand-painted, soft gray-blue #A8B5C8 colors, gentle glow, empathetic feeling, 256x256, clean background",
+    "filename": "sad",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Anxious emotion icon, simple minimalist style, worried tense face, watercolor hand-painted, soft purple #D4C5E8 colors, gentle glow, understanding feeling, 256x256, clean background",
+    "filename": "anxious",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Happiness emotion icon, simple minimalist style, joyful radiant face, watercolor hand-painted, soft peach #FFE5CC colors, gentle glow, warm feeling, 256x256, clean background",
+    "filename": "happiness",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Angry emotion icon, simple minimalist style, frustrated intense face, watercolor hand-painted, soft red-orange colors, gentle glow, validating feeling, 256x256, clean background",
+    "filename": "angry",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Confused emotion icon, simple minimalist style, puzzled questioning face, watercolor hand-painted, soft lavender colors, gentle glow, curious feeling, 256x256, clean background",
+    "filename": "confused",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Disappointed emotion icon, simple minimalist style, let-down dejected face, watercolor hand-painted, soft muted colors, gentle glow, empathetic feeling, 256x256, clean background",
+    "filename": "disappointed",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Embarrassed emotion icon, simple minimalist style, shy blushing face, watercolor hand-painted, soft pink-peach colors, gentle glow, gentle feeling, 256x256, clean background",
+    "filename": "embarrassed",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Excited emotion icon, simple minimalist style, energetic enthusiastic face, watercolor hand-painted, bright warm colors, gentle glow, vibrant feeling, 256x256, clean background",
+    "filename": "excited",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Fear emotion icon, simple minimalist style, scared worried face, watercolor hand-painted, soft cool colors, gentle glow, protective feeling, 256x256, clean background",
+    "filename": "fear",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Lonely emotion icon, simple minimalist style, isolated solitary face, watercolor hand-painted, soft muted blue-gray colors, gentle glow, compassionate feeling, 256x256, clean background",
+    "filename": "lonely",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Proud emotion icon, simple minimalist style, confident accomplished face, watercolor hand-painted, soft gold-yellow colors, gentle glow, celebratory feeling, 256x256, clean background",
+    "filename": "proud",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Tired emotion icon, simple minimalist style, exhausted weary face, watercolor hand-painted, soft muted colors, gentle glow, restful feeling, 256x256, clean background",
+    "filename": "tired",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Touched emotion icon, simple minimalist style, moved emotional face, watercolor hand-painted, soft warm pink colors, gentle glow, tender feeling, 256x256, clean background",
+    "filename": "touched",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Custom emotion icon, simple minimalist style, neutral blank face template, watercolor hand-painted, soft neutral colors, gentle glow, open feeling, 256x256, clean background",
+    "filename": "custom",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  },
+  {
+    "prompt": "Unknown emotion icon, simple minimalist style, questioning uncertain face, watercolor hand-painted, soft neutral gray colors, gentle glow, exploratory feeling, 256x256, clean background",
+    "filename": "unknown",
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  }
+]

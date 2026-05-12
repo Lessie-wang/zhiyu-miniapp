@@ -1,0 +1,169 @@
+<!-- 感官写作 - 游戏化关卡设计 -->
+<view class="container">
+  <!-- 顶部用户进度卡片 -->
+  <view class="user-progress-card">
+    <view class="progress-header">
+      <text class="progress-title">感官写作之旅</text>
+      <view class="level-badge">Lv.{{userLevel}}</view>
+    </view>
+
+    <!-- 经验值进度条 -->
+    <view class="exp-bar-container">
+      <view class="exp-label">
+        <text>经验值</text>
+        <text>{{currentExp}}/{{nextLevelExp}}</text>
+      </view>
+      <view class="exp-bar">
+        <view class="exp-fill" style="width: {{expProgress}}%"></view>
+      </view>
+    </view>
+
+    <!-- 统计数据 -->
+    <view class="stats-row">
+      <view class="stat-item">
+        <text class="stat-value">{{completedLevels}}</text>
+        <text class="stat-label">已完成</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{totalBadges}}</text>
+        <text class="stat-label">徽章</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{streakDays}}</text>
+        <text class="stat-label">连续天数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 关卡地图 - S形曲线路径 -->
+  <view class="level-map">
+    <!-- 路径背景线 -->
+    <view class="path-line"></view>
+
+    <!-- 关卡节点 -->
+    <view
+      class="level-node"
+      wx:for="{{levels}}"
+      wx:key="id"
+      bindtap="onLevelTap"
+      data-level="{{item}}"
+    >
+      <!-- 关卡圆形按钮 -->
+      <view class="level-circle {{item.status}} {{item.isBoss ? 'boss' : ''}}">
+        <!-- 已完成勾选图标 -->
+        <view class="check-icon" wx:if="{{item.status === 'completed'}}">✓</view>
+
+        <!-- 关卡图标 -->
+        <image
+          class="level-icon"
+          src="{{item.icon}}"
+          wx:if="{{item.status !== 'locked'}}"
+        />
+
+        <!-- 锁定图标 -->
+        <view class="lock-icon" wx:if="{{item.status === 'locked'}}">🔒</view>
+
+        <!-- 关卡编号 -->
+        <text class="level-number" wx:if="{{item.status !== 'locked'}}">
+          {{item.isBoss ? 'BOSS' : item.number}}
+        </text>
+      </view>
+
+      <!-- 关卡信息卡片 -->
+      <view class="level-info">
+        <text class="level-title">{{item.title}}</text>
+        <text class="level-desc">{{item.description}}</text>
+
+        <!-- 奖励标签 -->
+        <view class="level-rewards" wx:if="{{item.status !== 'locked'}}">
+          <view class="reward-tag exp">+{{item.expReward}} 经验</view>
+          <view class="reward-tag badge" wx:if="{{item.badgeReward}}">
+            🏆 {{item.badgeReward}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 徽章展示区 -->
+  <view class="badges-section">
+    <view class="badges-header">
+      <text class="badges-title">成就徽章</text>
+      <text class="badges-count">{{unlockedBadges}}/{{totalBadgesCount}}</text>
+    </view>
+
+    <view class="badges-grid">
+      <view
+        class="badge-item {{item.unlocked ? '' : 'locked'}}"
+        wx:for="{{badges}}"
+        wx:key="id"
+        bindtap="onBadgeTap"
+        data-badge="{{item}}"
+      >
+        <view class="badge-icon">{{item.icon}}</view>
+        <text class="badge-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-actions">
+    <view
+      class="action-button {{hasAvailableLevel ? '' : 'disabled'}}"
+      bindtap="onContinueTap"
+    >
+      {{hasAvailableLevel ? '继续训练' : '已完成所有关卡'}}
+    </view>
+  </view>
+
+  <!-- 关卡详情弹窗 -->
+  <view class="level-modal-mask" wx:if="{{showLevelModal}}" bindtap="onCloseModal">
+    <view class="level-modal" catchtap="onModalContentTap">
+      <!-- 弹窗头部 -->
+      <view class="modal-header">
+        <text class="modal-title">{{selectedLevel.title}}</text>
+        <view class="modal-close" bindtap="onCloseModal">×</view>
+      </view>
+
+      <!-- 弹窗内容 -->
+      <view class="modal-body">
+        <!-- 关卡描述 -->
+        <view class="modal-section">
+          <text class="section-title">关卡介绍</text>
+          <text class="section-content">{{selectedLevel.fullDescription}}</text>
+        </view>
+
+        <!-- 学习目标 -->
+        <view class="modal-section">
+          <text class="section-title">学习目标</text>
+          <view class="section-content">
+            <view wx:for="{{selectedLevel.objectives}}" wx:key="index" style="margin-bottom: 12rpx;">
+              • {{item}}
+            </view>
+          </view>
+        </view>
+
+        <!-- 奖励信息 -->
+        <view class="modal-section">
+          <text class="section-title">完成奖励</text>
+          <view class="level-rewards">
+            <view class="reward-tag exp">+{{selectedLevel.expReward}} 经验</view>
+            <view class="reward-tag badge" wx:if="{{selectedLevel.badgeReward}}">
+              🏆 {{selectedLevel.badgeReward}}
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 弹窗底部 -->
+      <view class="modal-footer">
+        <view
+          class="action-button {{selectedLevel.status === 'available' ? '' : 'disabled'}}"
+          bindtap="onStartLevel"
+        >
+          {{selectedLevel.status === 'available' ? '开始关卡' : '暂未解锁'}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

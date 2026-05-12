@@ -1,15 +1,11 @@
 <view class="container">
-  <!-- 闪光粒子背景 -->
-  <view class="particles">
-    <view
-      wx:for="{{particles}}"
-      wx:key="id"
-      class="particle"
-      style="left:{{item.x}}%;top:{{item.y}}%;width:{{item.size}}rpx;height:{{item.size}}rpx;animation-delay:{{item.delay}}s;animation-duration:{{item.duration}}s;opacity:{{item.opacity}}"
-    ></view>
-  </view>
+  <!-- 背景图层 -->
+  <image class="bg-image" src="/assets/images/index/welcome-bg.jpg" mode="aspectFill"></image>
 
-  <!-- BGM 开关按钮 - CSS 音符图标 -->
+  <!-- 玻璃态遮罩 -->
+  <view class="glass-overlay"></view>
+
+  <!-- BGM 开关按钮 -->
   <view class="bgm-toggle" bindtap="toggleBGM">
     <view class="icon-music {{bgmEnabled ? '' : 'muted'}}">
       <view class="music-note"></view>
@@ -19,53 +15,42 @@
     </view>
   </view>
 
-  <!-- 知愈 Logo -->
-  <view class="logo-section">
-    <view class="logo-mark">
-      <view class="logo-heart"></view>
+  <!-- 最上层：半透明信封 -->
+  <view class="envelope-layer {{envelopeOpened ? 'opened' : ''}}"
+        bindtouchmove="onTouchMove"
+        bindtouchstart="onTouchStart"
+        bindtouchend="onTouchEnd">
+
+    <!-- 信封上方：Logo 文字 -->
+    <view class="logo-above-envelope">
+      <text class="logo-text-main">知愈</text>
+      <text class="logo-text-sub">FeelingMosaic</text>
     </view>
-    <text class="logo-text">知愈</text>
-    <text class="logo-subtitle">FeelingMosaic</text>
-  </view>
 
-  <!-- 日期和时间 -->
-  <view class="datetime-section">
-    <text class="date-text">{{currentDate}}</text>
-    <text class="time-text">{{currentTime}}</text>
-    <text class="festival-text" wx:if="{{festivalMessage}}">{{festivalMessage}}</text>
-  </view>
+    <!-- 信封主体 -->
+    <view class="envelope-body">
+      <!-- 信封背面 - 使用水彩图片 -->
+      <image class="envelope-back-img" src="/assets/images/index/envelope-main.png" mode="aspectFit"></image>
 
-  <!-- 个性化问候 -->
-  <view class="greeting-section">
-    <text class="greeting-text">{{greetingText}}</text>
-  </view>
-
-  <!-- 主要操作按钮 - CSS星光图标 -->
-  <view class="main-action">
-    <view class="record-button" bindtap="goToMain">
-      <view class="button-glow"></view>
-      <view class="button-ring"></view>
-      <view class="button-content">
-        <view class="icon-star">
-          <view class="star-center"></view>
-          <view class="star-ray star-ray-1"></view>
-          <view class="star-ray star-ray-2"></view>
-          <view class="star-ray star-ray-3"></view>
-          <view class="star-ray star-ray-4"></view>
-        </view>
-        <text class="button-text">开始今天的情绪探索</text>
-      </view>
+      <!-- 信封封口 - 使用水彩图片 -->
+      <image class="envelope-flap-img {{envelopeOpened ? 'opening' : ''}}" src="/assets/images/index/envelope-seal.png" mode="aspectFit"></image>
     </view>
-  </view>
 
-  <!-- 底部名言 - CSS引号图标 -->
-  <view class="quote-section">
-    <view class="quote-container">
-      <view class="icon-quote">
-        <view class="quote-mark quote-mark-l"></view>
-        <view class="quote-mark quote-mark-r"></view>
-      </view>
+    <!-- 信封下方：随机名言 -->
+    <view class="quote-below-envelope" bindtap="onQuoteTap">
       <text class="quote-text">{{currentQuote}}</text>
+    </view>
+
+    <!-- 手指向上滑动提示 -->
+    <view class="swipe-hint {{envelopeOpened ? 'hidden' : ''}}">
+      <view class="hand-icon">
+        <view class="finger"></view>
+      </view>
+      <view class="hint-arrow">
+        <view class="arrow-line"></view>
+        <view class="arrow-head"></view>
+      </view>
+      <text class="hint-text">向上滑动开启</text>
     </view>
   </view>
 </view>

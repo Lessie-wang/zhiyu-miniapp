@@ -1,0 +1,80 @@
+/* ==================== 安全区域样式 ==================== */
+
+/* 顶部安全区域 - 符合知愈调性的渐变装饰 */
+.safe-area-top {
+  width: 100%;
+  height: calc(env(safe-area-inset-top) + 80rpx);
+  background: linear-gradient(180deg,
+    rgba(250, 249, 247, 1) 0%,
+    rgba(250, 249, 247, 0.98) 50%,
+    rgba(250, 249, 247, 0.95) 100%
+  );
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 顶部安全区域 - 简约版（无装饰） */
+.safe-area-top-simple {
+  width: 100%;
+  height: calc(env(safe-area-inset-top) + 80rpx);
+  background: #FAF9F7;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+/* 顶部安全区域占位符 - 用于页面内容不被遮挡 */
+.safe-area-placeholder {
+  width: 100%;
+  height: calc(env(safe-area-inset-top) + 80rpx);
+}
+
+/* 底部安全区域占位符 - 避免内容被tabBar遮挡 */
+.safe-area-bottom {
+  width: 100%;
+  height: calc(env(safe-area-inset-bottom) + 100rpx);
+}
+
+/* 带装饰的顶部安全区域 - 知愈特色 */
+.safe-area-top-decorated {
+  width: 100%;
+  height: calc(env(safe-area-inset-top) + 80rpx);
+  background: linear-gradient(180deg,
+    #FAF9F7 0%,
+    rgba(250, 249, 247, 0.98) 70%,
+    rgba(250, 249, 247, 0.95) 100%
+  );
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1rpx solid rgba(212, 184, 165, 0.15);
+  box-shadow: 0 2rpx 12rpx rgba(212, 184, 165, 0.08);
+}
+
+/* 装饰元素 - 顶部细线 */
+.safe-area-top-decorated::after {
+  content: '';
+  position: absolute;
+  bottom: 12rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80rpx;
+  height: 6rpx;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(212, 184, 165, 0.4) 50%,
+    transparent 100%
+  );
+  border-radius: 3rpx;
+}

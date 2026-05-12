@@ -1,522 +1,887 @@
-/* 知愈首页 - 全面优化 */
-page {
-  background: linear-gradient(165deg, #FAF9F7 0%, #F5EDE7 40%, #EDE3DB 100%);
-  height: 100vh;
-}
+/* Morandi 色系定义 */
+/* 粉色: #F5C6CB, 米驼色: #D4B8A5, 薰衣草色: #C4B5D8, 鼠尾草绿: #C4D4B5, 金色: #E8D4B8 */
 
+/* 页面容器 - 顶级质感背景 v2.0 */
 .container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60rpx 40rpx 40rpx;
+  width: 100vw;
+  height: 100vh;
   position: relative;
   overflow: hidden;
-  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 25% 15%, rgba(245, 198, 203, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 75% 85%, rgba(212, 184, 165, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255, 235, 230, 0.15) 0%, transparent 55%),
+    radial-gradient(ellipse at 30% 70%, rgba(196, 180, 212, 0.12) 0%, transparent 50%),
+    linear-gradient(165deg,
+      #FFF5F0 0%,
+      #FFEEE5 15%,
+      #FFE8E0 30%,
+      #FFF0E8 50%,
+      #FAF9F7 70%,
+      #F8F6F4 100%);
+  animation: page-fade-in 1s ease-out;
 }
 
-/* ==================== 闪光粒子系统 ==================== */
-.particles {
-  position: fixed;
+@keyframes page-fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 背景图层 (z-index: 1) */
+.bg-image {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
-.particle {
+/* 玻璃态遮罩 (z-index: 2) - 精致版 */
+.glass-overlay {
   position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 184, 165, 0.8) 0%, rgba(212, 184, 165, 0) 70%);
-  animation: particleDrift linear infinite;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 60% 70%, rgba(250, 249, 247, 0.12) 0%, transparent 50%),
+    rgba(250, 249, 247, 0.25);
+  backdrop-filter: blur(15rpx) saturate(110%);
+  -webkit-backdrop-filter: blur(15rpx) saturate(110%);
+  z-index: 2;
 }
 
-@keyframes particleDrift {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0;
-  }
-  15% {
-    opacity: 1;
-  }
-  50% {
-    transform: translate(calc(var(--dx, 30) * 1rpx), calc(var(--dy, -50) * 1rpx)) scale(1.3);
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(calc(var(--dx2, -20) * 1rpx), calc(var(--dy2, 40) * 1rpx)) scale(0.6);
-    opacity: 0;
-  }
-}
-
-/* 粒子闪烁替代方案（不依赖CSS变量） */
-.particle {
-  animation: particleFloat ease-in-out infinite, particleGlow ease-in-out infinite;
-}
-
-@keyframes particleFloat {
-  0%, 100% {
-    transform: translateY(0) translateX(0);
-  }
-  25% {
-    transform: translateY(-40rpx) translateX(20rpx);
-  }
-  50% {
-    transform: translateY(-10rpx) translateX(-15rpx);
-  }
-  75% {
-    transform: translateY(-50rpx) translateX(10rpx);
-  }
-}
-
-@keyframes particleGlow {
-  0%, 100% {
-    opacity: 0.2;
-    box-shadow: 0 0 6rpx 2rpx rgba(212, 184, 165, 0.3);
-  }
-  50% {
-    opacity: 0.9;
-    box-shadow: 0 0 16rpx 6rpx rgba(212, 184, 165, 0.6);
-  }
-}
-
-/* ==================== BGM 按钮与音符图标 ==================== */
+/* BGM 开关按钮 */
 .bgm-toggle {
   position: fixed;
-  top: 24rpx;
-  right: 32rpx;
-  width: 72rpx;
-  height: 72rpx;
-  background: rgba(255, 255, 255, 0.75);
-  border-radius: 50%;
+  top: 60rpx;
+  right: 40rpx;
+  width: 80rpx;
+  height: 80rpx;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 20rpx rgba(212, 184, 165, 0.2);
-  z-index: 100;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10rpx);
-}
-
-.bgm-toggle:active {
-  transform: scale(0.9);
 }
 
 .icon-music {
+  width: 60rpx;
+  height: 60rpx;
   position: relative;
-  width: 36rpx;
-  height: 36rpx;
+  transition: all 0.3s ease;
 }
 
 .music-note {
-  position: absolute;
-  bottom: 4rpx;
-  left: 6rpx;
-  width: 12rpx;
-  height: 12rpx;
-  background: #D4B8A5;
+  width: 24rpx;
+  height: 24rpx;
+  background: #5A5A5A;
   border-radius: 50%;
+  position: absolute;
+  left: 18rpx;
+  bottom: 12rpx;
 }
 
-.music-note::after {
+.music-note::before {
   content: '';
   position: absolute;
-  left: 10rpx;
-  bottom: 4rpx;
-  width: 3rpx;
-  height: 22rpx;
-  background: #D4B8A5;
+  width: 4rpx;
+  height: 30rpx;
+  background: #5A5A5A;
+  right: 2rpx;
+  bottom: 20rpx;
   border-radius: 2rpx;
 }
 
 .music-wave {
   position: absolute;
-  right: 0;
-  top: 50%;
-  border: 3rpx solid #D4B8A5;
-  border-left: none;
-  border-radius: 0 50% 50% 0;
+  width: 6rpx;
+  height: 20rpx;
+  background: #F5C6CB;
+  border-radius: 3rpx;
+  animation: wave-bounce 0.6s ease-in-out infinite;
 }
 
 .music-wave-1 {
-  width: 8rpx;
-  height: 16rpx;
-  margin-top: -8rpx;
-  animation: waveScale 1.2s ease-in-out infinite;
+  right: 8rpx;
+  top: 20rpx;
 }
 
 .music-wave-2 {
-  width: 14rpx;
-  height: 24rpx;
-  margin-top: -12rpx;
-  animation: waveScale 1.2s ease-in-out 0.3s infinite;
+  right: 18rpx;
+  top: 16rpx;
+  animation-delay: 0.2s;
 }
 
-@keyframes waveScale {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
+@keyframes wave-bounce {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.5);
+  }
 }
 
 .mute-line {
   position: absolute;
-  top: 2rpx;
-  left: 2rpx;
-  width: 44rpx;
+  width: 70rpx;
   height: 3rpx;
-  background: #B8B2A7;
-  transform: rotate(45deg);
-  transform-origin: left top;
-}
-
-.icon-music.muted .music-note {
-  background: #B8B2A7;
-}
-
-.icon-music.muted .music-note::after {
-  background: #B8B2A7;
-}
-
-/* ==================== Logo 区域 ==================== */
-.logo-section {
-  text-align: center;
-  margin-bottom: 36rpx;
-  animation: fadeInDown 0.8s ease-out;
-  z-index: 1;
-}
-
-.logo-mark {
-  width: 56rpx;
-  height: 56rpx;
-  margin: 0 auto 16rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* CSS心形标识 */
-.logo-heart {
-  position: relative;
-  width: 28rpx;
-  height: 26rpx;
-  background: linear-gradient(135deg, #D4B8A5, #C4A893);
+  background: #E74C3C;
   transform: rotate(-45deg);
-  border-radius: 4rpx;
-  opacity: 0.7;
+  top: 28rpx;
+  left: -5rpx;
 }
 
-.logo-heart::before,
-.logo-heart::after {
-  content: '';
-  position: absolute;
-  width: 28rpx;
-  height: 28rpx;
-  background: linear-gradient(135deg, #D4B8A5, #C4A893);
-  border-radius: 50%;
+.icon-music.muted {
+  opacity: 0.5;
 }
 
-.logo-heart::before {
-  top: -14rpx;
-  left: 0;
-}
-
-.logo-heart::after {
+/* Logo 文字 - 在信封上方 - 修复位置 */
+.logo-above-envelope {
+  position: relative;
   top: 0;
-  right: -14rpx;
+  left: 0;
+  transform: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  z-index: 5;
+  margin-bottom: 100rpx;
+  animation: logo-float 3s ease-in-out infinite;
 }
 
-.logo-text {
-  display: block;
-  font-size: 80rpx;
-  font-weight: 800;
-  color: #C8A692;
-  letter-spacing: 12rpx;
-  margin-bottom: 8rpx;
+@keyframes logo-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8rpx);
+  }
 }
 
-.logo-subtitle {
-  display: block;
-  font-size: 22rpx;
-  color: #BEB7AD;
-  letter-spacing: 6rpx;
-  font-weight: 300;
-  text-transform: uppercase;
+/* 主标题"知愈" - 彩色玻璃教堂风格 v6.0 - 彩色浓郁+细描边 */
+.logo-text-main {
+  font-size: 128rpx;
+  font-weight: 700;
+  color: transparent;
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'STXingkai', 'STKaiti', 'KaiTi', serif;
+  letter-spacing: 20rpx;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 15% 25%, rgba(245, 198, 203, 1) 0%, transparent 35%),
+    radial-gradient(ellipse at 85% 75%, rgba(196, 181, 216, 0.95) 0%, transparent 40%),
+    radial-gradient(ellipse at 45% 45%, rgba(212, 184, 165, 0.95) 0%, transparent 45%),
+    radial-gradient(ellipse at 30% 70%, rgba(196, 212, 181, 0.9) 0%, transparent 30%),
+    radial-gradient(ellipse at 70% 30%, rgba(232, 212, 184, 0.95) 0%, transparent 30%),
+    radial-gradient(ellipse at 50% 80%, rgba(255, 235, 230, 0.85) 0%, transparent 25%),
+    linear-gradient(135deg,
+      rgba(245, 198, 203, 1) 0%,
+      rgba(232, 212, 184, 1) 15%,
+      rgba(212, 184, 165, 0.98) 30%,
+      rgba(196, 181, 216, 1) 45%,
+      rgba(196, 212, 181, 0.98) 60%,
+      rgba(255, 235, 230, 0.95) 75%,
+      rgba(245, 198, 203, 1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-text-stroke: 0.5rpx rgba(255, 255, 255, 0.6);
+  text-stroke: 0.5rpx rgba(255, 255, 255, 0.6);
+  filter:
+    drop-shadow(0 10rpx 24rpx rgba(245, 198, 203, 0.5))
+    drop-shadow(0 6rpx 16rpx rgba(196, 181, 216, 0.4))
+    drop-shadow(0 4rpx 10rpx rgba(212, 184, 165, 0.45))
+    drop-shadow(0 14rpx 48rpx rgba(196, 212, 181, 0.3))
+    drop-shadow(0 2rpx 6rpx rgba(232, 212, 184, 0.4))
+    drop-shadow(0 0 3rpx rgba(255, 255, 255, 0.4));
+  animation: stainedGlassGlow 6s ease-in-out infinite;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ==================== 日期时间区域 ==================== */
-.datetime-section {
-  text-align: center;
-  margin-bottom: 28rpx;
-  animation: fadeIn 1s ease-out 0.2s both;
-  z-index: 1;
+/* 彩色玻璃光晕动画 - 增强版 */
+@keyframes stainedGlassGlow {
+  0%, 100% {
+    filter:
+      drop-shadow(0 10rpx 24rpx rgba(245, 198, 203, 0.5))
+      drop-shadow(0 6rpx 16rpx rgba(196, 181, 216, 0.4))
+      drop-shadow(0 4rpx 10rpx rgba(212, 184, 165, 0.45));
+  }
+  25% {
+    filter:
+      drop-shadow(0 12rpx 32rpx rgba(196, 181, 216, 0.6))
+      drop-shadow(0 8rpx 20rpx rgba(245, 198, 203, 0.45))
+      drop-shadow(0 5rpx 12rpx rgba(196, 212, 181, 0.4))
+      drop-shadow(0 18rpx 56rpx rgba(232, 212, 184, 0.35));
+  }
+  50% {
+    filter:
+      drop-shadow(0 12rpx 32rpx rgba(196, 212, 181, 0.55))
+      drop-shadow(0 8rpx 20rpx rgba(232, 212, 184, 0.5))
+      drop-shadow(0 5rpx 12rpx rgba(245, 198, 203, 0.45))
+      drop-shadow(0 18rpx 56rpx rgba(196, 181, 216, 0.3));
+  }
+  75% {
+    filter:
+      drop-shadow(0 12rpx 32rpx rgba(232, 212, 184, 0.6))
+      drop-shadow(0 8rpx 20rpx rgba(212, 184, 165, 0.5))
+      drop-shadow(0 5rpx 12rpx rgba(196, 181, 216, 0.4))
+      drop-shadow(0 18rpx 56rpx rgba(245, 198, 203, 0.35));
+  }
 }
 
-.date-text {
-  display: block;
-  font-size: 28rpx;
-  color: #8A857E;
-  font-weight: 500;
-  margin-bottom: 8rpx;
-  letter-spacing: 3rpx;
+/* 彩色玻璃碎片效果 - 使用伪元素 */
+.logo-text-main::before {
+  content: '知愈';
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 128rpx;
+  font-weight: 600;
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'STXingkai', 'STKaiti', 'KaiTi', serif;
+  letter-spacing: 20rpx;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(245, 198, 203, 0.7) 0%, transparent 12%),
+    radial-gradient(circle at 80% 20%, rgba(196, 181, 216, 0.65) 0%, transparent 12%),
+    radial-gradient(circle at 20% 80%, rgba(196, 212, 181, 0.6) 0%, transparent 12%),
+    radial-gradient(circle at 80% 80%, rgba(232, 212, 184, 0.7) 0%, transparent 12%),
+    radial-gradient(circle at 50% 50%, rgba(212, 184, 165, 0.5) 0%, transparent 15%),
+    radial-gradient(circle at 35% 35%, rgba(255, 235, 230, 0.55) 0%, transparent 10%),
+    radial-gradient(circle at 65% 65%, rgba(245, 198, 203, 0.6) 0%, transparent 10%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.6;
+  animation: glassShimmer 8s ease-in-out infinite;
+  pointer-events: none;
 }
 
-.time-text {
-  display: block;
-  font-size: 72rpx;
-  color: #C8A692;
-  font-weight: 200;
-  letter-spacing: 8rpx;
-  font-family: 'DIN Alternate', 'Helvetica Neue', Arial, sans-serif;
-  line-height: 1;
+@keyframes glassShimmer {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.02);
+  }
 }
 
-.festival-text {
-  display: inline-block;
-  font-size: 22rpx;
-  color: #C8A692;
-  margin-top: 20rpx;
-  line-height: 1.6;
-  font-weight: 400;
-  letter-spacing: 1rpx;
-  padding: 8rpx 28rpx;
-  background: rgba(212, 184, 165, 0.1);
-  border-radius: 32rpx;
-  border: 1rpx solid rgba(212, 184, 165, 0.15);
-}
-
-/* ==================== 问候语区域 ==================== */
-.greeting-section {
-  text-align: center;
-  margin-bottom: 80rpx;
-  animation: fadeIn 1s ease-out 0.4s both;
-  z-index: 1;
-}
-
-.greeting-text {
-  display: block;
+/* 副标题"FeelingMosaic" - 彩色玻璃装饰 v4.0 - 彩色浓郁+细描边 */
+.logo-text-sub {
   font-size: 36rpx;
-  color: #7A756F;
   font-weight: 400;
-  letter-spacing: 3rpx;
-  line-height: 1.6;
-}
-
-/* ==================== 主要操作按钮 ==================== */
-.main-action {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  animation: fadeInUp 1s ease-out 0.6s both;
-  z-index: 1;
-  margin-bottom: 20rpx;
-}
-
-.record-button {
-  width: 300rpx;
-  height: 300rpx;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #D9C0AD 0%, #C4A893 50%, #B8997F 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: transparent;
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Georgia, serif;
+  letter-spacing: 8rpx;
+  text-transform: none;
+  font-style: italic;
   position: relative;
-  margin-bottom: 48rpx;
-  border: none;
-  padding: 0;
-  transition: transform 0.3s ease;
+  background:
+    linear-gradient(90deg,
+      rgba(245, 198, 203, 0.95) 0%,
+      rgba(212, 184, 165, 0.9) 25%,
+      rgba(196, 181, 216, 0.85) 50%,
+      rgba(196, 212, 181, 0.9) 75%,
+      rgba(232, 212, 184, 0.95) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-text-stroke: 0.3rpx rgba(255, 255, 255, 0.5);
+  text-stroke: 0.3rpx rgba(255, 255, 255, 0.5);
+  filter:
+    drop-shadow(0 3rpx 8rpx rgba(212, 184, 165, 0.3))
+    drop-shadow(0 1rpx 3rpx rgba(245, 198, 203, 0.25))
+    drop-shadow(0 0 2rpx rgba(255, 255, 255, 0.3));
+  animation: subTitleShimmer 5s ease-in-out infinite;
 }
 
-.record-button::after {
-  border: none;
-}
-
-.record-button:active {
-  transform: scale(0.96);
-}
-
-/* 外发光环 */
-.button-glow {
-  position: absolute;
-  width: 340rpx;
-  height: 340rpx;
-  border-radius: 50%;
-  background: transparent;
-  box-shadow: 0 0 80rpx 20rpx rgba(212, 184, 165, 0.2);
-  animation: pulseGlow 3s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
+@keyframes subTitleShimmer {
   0%, 100% {
-    box-shadow: 0 0 60rpx 10rpx rgba(212, 184, 165, 0.15);
+    filter:
+      drop-shadow(0 3rpx 8rpx rgba(212, 184, 165, 0.3))
+      drop-shadow(0 1rpx 3rpx rgba(245, 198, 203, 0.25))
+      drop-shadow(0 0 2rpx rgba(255, 255, 255, 0.3));
   }
   50% {
-    box-shadow: 0 0 100rpx 30rpx rgba(212, 184, 165, 0.3);
+    filter:
+      drop-shadow(0 4rpx 12rpx rgba(196, 181, 216, 0.35))
+      drop-shadow(0 2rpx 6rpx rgba(196, 212, 181, 0.3))
+      drop-shadow(0 0 3rpx rgba(255, 255, 255, 0.4));
   }
 }
 
-/* 旋转光环 */
-.button-ring {
-  position: absolute;
-  width: 330rpx;
-  height: 330rpx;
-  border-radius: 50%;
-  border: 1rpx solid rgba(255, 255, 255, 0.15);
-  border-top-color: rgba(255, 255, 255, 0.5);
-  animation: ringRotate 8s linear infinite;
-}
-
-@keyframes ringRotate {
-  to { transform: rotate(360deg); }
-}
-
-.button-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 1;
-}
-
-/* CSS 星光图标 */
-.icon-star {
-  position: relative;
-  width: 64rpx;
-  height: 64rpx;
-  margin-bottom: 18rpx;
-  animation: starFloat 3s ease-in-out infinite;
-}
-
-.star-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 16rpx;
-  height: 16rpx;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 16rpx 4rpx rgba(255, 255, 255, 0.6);
-}
-
-.star-ray {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0));
-  height: 3rpx;
-  width: 28rpx;
-  transform-origin: 0 50%;
-  border-radius: 2rpx;
-}
-
-.star-ray-1 { transform: rotate(0deg); }
-.star-ray-2 { transform: rotate(90deg); }
-.star-ray-3 { transform: rotate(45deg); width: 20rpx; }
-.star-ray-4 { transform: rotate(135deg); width: 20rpx; }
-
-@keyframes starFloat {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-    filter: brightness(1);
-  }
-  50% {
-    transform: translateY(-10rpx) scale(1.1);
-    filter: brightness(1.2);
-  }
-}
-
-.button-text {
-  font-size: 26rpx;
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 500;
-  letter-spacing: 2rpx;
-  white-space: nowrap;
-}
-
-/* ==================== 底部名言区域 ==================== */
-.quote-section {
-  padding-top: 20rpx;
-  animation: fadeIn 1s ease-out 0.8s both;
-  z-index: 1;
-}
-
-.quote-container {
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 28rpx;
-  padding: 32rpx 36rpx;
-  backdrop-filter: blur(20rpx);
-  border: 1rpx solid rgba(255, 255, 255, 0.6);
-  display: flex;
-  align-items: flex-start;
-  gap: 20rpx;
-  margin: 0 auto;
-  max-width: 600rpx;
-}
-
-/* CSS 引号图标 */
-.icon-quote {
-  position: relative;
-  width: 32rpx;
-  height: 28rpx;
-  flex-shrink: 0;
-  margin-top: 6rpx;
-}
-
-.quote-mark {
-  position: absolute;
-  width: 12rpx;
-  height: 12rpx;
-  border-radius: 50%;
-  background: #D4B8A5;
-  opacity: 0.6;
-}
-
-.quote-mark::after {
+/* 副标题装饰线 - 彩色玻璃风格 */
+.logo-text-sub::before,
+.logo-text-sub::after {
   content: '';
   position: absolute;
-  top: 8rpx;
-  left: 4rpx;
-  width: 4rpx;
-  height: 10rpx;
-  background: #D4B8A5;
-  border-radius: 2rpx;
-  opacity: 0.6;
+  top: 50%;
+  width: 40rpx;
+  height: 2rpx;
+  background:
+    linear-gradient(to right,
+      transparent,
+      rgba(245, 198, 203, 0.6) 20%,
+      rgba(196, 181, 216, 0.5) 50%,
+      rgba(212, 184, 165, 0.6) 80%,
+      transparent);
+  box-shadow:
+    0 1rpx 3rpx rgba(245, 198, 203, 0.3),
+    0 -1rpx 3rpx rgba(196, 181, 216, 0.2);
 }
 
-.quote-mark-l {
+.logo-text-sub::before {
+  right: calc(100% + 16rpx);
+}
+
+.logo-text-sub::after {
+  left: calc(100% + 16rpx);
+}
+
+/* 名言区域 - 修复位置 */
+.quote-below-envelope {
+  position: relative;
+  top: 0;
   left: 0;
-  top: 0;
+  transform: none;
+  width: 100%;
+  max-width: 500rpx;
+  padding: 28rpx 40rpx;
+  margin-top: 120rpx;
+  background:
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 253, 250, 0.92) 50%,
+      rgba(255, 250, 245, 0.90) 100%);
+  backdrop-filter: blur(30rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(30rpx) saturate(150%);
+  border-radius: 24rpx;
+  box-shadow:
+    0 16rpx 48rpx rgba(212, 184, 165, 0.25),
+    0 8rpx 24rpx rgba(212, 184, 165, 0.15),
+    0 4rpx 12rpx rgba(0, 0, 0, 0.08),
+    inset 0 2rpx 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1rpx 0 rgba(212, 184, 165, 0.15);
+  border: 1rpx solid rgba(255, 255, 255, 0.8);
+  z-index: 5;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80rpx;
 }
 
-.quote-mark-r {
-  left: 16rpx;
-  top: 0;
+/* 点击时的效果 */
+.quote-below-envelope:active {
+  transform: scale(0.98);
+  box-shadow:
+    0 12rpx 36rpx rgba(212, 184, 165, 0.2),
+    0 6rpx 18rpx rgba(212, 184, 165, 0.12),
+    0 3rpx 9rpx rgba(0, 0, 0, 0.06);
+}
+
+/* 名言卡片装饰边框 */
+.quote-below-envelope::before {
+  content: '';
+  position: absolute;
+  top: 12rpx;
+  left: 12rpx;
+  right: 12rpx;
+  bottom: 12rpx;
+  border: 1rpx solid rgba(212, 184, 165, 0.2);
+  border-radius: 16rpx;
+  pointer-events: none;
+}
+
+/* 名言卡片光晕 */
+.quote-below-envelope::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(245, 198, 203, 0.15) 0%,
+    transparent 50%
+  );
+  animation: quoteGlow 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes quoteGlow {
+  0%, 100% {
+    transform: translate(0, 0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(25%, 25%);
+    opacity: 0.8;
+  }
 }
 
 .quote-text {
-  font-size: 26rpx;
-  color: #7A756F;
+  font-size: 28rpx;
+  color: #4A3D32;
   line-height: 2;
-  flex: 1;
+  font-family: 'STKaiti', 'KaiTi', serif;
+  text-align: center;
+  display: block;
+  position: relative;
+  z-index: 1;
+  font-weight: 400;
   letter-spacing: 1rpx;
+  text-shadow: 0 1rpx 2rpx rgba(255, 255, 255, 0.8);
+  word-wrap: break-word;
+  white-space: normal;
 }
 
-/* ==================== 动画 ==================== */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* 最上层：半透明信封 (z-index: 100) - 修复布局 */
+.envelope-layer {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 480rpx;
+  height: 680rpx;
+  z-index: 100;
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-30rpx); }
-  to { opacity: 1; transform: translateY(0); }
+.envelope-layer.opened {
+  transform: translate(-50%, -150%) scale(1.2);
+  opacity: 0;
+  pointer-events: none;
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30rpx); }
-  to { opacity: 1; transform: translateY(0); }
+/* ==================== 信封重新设计 v4.0 ==================== */
+
+/* 信封主体容器 */
+.envelope-body {
+  width: 100%;
+  height: 420rpx;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* 信封背面图片 */
+.envelope-back-img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: drop-shadow(0 20rpx 60rpx rgba(245, 198, 203, 0.3))
+          drop-shadow(0 10rpx 30rpx rgba(212, 184, 165, 0.2));
+  animation: envelopeFloat 8s ease-in-out infinite;
+}
+
+@keyframes envelopeFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 20rpx 60rpx rgba(245, 198, 203, 0.3))
+            drop-shadow(0 10rpx 30rpx rgba(212, 184, 165, 0.2));
+  }
+  50% {
+    transform: translateY(-8rpx) scale(1.02);
+    filter: drop-shadow(0 24rpx 72rpx rgba(245, 198, 203, 0.35))
+            drop-shadow(0 12rpx 36rpx rgba(212, 184, 165, 0.25));
+  }
+}
+
+/* 信封封口图片 */
+.envelope-flap-img {
+  width: 240rpx;
+  height: 140rpx;
+  position: absolute;
+  top: -20rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  filter: drop-shadow(0 8rpx 24rpx rgba(212, 184, 165, 0.35))
+          drop-shadow(0 4rpx 12rpx rgba(232, 212, 184, 0.25));
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  animation: sealFloat 6s ease-in-out infinite;
+}
+
+@keyframes sealFloat {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0) rotate(0deg);
+    filter: drop-shadow(0 8rpx 24rpx rgba(212, 184, 165, 0.35))
+            drop-shadow(0 4rpx 12rpx rgba(232, 212, 184, 0.25));
+  }
+  50% {
+    transform: translateX(-50%) translateY(-6rpx) rotate(2deg);
+    filter: drop-shadow(0 10rpx 28rpx rgba(212, 184, 165, 0.4))
+            drop-shadow(0 5rpx 14rpx rgba(232, 212, 184, 0.3));
+  }
+}
+
+/* 信封封口打开动画 */
+.envelope-flap-img.opening {
+  transform: translateX(-50%) translateY(-100rpx) rotate(15deg);
+  opacity: 0;
+}
+
+/* 信封背面（长方形主体）- 单色水彩风格 */
+.envelope-back {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(245, 198, 203, 0.25) 0%, transparent 45%),
+    radial-gradient(ellipse at 70% 80%, rgba(245, 198, 203, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 235, 230, 0.15) 0%, transparent 55%),
+    linear-gradient(135deg,
+      rgba(245, 198, 203, 0.88) 0%,
+      rgba(250, 210, 215, 0.85) 50%,
+      rgba(245, 198, 203, 0.90) 100%);
+  backdrop-filter: blur(50rpx) saturate(120%);
+  -webkit-backdrop-filter: blur(50rpx) saturate(120%);
+  border-radius: 20rpx;
+  box-shadow:
+    0 20rpx 60rpx rgba(245, 198, 203, 0.3),
+    0 10rpx 30rpx rgba(245, 198, 203, 0.2),
+    0 5rpx 15rpx rgba(212, 184, 165, 0.15),
+    inset 0 2rpx 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1rpx 0 rgba(245, 198, 203, 0.2);
+  position: relative;
+  overflow: hidden;
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  animation: envelopeGlow 8s ease-in-out infinite;
+}
+
+/* 信封光晕动画 - 单色水彩呼吸 */
+@keyframes envelopeGlow {
+  0%, 100% {
+    box-shadow:
+      0 20rpx 60rpx rgba(245, 198, 203, 0.3),
+      0 10rpx 30rpx rgba(245, 198, 203, 0.2),
+      0 5rpx 15rpx rgba(212, 184, 165, 0.15),
+      inset 0 2rpx 0 rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow:
+      0 24rpx 72rpx rgba(245, 198, 203, 0.35),
+      0 12rpx 36rpx rgba(245, 198, 203, 0.25),
+      0 6rpx 18rpx rgba(212, 184, 165, 0.2),
+      inset 0 2rpx 0 rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* 信封纹理 - 水彩晕染效果 */
+.envelope-back::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 12%),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 10%),
+    radial-gradient(circle at 30% 75%, rgba(255, 255, 255, 0.18) 0%, transparent 11%),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.12) 0%, transparent 9%),
+    radial-gradient(circle at 50% 50%, rgba(245, 198, 203, 0.08) 0%, transparent 15%),
+    repeating-linear-gradient(0deg, transparent, transparent 4rpx, rgba(255, 255, 255, 0.02) 4rpx, rgba(255, 255, 255, 0.02) 8rpx);
+  opacity: 0.7;
+  z-index: 2;
+  animation: watercolorShimmer 10s ease-in-out infinite;
+}
+
+@keyframes watercolorShimmer {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* 信封光影 - 单色光晕流动 */
+.envelope-shine {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background:
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.25) 0%, transparent 35%),
+    radial-gradient(ellipse at 60% 40%, rgba(245, 198, 203, 0.15) 0%, transparent 40%);
+  animation: envelopeShine 12s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes envelopeShine {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.5;
+  }
+  33% {
+    transform: translate(30%, 30%) rotate(120deg);
+    opacity: 0.7;
+  }
+  66% {
+    transform: translate(50%, 50%) rotate(240deg);
+    opacity: 0.6;
+  }
+}
+
+/* 信封盖子（倒三角形）- 单色水彩风格 */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 240rpx solid transparent;
+  border-right: 240rpx solid transparent;
+  border-top: 140rpx solid rgba(212, 184, 165, 0.92);
+  z-index: 5;
+  filter:
+    drop-shadow(0 8rpx 24rpx rgba(212, 184, 165, 0.35))
+    drop-shadow(0 4rpx 12rpx rgba(212, 184, 165, 0.25))
+    drop-shadow(0 2rpx 6rpx rgba(245, 198, 203, 0.2));
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  animation: flapGlow 6s ease-in-out infinite;
+}
+
+@keyframes flapGlow {
+  0%, 100% {
+    border-top-color: rgba(212, 184, 165, 0.92);
+    filter:
+      drop-shadow(0 8rpx 24rpx rgba(212, 184, 165, 0.35))
+      drop-shadow(0 4rpx 12rpx rgba(212, 184, 165, 0.25))
+      drop-shadow(0 2rpx 6rpx rgba(245, 198, 203, 0.2));
+  }
+  50% {
+    border-top-color: rgba(212, 184, 165, 0.95);
+    filter:
+      drop-shadow(0 10rpx 28rpx rgba(212, 184, 165, 0.4))
+      drop-shadow(0 5rpx 14rpx rgba(212, 184, 165, 0.3))
+      drop-shadow(0 3rpx 8rpx rgba(245, 198, 203, 0.25));
+  }
+}
+
+/* 信封盖子打开动画 */
+.envelope-flap.opening {
+  transform: translateX(-50%) translateY(-100rpx);
+  opacity: 0;
+}
+
+/* 手指向上滑动提示 - 精致版 v2.0 */
+.swipe-hint {
+  position: absolute;
+  bottom: 10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24rpx;
+  opacity: 0.75;
+  transition: opacity 0.3s ease;
+  animation: hint-pulse 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 2rpx 8rpx rgba(0, 0, 0, 0.15));
+  z-index: 200;
+}
+
+.swipe-hint.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes hint-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translateX(-50%) scale(1.05);
+  }
+}
+
+/* 手指图标 - 立体质感 */
+.hand-icon {
+  width: 60rpx;
+  height: 76rpx;
+  position: relative;
+  animation: hand-swipe 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 3rpx 10rpx rgba(0, 0, 0, 0.2));
+}
+
+@keyframes hand-swipe {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-48rpx);
+  }
+}
+
+.finger {
+  width: 44rpx;
+  height: 60rpx;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(250, 248, 245, 0.8) 50%,
+    rgba(245, 243, 240, 0.75) 100%);
+  border-radius: 22rpx 22rpx 12rpx 12rpx;
+  position: absolute;
+  left: 8rpx;
+  top: 0;
+  box-shadow:
+    0 3rpx 8rpx rgba(0, 0, 0, 0.15),
+    0 1rpx 4rpx rgba(0, 0, 0, 0.1),
+    inset 0 2rpx 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1rpx 0 rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+}
+
+.finger::before {
+  content: '';
+  width: 32rpx;
+  height: 32rpx;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(250, 248, 245, 0.8) 100%);
+  border-radius: 50%;
+  position: absolute;
+  top: -12rpx;
+  left: 6rpx;
+  box-shadow:
+    0 3rpx 8rpx rgba(0, 0, 0, 0.15),
+    0 1rpx 4rpx rgba(0, 0, 0, 0.1),
+    inset 0 2rpx 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1rpx 0 rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+}
+
+/* 指甲细节 */
+.finger::after {
+  content: '';
+  width: 20rpx;
+  height: 12rpx;
+  background: linear-gradient(180deg,
+    rgba(255, 240, 235, 0.9) 0%,
+    rgba(255, 235, 230, 0.8) 100%);
+  border-radius: 10rpx 10rpx 6rpx 6rpx;
+  position: absolute;
+  top: -8rpx;
+  left: 12rpx;
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 向上箭头 - 精致版 */
+.hint-arrow {
+  width: 52rpx;
+  height: 68rpx;
+  position: relative;
+  filter: drop-shadow(0 2rpx 6rpx rgba(0, 0, 0, 0.15));
+}
+
+.arrow-line {
+  width: 8rpx;
+  height: 48rpx;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(250, 248, 245, 0.8) 100%);
+  position: absolute;
+  left: 22rpx;
+  bottom: 0;
+  border-radius: 4rpx;
+  box-shadow:
+    0 2rpx 6rpx rgba(0, 0, 0, 0.15),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1rpx 0 rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+}
+
+.arrow-head {
+  width: 0;
+  height: 0;
+  border-left: 14rpx solid transparent;
+  border-right: 14rpx solid transparent;
+  border-bottom: 20rpx solid rgba(255, 255, 255, 0.85);
+  position: absolute;
+  left: 12rpx;
+  top: 0;
+  filter: drop-shadow(0 2rpx 6rpx rgba(0, 0, 0, 0.15))
+          drop-shadow(0 1rpx 3rpx rgba(0, 0, 0, 0.1));
+}
+
+/* 箭头高光 */
+.arrow-head::before {
+  content: '';
+  position: absolute;
+  top: 2rpx;
+  left: -10rpx;
+  width: 0;
+  height: 0;
+  border-left: 10rpx solid transparent;
+  border-right: 10rpx solid transparent;
+  border-bottom: 14rpx solid rgba(255, 255, 255, 1);
+}
+
+.hint-text {
+  font-size: 30rpx;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'STKaiti', 'KaiTi', serif;
+  font-weight: 500;
+  white-space: nowrap;
+  text-shadow:
+    0 2rpx 8rpx rgba(0, 0, 0, 0.25),
+    0 1rpx 4rpx rgba(0, 0, 0, 0.2),
+    0 1rpx 2rpx rgba(0, 0, 0, 0.15);
+  letter-spacing: 2rpx;
+}
+/* 背景知愈水印 - 精致版 v2.0 */
+.container::before {
+  content: '知愈';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 400rpx;
+  font-weight: 600;
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'STKaiti', 'KaiTi', serif;
+  background: linear-gradient(135deg,
+    rgba(212, 184, 165, 0.06) 0%,
+    rgba(196, 180, 212, 0.05) 50%,
+    rgba(212, 184, 165, 0.04) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 48rpx;
+  pointer-events: none;
+  z-index: 0;
+  animation: watermarkBreath 12s ease-in-out infinite;
+}
+
+@keyframes watermarkBreath {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1.08) rotate(2deg);
+  }
 }

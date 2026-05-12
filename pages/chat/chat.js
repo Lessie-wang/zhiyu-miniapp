@@ -20,13 +20,15 @@ Page({
     conversationId: '',  // 云端会话ID，用于自动保存更新
     editingIndex: -1,  // 正在编辑的消息索引
     editingText: '',  // 编辑中的文本
-    messageVersions: {},  // 存储每条消息的历史版本 {messageIndex: [{content, timestamp}]}
+    messageVersions: {},  // 存储每条消息的历史版本 {messageIndex: [{content, timestamp, branchMessages}]}
     currentVersionIndex: {},  // 当前显示的版本索引 {messageIndex: versionIndex}
+    conversationBranches: {},  // 对话分支树 {messageIndex: {versionIndex: [后续消息数组]}}
     showHistorySidebar: false,  // 显示历史对话侧边栏
     conversationHistory: [],  // 对话历史列表
     isVoiceMode: false,  // 是否为语音输入模式
     isRecording: false,   // 是否正在录音
-    favoriteMessages: {}  // 收藏的消息 {messageId: true}
+    favoriteMessages: {},  // 收藏的消息 {messageId: true}
+    showEndModal: false  // 显示结束对话弹窗
   },
 
   onLoad: function(options) {
@@ -218,27 +220,33 @@ Page({
       return;
     }
 
-    // 显示退出对话框
-    const that = this;
-    wx.showModal({
-      title: '结束本次对话',
-      content: '是否让小知整理本次对话并保存到日历？',
-      confirmText: '保存',
-      cancelText: '退出',
-      success: (res) => {
-        console.log('Modal success callback, confirm:', res.confirm);
-        if (res.confirm) {
-          // 用户选择整理并保存
-          that._saveAndExit();
-        } else {
-          // 用户选择暂时退出，保留对话以便继续
-          wx.navigateBack();
-        }
-      },
-      fail: (err) => {
-        console.error('Modal fail:', err);
-      }
+    // 显示自定义弹窗
+    this.setData({
+      showEndModal: true
     });
+  },
+
+  // 关闭弹窗
+  closeEndModal: function() {
+    this.setData({
+      showEndModal: false
+    });
+  },
+
+  // 退出不保存
+  exitWithoutSave: function() {
+    this.setData({
+      showEndModal: false
+    });
+    wx.navigateBack();
+  },
+
+  // 保存并退出
+  saveAndExit: function() {
+    this.setData({
+      showEndModal: false
+    });
+    this._saveAndExit();
   },
 
   // 整理并保存对话
@@ -581,11 +589,9 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
   },
 
   sendMessage: function() {
-    // 优先用缓存值（避免键盘语音输入重复），回退到 data 中的值
-    const text = (this._inputValue !== undefined ? this._inputValue : this.data.inputText).trim();
+    // 使用缓存值（避免键盘语音输入重复）
+    const text = (this._inputValue || '').trim();
     if (!text) return;
-
-    const messages = this.data.messages;
 
     const userMessage = {
       id: Date.now(),
@@ -594,12 +600,12 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
       formattedContent: this.formatMarkdown(text)
     };
 
-    messages.push(userMessage);
+    // 使用函数式更新减少 setData 调用
+    const messages = [...this.data.messages, userMessage];
 
     this._inputValue = '';
     this.setData({
-      messages: messages,
-      inputText: ''
+      messages: messages
     });
 
     wx.vibrateShort({ type: 'light' });
@@ -620,8 +626,8 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
           formattedContent: this.formatMarkdown(reply)
         };
 
-        const messages = this.data.messages;
-        messages.push(aiMessage);
+        // 使用函数式更新减少 setData 调用
+        const messages = [...this.data.messages, aiMessage];
 
         this.setData({
           messages: messages,
@@ -695,7 +701,14 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
     if (this.data.isAIThinking) {
       this.setData({ scrollToView: 'thinking' });
     } else if (messages.length > 0) {
-      this.setData({ scrollToView: 'msg-' + messages[messages.length - 1].id });
+      // 使用 requestAnimationFrame 优化滚动性能
+      if (typeof wx.nextTick === 'function') {
+        wx.nextTick(() => {
+          this.setData({ scrollToView: 'msg-' + messages[messages.length - 1].id });
+        });
+      } else {
+        this.setData({ scrollToView: 'msg-' + messages[messages.length - 1].id });
+      }
     }
   },
 
@@ -904,7 +917,7 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
 
   // 确认编辑并重新发送
   confirmEdit: function() {
-    const { editingIndex, editingText, messages, messageVersions } = this.data;
+    const { editingIndex, editingText, messages, messageVersions, conversationBranches, currentVersionIndex } = this.data;
     const newContent = editingText.trim();
 
     if (!newContent) {
@@ -915,13 +928,22 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
     // 保存当前版本到历史
     const oldMessage = messages[editingIndex];
     const versions = messageVersions[editingIndex] || [];
+    const branches = conversationBranches[editingIndex] || {};
 
-    // 第一次编辑时，保存原始内容
+    // 第一次编辑时，保存原始内容和后续对话
     if (versions.length === 0) {
       versions.push({
         content: oldMessage.content,
         timestamp: Date.now()
       });
+      // 保存原始版本的后续对话分支
+      branches[0] = messages.slice(editingIndex + 1);
+    } else {
+      // 保存当前版本的后续对话分支
+      const currentVersionIdx = currentVersionIndex[editingIndex] !== undefined
+        ? currentVersionIndex[editingIndex]
+        : versions.length - 1;
+      branches[currentVersionIdx] = messages.slice(editingIndex + 1);
     }
 
     // 保存新编辑的内容
@@ -930,7 +952,10 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
       timestamp: Date.now()
     });
 
-    // 截断从该消息之后的所有对话
+    // 新版本索引
+    const newVersionIdx = versions.length - 1;
+
+    // 截断从该消息之后的所有对话（新分支从空开始）
     const newMessages = messages.slice(0, editingIndex);
 
     // 更新该消息内容
@@ -943,13 +968,22 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
       originalContent: oldMessage.originalContent || oldMessage.content  // 保存原始内容
     });
 
-    // 更新版本历史
+    // 更新版本历史和分支树
     const newVersions = { ...messageVersions };
     newVersions[editingIndex] = versions;
+
+    const newBranches = { ...conversationBranches };
+    newBranches[editingIndex] = branches;
+
+    // 更新当前版本索引
+    const newCurrentVersionIndex = { ...currentVersionIndex };
+    newCurrentVersionIndex[editingIndex] = newVersionIdx;
 
     this.setData({
       messages: newMessages,
       messageVersions: newVersions,
+      conversationBranches: newBranches,
+      currentVersionIndex: newCurrentVersionIndex,
       editingIndex: -1,
       editingText: ''
     });
@@ -1022,24 +1056,96 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
     // 只对AI消息有效
     if (message.role !== 'ai') return;
 
-    wx.showActionSheet({
-      itemList: ['复制', '收藏到金句夹'],
+    // 检查是否有选中文本
+    wx.getSelectedTextRange({
       success: (res) => {
-        if (res.tapIndex === 0) {
-          // 复制
-          this.copyMessage(e);
-        } else if (res.tapIndex === 1) {
-          // 收藏
-          this.toggleFavorite({
-            currentTarget: {
-              dataset: {
-                id: message.id,
-                content: content,
-                index: index
+        const { start, end } = res;
+        if (start !== -1 && end !== -1 && start !== end) {
+          // 有选中文本，提取选中内容
+          const selectedText = content.substring(start, end);
+
+          wx.showActionSheet({
+            itemList: ['复制选中内容', '收藏选中内容到金句夹', '收藏整条回复'],
+            success: (actionRes) => {
+              if (actionRes.tapIndex === 0) {
+                // 复制选中内容
+                wx.setClipboardData({
+                  data: selectedText,
+                  success: () => {
+                    wx.showToast({ title: '已复制', icon: 'success', duration: 1500 });
+                  }
+                });
+              } else if (actionRes.tapIndex === 1) {
+                // 收藏选中内容
+                this._saveFavoriteQuote({
+                  id: message.id + '-' + Date.now(),
+                  content: selectedText,
+                  emotions: this.data.emotions,
+                  createdAt: new Date().toISOString(),
+                  source: 'chat-partial'
+                });
+                wx.showToast({ title: '已收藏', icon: 'success', duration: 1500 });
+                wx.vibrateShort({ type: 'light' });
+              } else if (actionRes.tapIndex === 2) {
+                // 收藏整条回复
+                this.toggleFavorite({
+                  currentTarget: {
+                    dataset: {
+                      id: message.id,
+                      content: content,
+                      index: index
+                    }
+                  }
+                });
+              }
+            }
+          });
+        } else {
+          // 没有选中文本，显示原有菜单
+          wx.showActionSheet({
+            itemList: ['复制', '收藏到金句夹'],
+            success: (actionRes) => {
+              if (actionRes.tapIndex === 0) {
+                // 复制
+                this.copyMessage(e);
+              } else if (actionRes.tapIndex === 1) {
+                // 收藏
+                this.toggleFavorite({
+                  currentTarget: {
+                    dataset: {
+                      id: message.id,
+                      content: content,
+                      index: index
+                    }
+                  }
+                });
               }
             }
           });
         }
+      },
+      fail: () => {
+        // API不支持或失败，显示原有菜单
+        wx.showActionSheet({
+          itemList: ['复制', '收藏到金句夹'],
+          success: (actionRes) => {
+            if (actionRes.tapIndex === 0) {
+              // 复制
+              this.copyMessage(e);
+            } else if (actionRes.tapIndex === 1) {
+              // 收藏
+              this.toggleFavorite({
+                currentTarget: {
+                  dataset: {
+                    id: message.id,
+                    content: content,
+                    index: index
+                  }
+                }
+              });
+            }
+          }
+        });
       }
     });
   },
@@ -1082,7 +1188,7 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
   // 切换到上一个版本
   previousVersion: function(e) {
     const index = e.currentTarget.dataset.index;
-    const { messages, messageVersions, currentVersionIndex } = this.data;
+    const { messages, messageVersions, currentVersionIndex, conversationBranches } = this.data;
     const versions = messageVersions[index] || [];
 
     if (versions.length === 0) return;
@@ -1098,21 +1204,29 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
       formattedContent: this.formatMarkdown(versions[newIdx].content)
     };
 
+    // 恢复该版本的后续对话分支
+    const branches = conversationBranches[index] || {};
+    const branchMessages = branches[newIdx] || [];
+
+    // 截断到当前消息，然后添加该版本的后续对话
+    const restoredMessages = newMessages.slice(0, index + 1).concat(branchMessages);
+
     const newCurrentVersionIndex = { ...currentVersionIndex };
     newCurrentVersionIndex[index] = newIdx;
 
     this.setData({
-      messages: newMessages,
+      messages: restoredMessages,
       currentVersionIndex: newCurrentVersionIndex
     });
 
     wx.vibrateShort({ type: 'light' });
+    this.scrollToBottom();
   },
 
   // 切换到下一个版本
   nextVersion: function(e) {
     const index = e.currentTarget.dataset.index;
-    const { messages, messageVersions, currentVersionIndex } = this.data;
+    const { messages, messageVersions, currentVersionIndex, conversationBranches } = this.data;
     const versions = messageVersions[index] || [];
 
     if (versions.length === 0) return;
@@ -1128,15 +1242,23 @@ TA今天主要在聊工作上的困扰。从对话中感受到TA有些疲惫和�
       formattedContent: this.formatMarkdown(versions[newIdx].content)
     };
 
+    // 恢复该版本的后续对话分支
+    const branches = conversationBranches[index] || {};
+    const branchMessages = branches[newIdx] || [];
+
+    // 截断到当前消息，然后添加该版本的后续对话
+    const restoredMessages = newMessages.slice(0, index + 1).concat(branchMessages);
+
     const newCurrentVersionIndex = { ...currentVersionIndex };
     newCurrentVersionIndex[index] = newIdx;
 
     this.setData({
-      messages: newMessages,
+      messages: restoredMessages,
       currentVersionIndex: newCurrentVersionIndex
     });
 
     wx.vibrateShort({ type: 'light' });
+    this.scrollToBottom();
   },
 
   // 查看历史对话 - 打开侧边栏

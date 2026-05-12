@@ -4,6 +4,7 @@ Page({
   data: {
     currentStep: 1, // 当前步骤：1-欢迎页, 2-授权页, 3-问卷页
     today: '', // 今天的日期（用于限制生日选择）
+    privacyAgreed: false, // 是否同意隐私政策
 
     // 表单数据
     formData: {
@@ -73,6 +74,12 @@ Page({
       today: `${year}-${month}-${day}`
     });
 
+    // 检查是否已同意隐私政策
+    const privacyPolicyAgreed = wx.getStorageSync('privacyPolicyAgreed');
+    if (privacyPolicyAgreed) {
+      this.setData({ privacyAgreed: true });
+    }
+
     // 支持从首页直接跳转到问卷步骤（?step=3）
     if (options.step) {
       const step = parseInt(options.step, 10);
@@ -92,8 +99,39 @@ Page({
     }
   },
 
+  // 切换隐私协议同意状态
+  togglePrivacyAgreement: function() {
+    this.setData({
+      privacyAgreed: !this.data.privacyAgreed
+    });
+    wx.vibrateShort({ type: 'light' });
+  },
+
+  // 查看隐私政策
+  viewPrivacyPolicy: function() {
+    wx.navigateTo({
+      url: '/pages/privacy-policy/privacy-policy?from=onboarding'
+    });
+  },
+
   // 下一步
   nextStep: function() {
+    // 第一步需要先同意隐私政策
+    if (this.data.currentStep === 1 && !this.data.privacyAgreed) {
+      wx.showToast({
+        title: '请先同意隐私政策',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+
+    // 保存隐私政策同意记录
+    if (this.data.currentStep === 1 && this.data.privacyAgreed) {
+      wx.setStorageSync('privacyPolicyAgreed', true);
+      wx.setStorageSync('privacyPolicyAgreedTime', new Date().toISOString());
+    }
+
     this.setData({
       currentStep: this.data.currentStep + 1
     });
@@ -102,6 +140,20 @@ Page({
     wx.vibrateShort({
       type: 'light'
     });
+  },
+
+  // 上一步
+  prevStep: function() {
+    if (this.data.currentStep > 1) {
+      this.setData({
+        currentStep: this.data.currentStep - 1
+      });
+
+      // 触觉反馈
+      wx.vibrateShort({
+        type: 'light'
+      });
+    }
   },
 
   // 选择头像
@@ -119,9 +171,10 @@ Page({
   onConfirmProfile: function() {
     const { avatarUrl, nickname } = this.data;
 
-    if (!avatarUrl && !nickname) {
+    // 至少需要填写昵称
+    if (!nickname || nickname.trim() === '') {
       wx.showToast({
-        title: '请设置头像或昵称',
+        title: '请填写昵称',
         icon: 'none',
         duration: 2000
       });
@@ -130,7 +183,7 @@ Page({
 
     const userInfo = {
       avatarUrl: avatarUrl || '',
-      nickName: nickname || '知愈用户'
+      nickName: nickname.trim()
     };
 
     this.setData({ userInfo });
@@ -252,22 +305,28 @@ Page({
   submitSurvey: function() {
     const { formData, concerns, goals, triggers, copingStyles, expectations } = this.data;
 
-    // 验证必填项
-    if (!formData.birthday || !formData.gender || !formData.occupation) {
-      wx.showToast({
-        title: '请完成基本信息',
-        icon: 'none',
-        duration: 2000
-      });
-      return;
-    }
-
     // 收集选中项
     const selectedConcerns = concerns.filter(item => item.checked).map(item => item.value);
     const selectedGoals = goals.filter(item => item.checked).map(item => item.value);
     const selectedTriggers = triggers.filter(item => item.checked).map(item => item.value);
     const selectedCoping = copingStyles.filter(item => item.checked).map(item => item.value);
     const selectedExpectations = expectations.filter(item => item.checked).map(item => item.value);
+
+    // 验证：至少选择一项（任意类别）
+    const hasAnySelection = selectedConcerns.length > 0 ||
+                           selectedGoals.length > 0 ||
+                           selectedTriggers.length > 0 ||
+                           selectedCoping.length > 0 ||
+                           selectedExpectations.length > 0;
+
+    if (!hasAnySelection) {
+      wx.showToast({
+        title: '请至少选择一项，帮助小知了解你',
+        icon: 'none',
+        duration: 2500
+      });
+      return;
+    }
 
     // 构建用户画像数据
     const userProfile = {

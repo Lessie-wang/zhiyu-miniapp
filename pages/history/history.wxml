@@ -1,5 +1,5 @@
 <view class="container">
-  <!-- 放大后的顶部日历 -->
+  <!-- 情绪日历 -->
   <view class="calendar-section calendar-section-hero">
     <view class="calendar-hero-top">
       <view class="calendar-hero-copy">
@@ -61,6 +61,158 @@
     </view>
 
     <text class="calendar-footnote">带颜色的日期表示当天有情绪记录</text>
+  </view>
+
+  <!-- 心脏藤蔓盆栽养成 -->
+  <view class="plant-section">
+    <view class="plant-header">
+      <text class="plant-title">本月情绪之心</text>
+      <text class="plant-stage-badge">{{plantStageText}}</text>
+    </view>
+
+    <view class="plant-canvas plant-stage-{{plantStage}}">
+      <!-- 花盆 -->
+      <view class="plant-pot">
+        <view class="pot-rim"></view>
+        <view class="pot-body"></view>
+        <view class="pot-soil"></view>
+      </view>
+
+      <!-- 阶段1：种子 (0-5次) -->
+      <view class="seed" wx:if="{{plantStage === 1}}"></view>
+
+      <!-- 阶段2：发芽 (6-15次) -->
+      <block wx:if="{{plantStage === 2}}">
+        <view class="sprout sprout-1"></view>
+        <view class="sprout sprout-2"></view>
+        <view class="sprout sprout-3"></view>
+      </block>
+
+      <!-- 阶段3：小苗 (16-30次) -->
+      <block wx:if="{{plantStage === 3}}">
+        <view class="vine vine-1"></view>
+        <view class="vine vine-2"></view>
+        <view class="vine vine-3"></view>
+        <view class="vine vine-4"></view>
+        <view class="vine vine-5"></view>
+        <view class="vine vine-6"></view>
+        <view class="vine vine-7"></view>
+      </block>
+
+      <!-- 阶段4：茂盛 (31-50次) -->
+      <block wx:if="{{plantStage === 4}}">
+        <view class="vine vine-1"></view>
+        <view class="vine vine-2"></view>
+        <view class="vine vine-3"></view>
+        <view class="vine vine-4"></view>
+        <view class="vine vine-5"></view>
+        <view class="vine vine-6"></view>
+        <view class="vine vine-7"></view>
+        <view class="vine vine-8"></view>
+        <view class="vine vine-9"></view>
+        <view class="vine vine-10"></view>
+        <view class="vine vine-11"></view>
+        <view class="vine vine-12"></view>
+        <view class="vine vine-13"></view>
+        <view class="vine vine-14"></view>
+        <view class="vine vine-15"></view>
+      </block>
+
+      <!-- 阶段5：开花 (51+次) -->
+      <block wx:if="{{plantStage === 5}}">
+        <view class="vine vine-1"></view>
+        <view class="vine vine-2"></view>
+        <view class="vine vine-3"></view>
+        <view class="vine vine-4"></view>
+        <view class="vine vine-5"></view>
+        <view class="vine vine-6"></view>
+        <view class="vine vine-7"></view>
+        <view class="vine vine-8"></view>
+        <view class="vine vine-9"></view>
+        <view class="vine vine-10"></view>
+        <view class="vine vine-11"></view>
+        <view class="vine vine-12"></view>
+        <view class="vine vine-13"></view>
+        <view class="vine vine-14"></view>
+        <view class="vine vine-15"></view>
+
+        <!-- 花朵 -->
+        <view class="flower flower-1">
+          <view class="flower-petal petal-1"></view>
+          <view class="flower-petal petal-2"></view>
+          <view class="flower-petal petal-3"></view>
+          <view class="flower-petal petal-4"></view>
+          <view class="flower-petal petal-5"></view>
+          <view class="flower-center"></view>
+        </view>
+        <view class="flower flower-2">
+          <view class="flower-petal petal-1"></view>
+          <view class="flower-petal petal-2"></view>
+          <view class="flower-petal petal-3"></view>
+          <view class="flower-petal petal-4"></view>
+          <view class="flower-petal petal-5"></view>
+          <view class="flower-center"></view>
+        </view>
+        <view class="flower flower-3">
+          <view class="flower-petal petal-1"></view>
+          <view class="flower-petal petal-2"></view>
+          <view class="flower-petal petal-3"></view>
+          <view class="flower-petal petal-4"></view>
+          <view class="flower-petal petal-5"></view>
+          <view class="flower-center"></view>
+        </view>
+        <view class="flower flower-4">
+          <view class="flower-petal petal-1"></view>
+          <view class="flower-petal petal-2"></view>
+          <view class="flower-petal petal-3"></view>
+          <view class="flower-petal petal-4"></view>
+          <view class="flower-petal petal-5"></view>
+          <view class="flower-center"></view>
+        </view>
+        <view class="flower flower-5">
+          <view class="flower-petal petal-1"></view>
+          <view class="flower-petal petal-2"></view>
+          <view class="flower-petal petal-3"></view>
+          <view class="flower-petal petal-4"></view>
+          <view class="flower-petal petal-5"></view>
+          <view class="flower-center"></view>
+        </view>
+        <view class="flower flower-6">
+          <view class="flower-petal petal-1"></view>
+          <view class="flower-petal petal-2"></view>
+          <view class="flower-petal petal-3"></view>
+          <view class="flower-petal petal-4"></view>
+          <view class="flower-petal petal-5"></view>
+          <view class="flower-center"></view>
+        </view>
+        <view class="flower flower-7">
+          <view class="flower-petal petal-1"></view>
+          <view class="flower-petal petal-2"></view>
+          <view class="flower-petal petal-3"></view>
+          <view class="flower-petal petal-4"></view>
+          <view class="flower-petal petal-5"></view>
+          <view class="flower-center"></view>
+        </view>
+        <view class="flower flower-8">
+          <view class="flower-petal petal-1"></view>
+          <view class="flower-petal petal-2"></view>
+          <view class="flower-petal petal-3"></view>
+          <view class="flower-petal petal-4"></view>
+          <view class="flower-petal petal-5"></view>
+          <view class="flower-center"></view>
+        </view>
+      </block>
+    </view>
+
+    <view class="plant-description">
+      <text class="plant-desc-text">{{plantDescription}}</text>
+      <view class="plant-progress">
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{plantProgress}}%;"></view>
+        </view>
+        <text class="progress-text">{{monthRecordCount}}/{{plantNextStageCount}}</text>
+      </view>
+    </view>
   </view>
 
   <!-- 报告区 -->

@@ -42,7 +42,7 @@
   <!-- 小知介绍 -->
   <view class="ai-profile">
     <view class="ai-center">
-      <image class="ai-avatar" src="/images/xiaozhi-avatar.jpg" mode="aspectFill"></image>
+      <image class="ai-avatar" src="/images/xiaozhi-avatar.jpg" mode="aspectFill" lazy-load></image>
       <view class="ai-info">
         <text class="ai-name">小知</text>
         <text class="ai-desc">陪你聊聊心事</text>
@@ -85,10 +85,13 @@
           <!-- 非编辑状态：显示消息内容 -->
           <view wx:if="{{editingIndex !== index}}">
             <view wx:if="{{item.role === 'ai' && item.isWelcome}}" class="welcome-card">
-              <text class="welcome-label">小知</text>
-              <rich-text class="message-text welcome-text" nodes="{{item.formattedContent || item.content}}" bindlongpress="onLongPressMessage" data-index="{{index}}" data-content="{{item.content}}"></rich-text>
+              <image class="welcome-avatar" src="/images/xiaozhi-avatar.jpg" mode="aspectFill"></image>
+              <view class="welcome-content">
+                <text class="welcome-label">小知</text>
+                <rich-text class="message-text welcome-text" nodes="{{item.formattedContent || item.content}}" bindlongpress="onLongPressMessage" data-index="{{index}}" data-content="{{item.content}}"></rich-text>
+              </view>
             </view>
-            <rich-text wx:else class="message-text" nodes="{{item.formattedContent || item.content}}" bindlongpress="onLongPressMessage" data-index="{{index}}" data-content="{{item.content}}"></rich-text>
+            <rich-text wx:else class="message-text" nodes="{{item.formattedContent || item.content}}" user-select="{{item.role === 'ai' && !item.isWelcome}}" bindlongpress="onLongPressMessage" data-index="{{index}}" data-content="{{item.content}}"></rich-text>
             <!-- 版本号显示和切换 -->
             <view class="version-indicator" wx:if="{{item.role === 'user' && item.versionCount > 1}}">
               <view class="version-nav">
@@ -147,6 +150,9 @@
               auto-height
               maxlength="500"
               placeholder="编辑你的消息..."
+              adjust-position="{{true}}"
+              cursor-spacing="150"
+              hold-keyboard="{{true}}"
             />
             <view class="edit-actions">
               <view class="edit-action-btn cancel-btn" bindtap="cancelEdit">
@@ -174,6 +180,27 @@
     </view>
   </scroll-view>
 
+  <!-- 结束对话弹窗 -->
+  <view class="modal-mask" wx:if="{{showEndModal}}" bindtap="closeEndModal"></view>
+  <view class="end-modal {{showEndModal ? 'show' : ''}}">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">结束本次对话</text>
+      </view>
+      <view class="modal-body">
+        <text class="modal-text">是否让小知整理本次对话并保存到日历？</text>
+      </view>
+      <view class="modal-actions">
+        <view class="modal-btn cancel-btn" bindtap="exitWithoutSave">
+          <text>退出</text>
+        </view>
+        <view class="modal-btn confirm-btn" bindtap="saveAndExit">
+          <text>保存</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
   <!-- 底部输入区域 -->
   <view class="input-area">
     <!-- 文字输入 -->
@@ -182,11 +209,11 @@
         class="chat-input"
         placeholder="说说你的感受..."
         placeholder-style="font-size:28rpx;color:#B8B2A7;"
-        value="{{inputText}}"
         bindinput="onInputChange"
         confirm-type="return"
         adjust-position="{{true}}"
-        cursor-spacing="20"
+        cursor-spacing="150"
+        hold-keyboard="{{true}}"
         auto-height
         maxlength="500"
         show-confirm-bar="{{false}}"

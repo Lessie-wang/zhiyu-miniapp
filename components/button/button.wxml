@@ -1,0 +1,26 @@
+<!--
+  知愈小程序 - 按钮组件
+  支持多种类型、尺寸和状态
+-->
+<view
+  class="zh-button zh-button--{{type}} zh-button--{{size}} {{disabled ? 'zh-button--disabled' : ''}} {{loading ? 'zh-button--loading' : ''}} {{block ? 'zh-button--block' : ''}} {{customClass}}"
+  hover-class="{{disabled || loading ? '' : 'zh-button--active'}}"
+  hover-stay-time="100"
+  bindtap="handleTap"
+>
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="zh-button__loading">
+    <view class="zh-button__loading-icon"></view>
+  </view>
+
+  <!-- 图标 -->
+  <image
+    wx:if="{{icon && !loading}}"
+    class="zh-button__icon"
+    src="{{icon}}"
+    mode="aspectFit"
+  />
+
+  <!-- 文字 -->
+  <text class="zh-button__text">{{text}}<slot></slot></text>
+</view>

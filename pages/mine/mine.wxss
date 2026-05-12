@@ -1,57 +1,156 @@
-/* ========== 页面容器 ========== */
+/* ==================== 知愈之树 - 大厂游戏级视觉体验 ==================== */
+/* 参考：原神、王者荣耀UI设计 */
+
+@import "../../styles/design-tokens.wxss";
+@import "../../styles/animations.wxss";
+@import "../../styles/safe-area.wxss";
+
+/* ========== 页面容器 - 全屏沉浸式背景 ========== */
 .container {
   min-height: 100vh;
-  background: linear-gradient(180deg, #FAF9F7 0%, #F5EDE7 40%, #F2E6DF 100%);
+  padding: calc(env(safe-area-inset-top) + 60rpx) 0 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(245, 198, 203, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(212, 184, 165, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at top left, #FAF9F7 0%, #F5F0EB 40%, #F2E6DF 100%);
   position: relative;
   overflow: hidden;
+  animation: containerFadeIn 1s ease-out;
 }
 
-/* ========== 粒子画布 ========== */
-.particle-canvas {
+@keyframes containerFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* 景深层1：远景模糊层 */
+.container::before {
+  content: '';
+  position: fixed;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  background: radial-gradient(ellipse at 50% 30%,
+    rgba(255, 240, 235, 0.6) 0%,
+    rgba(255, 220, 210, 0.4) 40%,
+    transparent 70%
+  );
+  filter: blur(60rpx);
+  pointer-events: none;
+  z-index: 0;
+  animation: depthLayer1 12s ease-in-out infinite;
+}
+
+@keyframes depthLayer1 {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 0.6; }
+  50% { transform: scale(1.1) translateY(-20rpx); opacity: 0.8; }
+}
+
+/* 景深层2：中景光晕 */
+.container::after {
+  content: '';
   position: fixed;
   top: 0;
   left: 0;
-  width: 750rpx;
-  height: 100vh;
-  z-index: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(245, 198, 203, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(196, 181, 216, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(196, 212, 181, 0.1) 0%, transparent 35%);
   pointer-events: none;
+  z-index: 1;
+  animation: depthLayer2 15s ease-in-out infinite;
 }
 
-/* ========== 用户卡片 ========== */
+@keyframes depthLayer2 {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* ========== 用户卡片 - 调整padding避免重合 ========== */
 .user-card {
   position: relative;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 28rpx;
-  padding: 32rpx;
-  margin: 40rpx 32rpx 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20rpx) saturate(180%);
+  border-radius: 32rpx;
+  padding: 24rpx 28rpx;
+  margin: calc(32rpx + env(safe-area-inset-top)) 24rpx 0;
   display: flex;
   align-items: center;
   gap: 20rpx;
-  box-shadow: 0 8rpx 32rpx rgba(212, 184, 165, 0.15);
-  border: 1rpx solid rgba(212, 184, 165, 0.2);
-  transition: all 0.2s ease;
+  box-shadow:
+    0 8rpx 32rpx rgba(212, 184, 165, 0.12),
+    0 2rpx 8rpx rgba(212, 184, 165, 0.08),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.8);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: cardSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
 }
+
+@keyframes cardSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-40rpx);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .card-hover {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4rpx 16rpx rgba(212, 184, 165, 0.2);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 12rpx 48rpx rgba(212, 184, 165, 0.16),
+    0 4rpx 12rpx rgba(212, 184, 165, 0.12);
+  transform: translateY(-4rpx);
 }
 
 .user-avatar {
   width: 96rpx;
   height: 96rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  background: linear-gradient(135deg,
+    rgba(245, 198, 203, 0.9) 0%,
+    rgba(212, 184, 165, 0.95) 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow:
+    0 4rpx 16rpx rgba(212, 184, 165, 0.2),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
 }
+
+.user-avatar::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  animation: avatarShine 3s ease-in-out infinite;
+}
+
+@keyframes avatarShine {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
 .avatar-img {
   width: 96rpx;
   height: 96rpx;
   border-radius: 50%;
+  object-fit: cover;
 }
+
 .avatar-css-icon {
   width: 96rpx;
   height: 96rpx;
@@ -59,496 +158,777 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rpx;
+  gap: 4rpx;
 }
+
 .avatar-css-icon .avi-head {
-  width: 28rpx;
-  height: 28rpx;
-  background: rgba(255, 255, 255, 0.8);
+  width: 32rpx;
+  height: 32rpx;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 50%;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 }
+
 .avatar-css-icon .avi-body {
-  width: 40rpx;
-  height: 20rpx;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 20rpx 20rpx 0 0;
+  width: 48rpx;
+  height: 24rpx;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 24rpx 24rpx 0 0;
 }
 
 .user-info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8rpx;
+  gap: 6rpx;
 }
+
 .user-name {
   font-size: 32rpx;
   font-weight: 700;
-  color: #6D6A65;
+  color: #3D3D3D;
+  letter-spacing: 0.5rpx;
 }
+
 .user-motto {
   font-size: 24rpx;
-  color: #B8B2A7;
+  color: #8B7B6F;
+  line-height: 1.5;
 }
+
 .edit-profile {
-  width: 48rpx;
-  height: 48rpx;
+  width: 52rpx;
+  height: 52rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  background: rgba(245, 198, 203, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.edit-profile:active {
+  background: rgba(245, 198, 203, 0.2);
+  transform: scale(0.92);
+}
+
 .edit-icon {
   font-size: 36rpx;
-  color: #B8B2A7;
+  color: #D4B8A5;
   font-weight: 700;
 }
 
-/* ========== 知愈之树功能区 ========== */
+/* ========== 知愈之树区域 - 全屏沉浸式 ========== */
 .tree-section {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 800rpx;
-  margin-top: 20rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  animation: treeSectionFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s backwards;
 }
 
-/* 树冠光晕 */
-.tree-crown {
+@keyframes treeSectionFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 水彩树意象层 - 用纯CSS渐变模拟水彩晕染的树冠+树干轮廓 */
+.tree-section::before {
+  content: '';
   position: absolute;
+  top: 50%;
   left: 50%;
-  top: -30rpx;
-  width: 260rpx;
-  height: 180rpx;
-  transform: translateX(-50%);
-  background: radial-gradient(ellipse, rgba(212, 184, 165, 0.12) 0%, rgba(212, 184, 165, 0.04) 50%, transparent 70%);
-  border-radius: 50%;
-}
-
-/* ========== 树干 ========== */
-.tree-trunk {
-  position: absolute;
-  left: 50%;
-  top: 50rpx;
-  bottom: 80rpx;
-  width: 24rpx;
-  transform: translateX(-50%);
-  background: linear-gradient(180deg,
-    rgba(175, 150, 130, 0.15) 0%,
-    rgba(175, 150, 130, 0.45) 10%,
-    rgba(170, 145, 125, 0.6) 30%,
-    rgba(165, 138, 118, 0.7) 50%,
-    rgba(160, 132, 112, 0.65) 70%,
-    rgba(158, 130, 110, 0.55) 85%,
-    rgba(155, 128, 108, 0.25) 100%
-  );
-  border-radius: 12rpx 12rpx 6rpx 6rpx;
-  clip-path: polygon(22% 0%, 78% 0%, 100% 100%, 0% 100%);
-}
-
-/* 树干纹理 */
-.trunk-tex {
-  position: absolute;
-  height: 2rpx;
-  background: rgba(135, 110, 90, 0.15);
-  border-radius: 1rpx;
-}
-.trunk-tex.t1 { top: 18%; width: 55%; left: 22%; }
-.trunk-tex.t2 { top: 38%; width: 45%; left: 28%; }
-.trunk-tex.t3 { top: 58%; width: 55%; left: 22%; }
-.trunk-tex.t4 { top: 78%; width: 40%; left: 30%; }
-
-/* ========== 树枝 ========== */
-.branch {
-  position: absolute;
-  height: 5rpx;
-  border-radius: 3rpx;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 90%;
+  background:
+    /* 树冠：上方多层水彩晕染圆斑 */
+    radial-gradient(ellipse 280rpx 220rpx at 50% 32%,
+      rgba(196, 212, 181, 0.35) 0%,
+      rgba(196, 212, 181, 0.18) 40%,
+      transparent 75%),
+    radial-gradient(ellipse 220rpx 180rpx at 38% 28%,
+      rgba(168, 192, 144, 0.28) 0%,
+      rgba(168, 192, 144, 0.14) 45%,
+      transparent 80%),
+    radial-gradient(ellipse 200rpx 170rpx at 62% 30%,
+      rgba(212, 184, 165, 0.22) 0%,
+      rgba(212, 184, 165, 0.1) 50%,
+      transparent 80%),
+    radial-gradient(ellipse 180rpx 150rpx at 45% 22%,
+      rgba(245, 198, 203, 0.2) 0%,
+      rgba(245, 198, 203, 0.1) 50%,
+      transparent 80%),
+    radial-gradient(ellipse 160rpx 140rpx at 58% 24%,
+      rgba(196, 181, 216, 0.18) 0%,
+      rgba(196, 181, 216, 0.08) 50%,
+      transparent 80%),
+    /* 树干：中下部纵向晕染 */
+    radial-gradient(ellipse 60rpx 200rpx at 50% 65%,
+      rgba(180, 145, 120, 0.25) 0%,
+      rgba(180, 145, 120, 0.12) 50%,
+      transparent 80%),
+    /* 地面光晕 */
+    radial-gradient(ellipse 320rpx 80rpx at 50% 88%,
+      rgba(212, 184, 165, 0.18) 0%,
+      rgba(212, 184, 165, 0.08) 50%,
+      transparent 80%);
+  filter: blur(2rpx);
+  opacity: 0.95;
+  animation: watercolorBreath 10s ease-in-out infinite;
+  pointer-events: none;
   z-index: 0;
 }
 
-/* 左上枝 → 她的时间 */
-.branch-1 {
-  left: 219rpx;
-  top: 130rpx;
-  width: 156rpx;
-  background: linear-gradient(to right, rgba(175, 150, 130, 0.08), rgba(175, 150, 130, 0.5));
-  transform: rotate(10deg);
-  transform-origin: right center;
-}
-
-/* 右上枝 → 情绪库 */
-.branch-2 {
-  left: 375rpx;
-  top: 160rpx;
-  width: 156rpx;
-  background: linear-gradient(to right, rgba(175, 150, 130, 0.5), rgba(175, 150, 130, 0.08));
-  transform: rotate(5deg);
-  transform-origin: left center;
-}
-
-/* 左中枝 → 疗愈商店 */
-.branch-3 {
-  left: 209rpx;
-  top: 400rpx;
-  width: 166rpx;
-  background: linear-gradient(to right, rgba(175, 150, 130, 0.08), rgba(175, 150, 130, 0.5));
-  transform: rotate(9deg);
-  transform-origin: right center;
-}
-
-/* 右中枝 → 设置 */
-.branch-4 {
-  left: 375rpx;
-  top: 435rpx;
-  width: 171rpx;
-  background: linear-gradient(to right, rgba(175, 150, 130, 0.5), rgba(175, 150, 130, 0.08));
-  transform: rotate(3deg);
-  transform-origin: left center;
-}
-
-/* ========== 枝节点（树干分叉处） ========== */
-.branch-joint {
-  position: absolute;
-  width: 14rpx;
-  height: 14rpx;
-  background: rgba(170, 145, 125, 0.35);
-  border-radius: 50%;
-  left: 50%;
-  transform: translateX(-50%) scale(1);
-  z-index: 1;
-  animation: jointPulse 4s ease-in-out infinite;
-}
-.joint-top { top: 145rpx; }
-.joint-mid { top: 418rpx; animation-delay: 2s; }
-
-@keyframes jointPulse {
+@keyframes watercolorBreath {
   0%, 100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 0.35;
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1);
   }
   50% {
-    transform: translateX(-50%) scale(1.4);
-    opacity: 0.6;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.04);
   }
 }
 
-/* ========== 树叶装饰 ========== */
+/* 树周围的光晕效果 - 增强景深 */
+.tree-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(ellipse at center,
+    rgba(245, 198, 203, 0.2) 0%,
+    rgba(212, 184, 165, 0.15) 25%,
+    rgba(196, 181, 216, 0.1) 50%,
+    transparent 70%
+  );
+  filter: blur(60rpx);
+  animation: glowPulse 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+/* ========== 玻璃反光层 - 流动光效 ========== */
+.glass-reflection {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 流动光效1 */
+.glass-reflection::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+  animation: flowingLight1 8s ease-in-out infinite;
+}
+
+@keyframes flowingLight1 {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(30deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(30deg);
+  }
+}
+
+/* 流动光效2 */
+.glass-reflection::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    240deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(245, 198, 203, 0.1) 45%,
+    rgba(245, 198, 203, 0.2) 50%,
+    rgba(245, 198, 203, 0.1) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+  animation: flowingLight2 10s ease-in-out infinite 2s;
+}
+
+@keyframes flowingLight2 {
+  0% {
+    transform: translateX(100%) translateY(-100%) rotate(-30deg);
+  }
+  100% {
+    transform: translateX(-100%) translateY(100%) rotate(-30deg);
+  }
+}
+
+/* ========== 落叶特效系统 ========== */
+.falling-leaves {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 落叶1-8 */
 .leaf {
   position: absolute;
-  background: rgba(170, 150, 130, 0.3);
-  border-radius: 0 50% 50% 50%;
-  z-index: 0;
-  animation: leafBreath 5s ease-in-out infinite;
+  width: 24rpx;
+  height: 24rpx;
+  background: radial-gradient(ellipse at 30% 30%,
+    rgba(245, 198, 203, 0.8) 0%,
+    rgba(212, 184, 165, 0.6) 100%
+  );
+  border-radius: 0 100% 0 100%;
+  filter: blur(1rpx);
+  opacity: 0;
 }
 
-@keyframes leafBreath {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 0.35; }
+.leaf1 {
+  left: 10%;
+  animation: leafFall1 12s ease-in-out infinite;
 }
 
-.lf1 {
-  width: 14rpx; height: 9rpx;
-  left: 350rpx; top: 35rpx;
-  transform: rotate(-25deg);
-  animation-delay: 0s;
-}
-.lf2 {
-  width: 12rpx; height: 8rpx;
-  left: 400rpx; top: 50rpx;
-  transform: rotate(155deg);
-  animation-delay: 0.8s;
-}
-.lf3 {
-  width: 13rpx; height: 8rpx;
-  left: 270rpx; top: 115rpx;
-  transform: rotate(40deg);
-  animation-delay: 1.5s;
-  background: rgba(170, 150, 130, 0.22);
-}
-.lf4 {
-  width: 11rpx; height: 7rpx;
-  left: 490rpx; top: 175rpx;
-  transform: rotate(-55deg);
-  animation-delay: 0.4s;
-}
-.lf5 {
-  width: 14rpx; height: 9rpx;
-  left: 362rpx; top: 260rpx;
-  transform: rotate(50deg);
-  animation-delay: 2.2s;
-  background: rgba(170, 150, 130, 0.2);
-}
-.lf6 {
-  width: 10rpx; height: 7rpx;
-  left: 395rpx; top: 310rpx;
-  transform: rotate(-130deg);
-  animation-delay: 3s;
-}
-.lf7 {
-  width: 12rpx; height: 8rpx;
-  left: 260rpx; top: 370rpx;
-  transform: rotate(65deg);
-  animation-delay: 1.8s;
-  background: rgba(170, 150, 130, 0.22);
-}
-.lf8 {
-  width: 13rpx; height: 8rpx;
-  left: 505rpx; top: 440rpx;
-  transform: rotate(-40deg);
-  animation-delay: 0.6s;
-}
-.lf9 {
-  width: 10rpx; height: 6rpx;
-  left: 355rpx; top: 510rpx;
-  transform: rotate(-60deg);
-  animation-delay: 2.8s;
-}
-.lf10 {
-  width: 11rpx; height: 7rpx;
-  left: 400rpx; top: 570rpx;
-  transform: rotate(140deg);
-  animation-delay: 3.5s;
-  background: rgba(170, 150, 130, 0.18);
+.leaf2 {
+  left: 25%;
+  animation: leafFall2 15s ease-in-out infinite 2s;
 }
 
-/* ========== 树根 ========== */
-.tree-roots {
-  position: absolute;
-  bottom: 50rpx;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 140rpx;
-  height: 44rpx;
+.leaf3 {
+  left: 40%;
+  animation: leafFall3 13s ease-in-out infinite 4s;
 }
-.root {
-  position: absolute;
+
+.leaf4 {
+  left: 55%;
+  animation: leafFall4 14s ease-in-out infinite 1s;
+}
+
+.leaf5 {
+  left: 70%;
+  animation: leafFall5 16s ease-in-out infinite 3s;
+}
+
+.leaf6 {
+  left: 85%;
+  animation: leafFall6 11s ease-in-out infinite 5s;
+}
+
+.leaf7 {
+  left: 15%;
+  animation: leafFall7 17s ease-in-out infinite 6s;
+}
+
+.leaf8 {
+  left: 60%;
+  animation: leafFall8 13s ease-in-out infinite 7s;
+}
+
+@keyframes leafFall1 {
+  0% {
+    top: -10%;
+    opacity: 0;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+    transform: translateX(100rpx) rotate(360deg);
+  }
+}
+
+@keyframes leafFall2 {
+  0% {
+    top: -10%;
+    opacity: 0;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+    transform: translateX(-80rpx) rotate(-360deg);
+  }
+}
+
+@keyframes leafFall3 {
+  0% {
+    top: -10%;
+    opacity: 0;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+    transform: translateX(120rpx) rotate(540deg);
+  }
+}
+
+@keyframes leafFall4 {
+  0% {
+    top: -10%;
+    opacity: 0;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+    transform: translateX(-100rpx) rotate(-540deg);
+  }
+}
+
+@keyframes leafFall5 {
+  0% {
+    top: -10%;
+    opacity: 0;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+    transform: translateX(90rpx) rotate(720deg);
+  }
+}
+
+@keyframes leafFall6 {
+  0% {
+    top: -10%;
+    opacity: 0;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+    transform: translateX(-110rpx) rotate(-720deg);
+  }
+}
+
+@keyframes leafFall7 {
+  0% {
+    top: -10%;
+    opacity: 0;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+    transform: translateX(70rpx) rotate(900deg);
+  }
+}
+
+@keyframes leafFall8 {
+  0% {
+    top: -10%;
+    opacity: 0;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+    transform: translateX(-90rpx) rotate(-900deg);
+  }
+}
+
+/* ========== 功能按钮 - 与树枝融合设计 ========== */
+.tree-nodes {
+  position: fixed;
   top: 0;
-  height: 3rpx;
-  background: rgba(155, 128, 108, 0.25);
-  border-radius: 2rpx;
-  transform-origin: top center;
-}
-.root.r1 {
-  left: 50%;
-  width: 48rpx;
-  transform: translateX(-20%) rotate(28deg);
-}
-.root.r2 {
-  left: 50%;
-  width: 55rpx;
-  transform: translateX(-80%) rotate(-22deg);
-}
-.root.r3 {
-  left: 50%;
-  width: 38rpx;
-  transform: translateX(5%) rotate(12deg);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  pointer-events: none;
 }
 
-/* ========== 功能按钮 ========== */
 .tree-node {
   position: absolute;
+  pointer-events: auto;
+  animation: nodeEntrance 0.8s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+@keyframes nodeEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-40rpx);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 按钮位置 - 模拟树枝节点 */
+.node-1 {
+  top: 32%;
+  left: 15%;
+  animation-delay: 0.6s;
+}
+
+.node-2 {
+  top: 48%;
+  right: 18%;
+  animation-delay: 0.8s;
+}
+
+.node-3 {
+  top: 64%;
+  left: 20%;
+  animation-delay: 1s;
+}
+
+.node-4 {
+  top: 78%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-delay: 1.2s;
+}
+
+/* 按钮容器 - 树枝节点效果 */
+.node-btn-wrapper {
+  position: relative;
+  width: 140rpx;
+  height: 140rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 树枝连接线 */
+.node-btn-wrapper::before {
+  content: '';
+  position: absolute;
+  width: 4rpx;
+  height: 60rpx;
+  background: linear-gradient(180deg,
+    rgba(212, 184, 165, 0.4) 0%,
+    rgba(212, 184, 165, 0.1) 100%
+  );
+  top: -60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2rpx;
+  opacity: 0.6;
+}
+
+/* 按钮本体 */
+.node-btn {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20rpx) saturate(180%);
+  box-shadow:
+    0 8rpx 32rpx rgba(212, 184, 165, 0.2),
+    0 2rpx 8rpx rgba(212, 184, 165, 0.1),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.8);
+  border: 2rpx solid rgba(255, 255, 255, 0.6);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12rpx;
-  z-index: 2;
-  transform: translateX(-50%);
-  transition: all 0.25s ease;
-}
-.node-active {
-  transform: translateX(-50%) scale(1.08);
+  justify-content: center;
+  gap: 8rpx;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: nodeFloat 5s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
 }
 
-.node-circle {
-  width: 108rpx;
-  height: 108rpx;
-  background: rgba(255, 255, 255, 0.92);
+@keyframes nodeFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8rpx);
+  }
+}
+
+/* 按钮悬浮光晕 */
+.node-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle,
+    rgba(245, 198, 203, 0.3) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* 按钮点击涟漪 */
+.node-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  background: rgba(245, 198, 203, 0.4);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.node-btn:active::after {
+  animation: nodeRipple 0.8s ease-out;
+}
+
+@keyframes nodeRipple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 200%;
+    height: 200%;
+    opacity: 0;
+  }
+}
+
+/* 按钮悬浮状态 */
+.node-btn-hover {
+  transform: translateY(-4rpx) scale(1.05);
   box-shadow:
-    0 8rpx 24rpx rgba(212, 184, 165, 0.2),
+    0 16rpx 48rpx rgba(212, 184, 165, 0.3),
+    0 4rpx 16rpx rgba(212, 184, 165, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.node-btn-hover::before {
+  opacity: 1;
+}
+
+/* 按钮图标 */
+.node-circle {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20rpx) saturate(180%);
+  box-shadow:
+    0 8rpx 32rpx rgba(212, 184, 165, 0.2),
     0 2rpx 8rpx rgba(212, 184, 165, 0.1),
-    inset 0 1rpx 3rpx rgba(255, 255, 255, 0.9);
-  border: 2rpx solid rgba(212, 184, 165, 0.25);
-  transition: all 0.25s ease;
-}
-.node-active .node-circle {
-  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
-  border-color: #C4A893;
-  box-shadow: 0 12rpx 32rpx rgba(212, 184, 165, 0.45);
-}
-
-.node-label {
-  font-size: 24rpx;
-  color: #6D6A65;
-  font-weight: 600;
-  white-space: nowrap;
-  text-shadow: 0 1rpx 4rpx rgba(255, 255, 255, 0.8);
-}
-
-/* 按钮位置 */
-.node-1 { left: 165rpx; top: 50rpx; }
-.node-2 { left: 585rpx; top: 120rpx; }
-.node-3 { left: 155rpx; top: 320rpx; }
-.node-4 { left: 595rpx; top: 390rpx; }
-.node-5 { left: 375rpx; top: 580rpx; }
-
-/* ========== 图标容器 ========== */
-.node-icon {
-  width: 44rpx;
-  height: 44rpx;
-  position: relative;
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.8);
+  border: 2rpx solid rgba(255, 255, 255, 0.6);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 8rpx;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: nodeFloat 5s ease-in-out infinite;
 }
 
-/* 按下时图标变白 */
-.node-active .sflower-center,
-.node-active .sflower-petal,
-.node-active .sbook-spine,
-.node-active .sbook-line,
-.node-active .sgear-tooth,
-.node-active .sabout-bubble,
-.node-active .sabout-dot {
-  background: rgba(255, 255, 255, 0.75);
-}
-.node-active .sbook-body,
-.node-active .sshop-bag,
-.node-active .sshop-handle,
-.node-active .sgear-center {
-  border-color: rgba(255, 255, 255, 0.8);
+@keyframes nodeFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8rpx);
+  }
 }
 
-/* ========== CSS 图标 ========== */
-
-/* 花朵 - 她的时间 */
-.sflower-center {
-  width: 12rpx;
-  height: 12rpx;
-  background: #D4B8A5;
-  border-radius: 50%;
-  position: absolute;
-  z-index: 1;
-}
-.sflower-petal {
-  width: 12rpx;
-  height: 16rpx;
-  background: #E8C4D8;
-  border-radius: 50%;
-  position: absolute;
-  opacity: 0.7;
-}
-.sflower-petal.sp1 { top: 2rpx; }
-.sflower-petal.sp2 { bottom: 2rpx; }
-.sflower-petal.sp3 { left: 4rpx; transform: rotate(90deg); }
-.sflower-petal.sp4 { right: 4rpx; transform: rotate(90deg); }
-
-/* 书本 - 情绪库 */
-.sbook-spine {
-  width: 4rpx;
-  height: 30rpx;
-  background: #D4B8A5;
-  border-radius: 2rpx;
-  position: absolute;
-  left: 6rpx;
-}
-.sbook-body {
-  width: 26rpx;
-  height: 26rpx;
-  border: 2.5rpx solid #D4B8A5;
-  border-left: none;
-  border-radius: 0 6rpx 6rpx 0;
-  position: absolute;
-  left: 10rpx;
-}
-.sbook-line {
-  position: absolute;
-  height: 2rpx;
-  background: #D4B8A5;
-  opacity: 0.4;
-  border-radius: 1rpx;
-}
-.sbook-line.bl1 { width: 14rpx; left: 14rpx; top: 15rpx; }
-.sbook-line.bl2 { width: 10rpx; left: 14rpx; top: 21rpx; }
-
-/* 购物袋 - 疗愈商店 */
-.sshop-bag {
-  width: 26rpx;
-  height: 22rpx;
-  border: 2.5rpx solid #D4B8A5;
-  border-radius: 0 0 8rpx 8rpx;
-  position: absolute;
-  bottom: 6rpx;
-}
-.sshop-handle {
-  width: 16rpx;
-  height: 12rpx;
-  border: 2.5rpx solid #D4B8A5;
-  border-bottom: none;
-  border-radius: 16rpx 16rpx 0 0;
-  position: absolute;
-  top: 6rpx;
+.node-icon {
+  width: 56rpx;
+  height: 56rpx;
+  transition: all 0.3s ease;
 }
 
-/* 齿轮 - 设置 */
-.sgear-center {
-  width: 14rpx;
-  height: 14rpx;
-  border: 2.5rpx solid #D4B8A5;
-  border-radius: 50%;
-  position: absolute;
-}
-.sgear-tooth {
-  width: 30rpx;
-  height: 4rpx;
-  background: #D4B8A5;
-  border-radius: 2rpx;
-  position: absolute;
-  opacity: 0.6;
-}
-.sgear-tooth.gt1 { transform: rotate(0deg); }
-.sgear-tooth.gt2 { transform: rotate(60deg); }
-.sgear-tooth.gt3 { transform: rotate(120deg); }
-
-/* 思维泡 - 关于知愈 */
-.sabout-bubble {
-  width: 30rpx;
-  height: 22rpx;
-  background: #D4B8A5;
-  border-radius: 14rpx;
-  position: absolute;
-  top: 4rpx;
-  opacity: 0.6;
-}
-.sabout-dot {
-  background: #D4B8A5;
-  border-radius: 50%;
-  position: absolute;
-}
-.sabout-dot.sad1 {
-  width: 6rpx;
-  height: 6rpx;
-  bottom: 8rpx;
-  left: 8rpx;
-  opacity: 0.4;
-}
-.sabout-dot.sad2 {
-  width: 4rpx;
-  height: 4rpx;
-  bottom: 4rpx;
-  left: 4rpx;
-  opacity: 0.25;
+.node-icon-img {
+  width: 64rpx;
+  height: 64rpx;
+  transition: all 0.3s ease;
 }
 
-/* ========== 版本信息 ========== */
-.version-info {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: 16rpx 0 60rpx;
+.node-btn-hover .node-icon {
+  transform: scale(1.15);
 }
-.version-text {
+
+.node-btn-hover .node-icon-img {
+  transform: scale(1.15);
+}
+
+/* 按钮文字 */
+.node-label {
   font-size: 22rpx;
-  color: #B8B2A7;
+  color: #8B7B6F;
+  font-weight: 500;
+  letter-spacing: 0.5rpx;
+  transition: color 0.3s ease;
+}
+
+.node-btn-hover .node-label {
+  color: #3D3D3D;
+}
+
+/* ========== 统计卡片区域 ========== */
+.stats-section {
+  position: relative;
+  z-index: 100;
+  margin: 480rpx 24rpx 32rpx;
+  animation: statsSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.4s backwards;
+}
+
+@keyframes statsSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40rpx);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stats-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20rpx) saturate(180%);
+  border-radius: 32rpx;
+  padding: 32rpx;
+  box-shadow:
+    0 8rpx 32rpx rgba(212, 184, 165, 0.12),
+    0 2rpx 8rpx rgba(212, 184, 165, 0.08),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.8);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+}
+
+.stats-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #3D3D3D;
+  margin-bottom: 24rpx;
+  letter-spacing: 0.5rpx;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 20rpx;
+  background: rgba(245, 198, 203, 0.1);
+  border-radius: 20rpx;
+  transition: all 0.3s ease;
+}
+
+.stat-item:active {
+  background: rgba(245, 198, 203, 0.2);
+  transform: scale(0.96);
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #D4B8A5;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #8B7B6F;
 }

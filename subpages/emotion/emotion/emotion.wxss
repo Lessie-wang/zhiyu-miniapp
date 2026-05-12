@@ -1,0 +1,205 @@
+/* 情绪觉察页面样式 - 高级透明质感版 */
+
+/* 引入设计系统 */
+@import '/styles/design-tokens.wxss';
+@import '/styles/animations.wxss';
+
+.container {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(245, 198, 203, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(212, 184, 165, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at top left, #FAF9F7 0%, #F5F0EB 40%, #F2E6DF 100%);
+  padding: calc(env(safe-area-inset-top) + 60rpx) 40rpx 120rpx;
+}
+
+/* 页面标题 */
+.page-header {
+  text-align: center;
+  margin-bottom: 48rpx;
+}
+
+.page-title {
+  display: block;
+  font-size: 52rpx;
+  font-weight: 700;
+  color: #D4B8A5;
+  margin-bottom: 16rpx;
+  letter-spacing: 2rpx;
+  text-shadow: 0 2rpx 8rpx rgba(212, 184, 165, 0.2);
+}
+
+.page-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+}
+
+/* AI 提示 */
+.ai-tip {
+  display: inline-flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 28rpx;
+  background: linear-gradient(135deg, #FFF7E6 0%, #FFE7BA 100%);
+  border-radius: 40rpx;
+  margin-top: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(255, 193, 7, 0.15);
+}
+
+.tip-icon {
+  font-size: 28rpx;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #8B6914;
+  font-weight: 500;
+}
+
+/* 情绪网格布局 */
+.emotions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24rpx;
+  margin-bottom: 48rpx;
+}
+
+/* 情绪卡片 */
+.emotion-card {
+  height: 100%;
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.emotion-card.active {
+  transform: scale(1.02);
+}
+
+.emotion-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 280rpx;
+  padding: 12rpx 0;
+}
+
+.emotion-icon {
+  font-size: 64rpx;
+  margin-bottom: 16rpx;
+}
+
+.emotion-name {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 12rpx;
+  letter-spacing: 2rpx;
+}
+
+.emotion-definition {
+  font-size: 22rpx;
+  color: #B8B2A7;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 12rpx;
+}
+
+/* 衍生情绪数量 */
+.derivatives-count {
+  margin-top: auto;
+  padding: 8rpx 16rpx;
+  background: rgba(212, 184, 165, 0.15);
+  border-radius: 20rpx;
+}
+
+.count-text {
+  font-size: 20rpx;
+  color: #D4B8A5;
+  font-weight: 600;
+}
+
+/* 衍生情绪区域 */
+.derivatives-section {
+  margin-bottom: 48rpx;
+  animation: fadeInUp 0.4s var(--ease-smooth);
+}
+
+.derivatives-card {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 243, 238, 0.95) 100%);
+  backdrop-filter: blur(20rpx);
+}
+
+.derivatives-header {
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+
+.derivatives-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 12rpx;
+}
+
+.derivatives-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+}
+
+.derivatives-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  justify-content: center;
+}
+
+.derivative-tag {
+  padding: 16rpx 28rpx;
+  background: white;
+  border-radius: 40rpx;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.1);
+  transition: all 0.2s ease;
+}
+
+.derivative-tag:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 8rpx rgba(212, 184, 165, 0.15);
+}
+
+.derivative-text {
+  font-size: 26rpx;
+  color: #6D6A65;
+  font-weight: 500;
+}
+
+/* 底部操作按钮 */
+.action-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-top: auto;
+}
+
+.action-btn-primary,
+.action-btn-secondary {
+  width: 100%;
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

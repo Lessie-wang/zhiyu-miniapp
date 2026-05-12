@@ -1,0 +1,165 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">关于知愈</text>
+    <text class="page-subtitle">我们在这里，随时倾听你的声音</text>
+  </view>
+
+  <!-- 作者介绍卡片 -->
+  <view class="author-card">
+    <view class="author-avatar">
+      <image class="avatar-icon-img" src="/assets/images/icons/icon-sparkle.jpg" mode="aspectFit"></image>
+    </view>
+    <text class="author-name">Aito</text>
+    <text class="author-role">知愈创始人</text>
+
+    <!-- 给使用者的话按钮 -->
+    <button class="letter-btn" bindtap="openLetter">
+      <image class="letter-icon-img" src="/assets/images/icons/icon-letter.png" mode="aspectFit"></image>
+      <text class="letter-text">致你的一封信</text>
+    </button>
+  </view>
+
+  <!-- 功能菜单列表 -->
+  <view class="menu-section">
+    <!-- 更新日志 -->
+    <view class="menu-item" bindtap="goToChangelog">
+      <view class="menu-left">
+        <image class="menu-icon-img" src="/assets/images/icons/icon-document.png" mode="aspectFit"></image>
+        <view class="menu-text">
+          <text class="menu-title">更新日志</text>
+          <text class="menu-desc">查看最新功能与改进</text>
+        </view>
+      </view>
+      <view class="menu-right">
+        <text class="new-badge" wx:if="{{hasNewUpdate}}">NEW</text>
+        <text class="menu-arrow">→</text>
+      </view>
+    </view>
+
+    <!-- 重要提醒 -->
+    <view class="menu-item" bindtap="goToNotices">
+      <view class="menu-left">
+        <image class="menu-icon-img" src="/assets/images/icons/icon-bell.jpg" mode="aspectFit"></image>
+        <view class="menu-text">
+          <text class="menu-title">重要提醒</text>
+          <text class="menu-desc">公告与重要通知</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+    </view>
+
+    <!-- 数据隐私 -->
+    <view class="menu-item" bindtap="goToPrivacy">
+      <view class="menu-left">
+        <image class="menu-icon-img" src="/assets/images/icons/icon-lock.png" mode="aspectFit"></image>
+        <view class="menu-text">
+          <text class="menu-title">数据隐私</text>
+          <text class="menu-desc">了解我们如何保护你的数据</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+    </view>
+
+    <!-- 意见反馈 -->
+    <view class="menu-item">
+      <view class="menu-left">
+        <image class="menu-icon-img" src="/assets/images/icons/icon-chat.jpg" mode="aspectFit"></image>
+        <view class="menu-text">
+          <text class="menu-title">意见反馈</text>
+          <text class="menu-desc">直接与知愈客服对话</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+      <button class="hidden-btn" open-type="contact"></button>
+    </view>
+
+    <!-- 分享有礼 -->
+    <view class="menu-item">
+      <view class="menu-left">
+        <image class="menu-icon-img" src="/assets/images/icons/icon-gift.png" mode="aspectFit"></image>
+        <view class="menu-text">
+          <text class="menu-title">分享有礼</text>
+          <text class="menu-desc">邀请好友一起养育情绪</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+      <button class="hidden-btn" open-type="share"></button>
+    </view>
+  </view>
+
+  <!-- 联系方式 -->
+  <view class="contact-section">
+    <view class="menu-item" bindtap="copyEmail">
+      <view class="menu-left">
+        <image class="menu-icon-img" src="/assets/images/icons/icon-email.png" mode="aspectFit"></image>
+        <view class="menu-text">
+          <text class="menu-title">商务合作</text>
+          <text class="menu-desc">yinji_aito@yeah.net</text>
+        </view>
+      </view>
+      <text class="menu-arrow">→</text>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text class="version-text">知愈 v1.2.0</text>
+    <text class="copyright-text">© 2026 Aito Studio</text>
+  </view>
+
+  <!-- 通用信息弹窗 -->
+  <view class="info-modal" wx:if="{{showInfoModal}}" bindtap="closeInfoModal">
+    <view class="info-modal-content" catchtap="">
+      <text class="info-modal-title">{{infoTitle}}</text>
+      <scroll-view class="info-modal-scroll" scroll-y>
+        <view class="info-modal-body">
+          <block wx:for="{{infoItems}}" wx:key="index">
+            <view class="info-item {{item.type || ''}}">
+              <text class="info-item-text">{{item.text}}</text>
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+      <button class="info-modal-btn" bindtap="closeInfoModal">{{infoBtnText}}</button>
+    </view>
+  </view>
+
+  <!-- 信封弹窗 -->
+  <view class="letter-modal" wx:if="{{showLetter}}">
+    <view class="modal-mask" bindtap="closeLetter"></view>
+    <view class="letter-container {{letterOpened ? 'opened' : ''}}">
+      <!-- 信封 -->
+      <view class="envelope {{letterOpened ? 'envelope-opened' : ''}}" bindtap="openEnvelope">
+        <view class="envelope-flap"></view>
+        <view class="envelope-body">
+          <text class="envelope-icon">💌</text>
+        </view>
+      </view>
+
+      <!-- 信纸内容 -->
+      <view class="letter-content {{letterOpened ? 'letter-visible' : ''}}">
+        <view class="letter-paper">
+          <text class="letter-title">写给你</text>
+          <scroll-view class="letter-scroll" scroll-y>
+            <text class="letter-text">
+如果你正在使用知愈，我想对你说：
+
+你愿意花时间记录情绪、学习表达，这本身就是一种勇气。在这个鼓励"坚强"、推崇"理性"的时代，承认自己有情绪、愿意去理解它们，需要打破很多隐形的规则。
+
+情绪不是需要被"治愈"的疾病，而是需要被"养育"的能力。就像学习一门语言，从最初的词不达意，到能够精准表达，这个过程需要时间、需要练习，也需要耐心。
+
+知愈不会告诉你"应该"怎么感受，也不会承诺让你"永远快乐"。我们只是想陪你一起，把那些说不清的感受，一点点翻译成可以被理解、可以被表达的语言。
+
+当你能够说出"我感到怅然若失"而不是"我很难受"，当你能够区分"焦虑"和"烦躁"的细微差别，你就拥有了更多选择——选择如何回应自己的情绪，选择如何与他人沟通，选择如何过好这一生。
+
+感谢你选择知愈。希望这个小小的工具，能成为你情绪世界里的一盏灯。
+            </text>
+            <text class="letter-signature">—— Aito</text>
+          </scroll-view>
+          <button class="close-letter-btn" bindtap="closeLetter">收起</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

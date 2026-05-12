@@ -1,10 +1,91 @@
-/**app.wxss**/
+/**
+ * 知愈小程序 - 全局样式 v3.0
+ *
+ * 导入设计系统基础文件
+ * 创建时间: 2026-04-29
+ * 版本: v3.0
+ */
+
+/* 导入设计Token */
+@import "styles/design-tokens.wxss";
+
+/* 导入动画系统 */
+@import "styles/animations.wxss";
+
+/* 导入Mixins工具库 */
+@import "styles/mixins.wxss";
+
+/* ==================== 全局基础样式 ==================== */
+page {
+  background: var(--gradient-primary);
+  font-family: var(--font-family-base);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-normal);
+  font-size: var(--font-size-base);
+  /* 重置微信默认padding */
+  padding: 0;
+  margin: 0;
+}
+
+/* 全局容器重置 */
 .container {
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
   box-sizing: border-box;
+  /* 移除默认padding，由各页面自行控制 */
+  padding: 0;
+  margin: 0;
+}
+
+/* 全局按钮样式重置 */
+button {
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+
+button::after {
+  border: none;
+}
+
+/* 全局输入框样式 */
+input, textarea {
+  font-family: inherit;
+}
+
+/* 全局滚动条优化 */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+/* 全局文本选择 */
+::selection {
+  background: rgba(212, 184, 165, 0.3);
+  color: #6D6A65;
+}
+
+/* 全局平滑滚动 */
+scroll-view {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 全局图片优化 */
+image {
+  display: block;
+}
+
+/* 全局动画性能优化 */
+.animated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* 全局GPU加速 */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000rpx;
 } 

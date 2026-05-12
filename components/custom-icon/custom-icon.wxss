@@ -1,0 +1,93 @@
+/* 自定义图标组件样式 */
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.svg-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 尺寸变体 */
+.icon-size-xs {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.icon-size-sm {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.icon-size-md {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.icon-size-lg {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.icon-size-xl {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+/* 颜色主题 */
+.icon-companion svg,
+.icon-heart svg,
+.icon-gift svg {
+  color: #F5C6CB;
+}
+
+.icon-flower svg {
+  color: #F5C6CB;
+}
+
+.icon-chat svg,
+.icon-bell svg {
+  color: #D4B8A5;
+}
+
+.icon-calendar svg,
+.icon-chart svg {
+  color: #8C8780;
+}
+
+.icon-warning svg {
+  color: #E74C3C;
+}
+
+.icon-moon svg {
+  color: #9B8EA5;
+}
+
+.icon-sun svg {
+  color: #F5A623;
+}
+
+.icon-key svg,
+.icon-lock svg {
+  color: #D4B8A5;
+}
+
+.icon-bulb svg {
+  color: #F5A623;
+}
+
+.icon-plus svg {
+  color: #D4B8A5;
+}

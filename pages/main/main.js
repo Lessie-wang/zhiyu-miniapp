@@ -1,5 +1,6 @@
 // 引入云端工具函数
 const cloudUtil = require('../../utils/cloud.js');
+const { getGuideSteps, shouldShowGuide, markGuideCompleted } = require('../../utils/guide-config.js');
 
 // 节日祝福库 - 格式：{ month: 月份, day: 日期, message: 祝福语 }
 const festivals = [
@@ -54,91 +55,142 @@ const festivals = [
   { month: 12, day: 31, message: "辞旧迎新，感谢这一年的自己。" }
 ];
 
-// 12种情绪数据（每种情绪对应独特的莫兰迪色系）
+// 16种情绪数据（按方案D排序：左积极右消极，底部中性）
 const emotionsData = [
+  // 第一排（高频）
   {
     name: '开心',
     iconType: 'happy',
     selected: false,
-    color: '#F5C6CB', // 温暖粉
-    subEmotions: ['满足', '愉悦', '欣喜', '兴奋', '雀跃', '狂喜']
+    color: '#FFD4D8',
+    colorLight: '#FFE8EB',
+    subEmotions: ['愉悦', '欣喜', '高兴', '喜悦', '欢快', '欣喜若狂']
   },
   {
     name: '平静',
     iconType: 'calm',
     selected: false,
-    color: '#B8D4E8', // 天蓝
-    subEmotions: ['安宁', '放松', '淡然', '宁静', '祥和', '超然']
+    color: '#C8E0F0',
+    colorLight: '#E0F0F8',
+    subEmotions: ['安宁', '放松', '淡然', '宁静', '超然', '空明']
   },
   {
     name: '难过',
     iconType: 'sad',
     selected: false,
-    color: '#9BA8BC', // 雾蓝
-    subEmotions: ['失落', '沮丧', '忧伤', '悲伤', '心痛', '绝望']
-  },
-  {
-    name: '累',
-    iconType: 'tired',
-    selected: false,
-    color: '#D4C5B0', // 沙棕
-    subEmotions: ['疲倦', '困乏', '疲惫', '劳累', '精疲力竭', '身心俱疲']
-  },
-  {
-    name: '烦躁',
-    iconType: 'irritated',
-    selected: false,
-    color: '#E8A5A5', // 珊瑚红
-    subEmotions: ['不耐烦', '急躁', '烦闷', '烦躁', '暴躁', '狂躁']
+    color: '#A8B5C8',
+    colorLight: '#C8D5E8',
+    subEmotions: ['失落', '沮丧', '忧伤', '悲痛', '心碎', '哀恸']
   },
   {
     name: '焦虑',
     iconType: 'anxious',
     selected: false,
-    color: '#C4B5D8', // 薰衣草紫
-    subEmotions: ['担心', '不安', '紧张', '焦虑', '恐慌', '惊恐']
+    color: '#D4C5E8',
+    colorLight: '#E8DDF8',
+    subEmotions: ['担忧', '不安', '紧张', '焦灼', '恐慌', '惊惧']
+  },
+
+  // 第二排（高频）
+  {
+    name: '幸福',
+    iconType: 'happiness',
+    selected: false,
+    color: '#FFE5CC',
+    colorLight: '#FFF5E8',
+    subEmotions: ['满足', '舒心', '幸福', '美满', '圆满', '至福']
+  },
+  {
+    name: '自豪',
+    iconType: 'proud',
+    selected: false,
+    color: '#E8D4A8',
+    colorLight: '#F8E8D0',
+    subEmotions: ['满意', '欣慰', '自豪', '骄傲', '荣耀', '无比荣光']
+  },
+  {
+    name: '孤独',
+    iconType: 'lonely',
+    selected: false,
+    color: '#B8C5D8',
+    colorLight: '#D8E0E8',
+    subEmotions: ['孤单', '寂寞', '孤独', '孤寂', '孤立无援', '与世隔绝']
   },
   {
     name: '愤怒',
     iconType: 'angry',
     selected: false,
-    color: '#D89B9B', // 砖红
-    subEmotions: ['不满', '生气', '恼怒', '愤怒', '暴怒', '狂怒']
+    color: '#E8B0B0',
+    colorLight: '#F8D0D0',
+    subEmotions: ['不满', '生气', '恼怒', '愤恨', '暴怒', '狂怒']
+  },
+
+  // 第三排（中频）
+  {
+    name: '兴奋',
+    iconType: 'excited',
+    selected: false,
+    color: '#FFD4D8',
+    colorLight: '#FFE8EB',
+    subEmotions: ['期待', '激动', '兴奋', '亢奋', '狂热', '热血沸腾']
   },
   {
     name: '感动',
     iconType: 'touched',
     selected: false,
-    color: '#F5D4C4', // 蜜桃色
-    subEmotions: ['温暖', '触动', '感动', '感激', '感恩', '深深感动']
+    color: '#FFE0D0',
+    colorLight: '#FFF0E8',
+    subEmotions: ['温暖', '触动', '感动', '感激', '感恩戴德', '涕泗横流']
+  },
+  {
+    name: '失望',
+    iconType: 'disappointed',
+    selected: false,
+    color: '#A8B5C8',
+    colorLight: '#C8D5E8',
+    subEmotions: ['不满意', '遗憾', '失望', '心寒', '心灰意冷', '绝望']
+  },
+  {
+    name: '恐惧',
+    iconType: 'fear',
+    selected: false,
+    color: '#D4C5E8',
+    colorLight: '#E8DDF8',
+    subEmotions: ['害怕', '畏惧', '恐惧', '惊恐', '恐怖', '胆战心惊']
+  },
+
+  // 第四排（中性/特殊）
+  {
+    name: '累',
+    iconType: 'tired',
+    selected: false,
+    color: '#E0D5C0',
+    colorLight: '#F0E5D8',
+    subEmotions: ['疲倦', '困乏', '疲惫', '劳累', '精疲力竭', '身心俱疲']
   },
   {
     name: '困惑',
     iconType: 'confused',
     selected: false,
-    color: '#C4D4B5', // 鼠尾草绿
-    subEmotions: ['疑惑', '迷茫', '困惑', '不解', '茫然', '迷失']
+    color: '#D4E0C8',
+    colorLight: '#E8F0E0',
+    subEmotions: ['疑惑', '迷茫', '困惑', '茫然', '迷失', '不知所措']
   },
   {
-    name: '无聊',
-    iconType: 'bored',
+    name: '尴尬',
+    iconType: 'embarrassed',
     selected: false,
-    color: '#D0CFC4', // 灰米
-    subEmotions: ['乏味', '无趣', '无聊', '厌倦', '麻木', '空虚']
-  },
-  {
-    name: '震惊',
-    iconType: 'shocked',
-    selected: false,
-    color: '#E8C4D8', // 玫瑰粉
-    subEmotions: ['意外', '惊讶', '吃惊', '震惊', '震撼', '目瞪口呆']
+    color: '#F0C8D0',
+    colorLight: '#F8E0E8',
+    subEmotions: ['不自在', '局促', '尴尬', '窘迫', '难堪', '无地自容']
   },
   {
     name: '不知道',
     iconType: 'unknown',
     selected: false,
-    color: '#BCBCBC', // 中性灰
-    subEmotions: ['说不清', '模糊', '混乱', '复杂', '矛盾', '无法言说']
+    color: '#D0D0D0',
+    colorLight: '#E8E8E8',
+    subEmotions: ['模糊', '混沌', '混乱', '复杂', '矛盾', '无以名状']
   }
 ];
 
@@ -177,7 +229,15 @@ Page({
     userProfile: null,
     quickNote: '',  // 快速记录文本
     showGuide: false,  // 是否显示新手引导
-    guideStep: 0  // 引导步骤 0-3
+    guideSteps: [],  // 引导步骤配置
+    // 邮筒投递动画
+    showMailboxAnimation: false,
+    mailboxState: 'idle', // idle, delivering, delivered
+    letterState: 'hidden', // hidden, flying, dropped
+    recordCount: 0,
+    // 自定义情绪弹窗
+    showCustomEmotionModal: false,
+    customEmotionInput: ''
   },
 
   onLoad: function(options) {
@@ -186,11 +246,20 @@ Page({
     this.updateFestival();  // 更新节日祝福
     this.loadUserProfile();
     this.checkFirstTime();
+    this.initGuide();  // 初始化引导
   },
 
   onShow: function() {
     this.updateTime();
     this.updateFestival();  // 每次显示时更新节日祝福
+
+    // 检查是否需要重置状态（从对话页面返回）
+    const shouldReset = wx.getStorageSync('shouldResetMainPage');
+    if (shouldReset) {
+      this.resetPage();
+      wx.removeStorageSync('shouldResetMainPage');
+    }
+
     this._timeTimer = setInterval(() => {
       this.updateTime();
     }, 1000);
@@ -271,7 +340,7 @@ Page({
   // 跳转到情绪库解读页面
   goToEmotionLibrary: function() {
     wx.navigateTo({
-      url: '/pages/emotion-library/emotion-library'
+      url: '/subpages/emotion/emotion-library/emotion-library'
     });
   },
 
@@ -299,10 +368,11 @@ Page({
       // 未选中，弹出强度滑块
       emotion.selected = true;
 
-      // 为每个子情绪生成渐变色（从浅到深）
+      // 为每个子情绪生成渐变色（从浅到深，强度1-6）
       const intensityColors = emotion.subEmotions.map((subEmotion, idx) => {
         const baseColor = emotion.color;
-        const opacity = (idx + 1) * 0.15 + 0.1; // 0.25 到 1.0
+        // 强度1: 0.25, 强度2: 0.4, 强度3: 0.55, 强度4: 0.7, 强度5: 0.85, 强度6: 1.0
+        const opacity = 0.25 + (idx * 0.15);
         return this.hexToRgba(baseColor, opacity);
       });
 
@@ -385,11 +455,22 @@ Page({
 
   // 关闭强度滑块（不保存）
   closeIntensitySlider: function() {
-    const emotion = this.data.currentEditingEmotion;
-    if (emotion) {
-      emotion.selected = false;
+    const currentEmotion = this.data.currentEditingEmotion;
+    if (currentEmotion) {
+      // 找到原始 emotions 数组中的对应情绪对象
+      const emotions = this.data.emotions;
+      const emotion = emotions.find(e => e.name === currentEmotion.name);
+
+      if (emotion) {
+        emotion.selected = false;
+      }
+
+      // 更新选中的情绪列表
+      const selectedEmotions = emotions.filter(e => e.selected).map(e => e.name);
+
       this.setData({
-        emotions: this.data.emotions,
+        emotions: emotions,
+        selectedEmotions: selectedEmotions,
         showIntensitySlider: false,
         currentEditingEmotion: null,
         currentIntensity: 2
@@ -457,44 +538,97 @@ Page({
     this.setData({ selectedBodyFeelings: selectedBodyFeelings });
   },
 
-  // 快速记录输入
+  // 快速记录输入（使用缓存避免语音输入重复）
   onQuickNoteInput: function(e) {
-    this.setData({ quickNote: e.detail.value });
+    this._quickNoteValue = e.detail.value;
   },
 
   // 自定义情绪标签
   showCustomEmotionInput: function() {
-    wx.showModal({
-      title: '自定义情绪',
-      editable: true,
-      placeholderText: '输入你的情绪词...',
-      success: (res) => {
-        if (res.confirm && res.content && res.content.trim()) {
-          const customName = res.content.trim().substring(0, 6);
-          const emotions = this.data.emotions;
-
-          // 检查是否已存在
-          if (emotions.find(e => e.name === customName)) {
-            wx.showToast({ title: '该情绪已存在', icon: 'none' });
-            return;
-          }
-
-          // 添加自定义情绪
-          emotions.push({
-            name: customName,
-            iconType: 'custom',
-            selected: true,
-            color: '#C4B5D8',
-            subEmotions: [customName],
-            isCustom: true
-          });
-
-          const selectedEmotions = emotions.filter(e => e.selected).map(e => e.name);
-          this.setData({ emotions, selectedEmotions });
-          wx.vibrateShort({ type: 'light' });
-        }
-      }
+    this.setData({
+      showCustomEmotionModal: true,
+      customEmotionInput: ''
     });
+    wx.vibrateShort({ type: 'light' });
+  },
+
+  // 输入自定义情绪
+  onCustomEmotionInput: function(e) {
+    this.setData({
+      customEmotionInput: e.detail.value
+    });
+  },
+
+  // 关闭自定义情绪弹窗
+  closeCustomEmotionModal: function() {
+    this.setData({
+      showCustomEmotionModal: false,
+      customEmotionInput: ''
+    });
+  },
+
+  // 确认自定义情绪
+  confirmCustomEmotion: function() {
+    const customName = this.data.customEmotionInput.trim();
+
+    if (!customName) {
+      wx.showToast({
+        title: '请输入情绪描述',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+
+    const emotions = this.data.emotions;
+
+    // 检查是否已存在
+    if (emotions.find(e => e.name === customName)) {
+      wx.showToast({
+        title: '该情绪已存在',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+
+    // 添加自定义情绪
+    emotions.push({
+      name: customName,
+      iconType: 'custom',
+      selected: true,
+      color: '#C4B5D8',
+      colorLight: '#E0D8F0',
+      subEmotions: [customName],
+      isCustom: true
+    });
+
+    // 自动设置强度为中等
+    const emotionIntensities = this.data.emotionIntensities;
+    emotionIntensities[customName] = {
+      intensity: 2,
+      subEmotion: customName
+    };
+
+    const selectedEmotions = emotions.filter(e => e.selected).map(e => e.name);
+
+    this.setData({
+      emotions,
+      selectedEmotions,
+      emotionIntensities,
+      showCustomEmotionModal: false,
+      customEmotionInput: ''
+    });
+
+    wx.vibrateShort({ type: 'medium' });
+
+    // 滚动到身体感受区域
+    setTimeout(() => {
+      wx.pageScrollTo({
+        selector: '.body-feeling-section',
+        duration: 300
+      });
+    }, 150);
   },
 
   // 开始 AI 引导
@@ -513,6 +647,9 @@ Page({
       type: 'medium'
     });
 
+    // 设置标志，表示从对话页面返回时需要重置状态
+    wx.setStorageSync('shouldResetMainPage', true);
+
     // 将情绪数据传递到独立对话页面
     const emotions = encodeURIComponent(JSON.stringify(this.data.selectedEmotions));
     const bodyFeelings = encodeURIComponent(JSON.stringify(this.data.selectedBodyFeelings));
@@ -525,7 +662,8 @@ Page({
 
   // 保存记录
   saveRecord: function() {
-    const { selectedEmotions, selectedBodyFeelings, emotionIntensities, quickNote } = this.data;
+    const { selectedEmotions, selectedBodyFeelings, emotionIntensities } = this.data;
+    const quickNote = this._quickNoteValue || '';
 
     if (selectedEmotions.length === 0) {
       wx.showToast({
@@ -592,18 +730,8 @@ Page({
       type: 'medium'
     });
 
-    // 显示保存成功引导
-    wx.showModal({
-      title: '记录已保存',
-      content: '可在「我的历史」日历中查看',
-      confirmText: '去看看',
-      cancelText: '好的',
-      success: (res) => {
-        if (res.confirm) {
-          wx.navigateTo({ url: '/pages/history/history' });
-        }
-      }
-    });
+    // 播放邮筒投递动画
+    this.playMailboxAnimation();
 
     // 重置页面
     this.resetPage();
@@ -614,6 +742,8 @@ Page({
     const emotions = emotionsData.map(e => ({ ...e, selected: false }));
     const resetBodyFeelings = bodyFeelings.map(f => ({ ...f, selected: false }));
 
+    this._quickNoteValue = '';  // 清空快速记录缓存
+
     this.setData({
       emotions: emotions,
       selectedEmotions: [],
@@ -621,8 +751,7 @@ Page({
       bodyFeelings: resetBodyFeelings,
       selectedBodyFeelings: [],
       otherBodyFeeling: '',
-      showOtherInput: false,
-      quickNote: ''  // 清空快速记录输入框
+      showOtherInput: false
     });
   },
 
@@ -643,27 +772,9 @@ Page({
     });
   },
 
-  goToWomen: function() {
-    wx.navigateTo({
-      url: '/pages/women/women'
-    });
-  },
-
-  goToShop: function() {
-    wx.navigateTo({
-      url: '/pages/shop/shop'
-    });
-  },
-
-  goToKnowledge: function() {
-    wx.navigateTo({
-      url: '/pages/psych-knowledge/psych-knowledge'
-    });
-  },
-
   goToAbout: function() {
     wx.navigateTo({
-      url: '/pages/about/about'
+      url: '/subpages/profile/about/about'
     });
   },
 
@@ -671,7 +782,10 @@ Page({
     const selectedEmotions = this.data.emotions.filter(e => e.selected).map(e => e.name);
     const selectedBodyFeelings = this.data.bodyFeelings.filter(f => f.selected).map(f => f.name);
     const intensities = this.data.emotionIntensities || {};
-    const quickNote = this.data.quickNote || '';
+    const quickNote = this._quickNoteValue || '';
+
+    // 设置标志，表示从对话页面返回时需要重置状态
+    wx.setStorageSync('shouldResetMainPage', true);
 
     // 用 localStorage 传递 quickNote 避免 URL 长度限制
     if (quickNote.trim()) {
@@ -693,38 +807,147 @@ Page({
 
   // 检查是否首次使用
   checkFirstTime: function() {
-    const hasSeenGuide = wx.getStorageSync('hasSeenGuide');
-    if (!hasSeenGuide) {
+    // 旧的引导逻辑已废弃，使用新的游戏式引导
+  },
+
+  // 初始化引导
+  initGuide: function() {
+    if (shouldShowGuide('main')) {
+      const steps = getGuideSteps('main');
       this.setData({
         showGuide: true,
-        guideStep: 0
+        guideSteps: steps
       });
     }
   },
 
-  // 下一步引导
-  nextGuideStep: function() {
-    const nextStep = this.data.guideStep + 1;
-    if (nextStep > 3) {
-      this.closeGuide();
-    } else {
-      this.setData({
-        guideStep: nextStep
-      });
-    }
-  },
+  // 引导完成回调
+  onGuideComplete: function(e) {
+    const { skipped } = e.detail;
 
-  // 跳过引导
-  skipGuide: function() {
-    this.closeGuide();
-  },
-
-  // 关闭引导
-  closeGuide: function() {
     this.setData({
       showGuide: false
     });
-    wx.setStorageSync('hasSeenGuide', true);
+
+    // 标记引导已完成
+    markGuideCompleted('main');
+
+    // 显示提示
+    if (!skipped) {
+      wx.showToast({
+        title: '开始记录你的情绪吧',
+        icon: 'success',
+        duration: 2000
+      });
+    }
+  },
+
+  // 处理情绪卡片点击（用于引导交互）
+  toggleEmotion: function(e) {
+    const emotionName = e.currentTarget.dataset.name;
+    const emotions = this.data.emotions;
+    const selectedEmotions = this.data.selectedEmotions;
+
+    const emotion = emotions.find(item => item.name === emotionName);
+    if (!emotion) return;
+
+    // 切换选中状态
+    emotion.selected = !emotion.selected;
+
+    // 更新选中列表
+    let newSelectedEmotions = [...selectedEmotions];
+    if (emotion.selected) {
+      if (!newSelectedEmotions.includes(emotionName)) {
+        newSelectedEmotions.push(emotionName);
+      }
+    } else {
+      newSelectedEmotions = newSelectedEmotions.filter(name => name !== emotionName);
+      // 同时移除强度数据
+      const emotionIntensities = { ...this.data.emotionIntensities };
+      delete emotionIntensities[emotionName];
+      this.setData({ emotionIntensities });
+    }
+
+    this.setData({
+      emotions: emotions,
+      selectedEmotions: newSelectedEmotions
+    });
+
+    // 触觉反馈
+    wx.vibrateShort({ type: 'light' });
+
+    // 如果在引导中且需要用户操作，通知引导组件
+    if (this.data.showGuide) {
+      const guideComponent = this.selectComponent('#interactive-guide');
+      if (guideComponent) {
+        guideComponent.handleTargetClick();
+      }
+    }
+  },
+
+  // 播放邮筒投递动画
+  playMailboxAnimation: function() {
+    // 获取当前记录总数
+    const records = wx.getStorageSync('dailyRecords') || [];
+
+    // 设置标志，表示从对话页面返回时需要重置状态
+    wx.setStorageSync('shouldResetMainPage', true);
+
+    this.setData({
+      showMailboxAnimation: true,
+      mailboxState: 'idle',
+      letterState: 'hidden',
+      recordCount: records.length
+    });
+
+    // 播放投递音效（暂时禁用，等待真实音效文件）
+    // const dropSound = wx.createInnerAudioContext();
+    // dropSound.src = '/assets/sounds/mailbox-drop.mp3';
+    // dropSound.onError(() => {
+    //   console.log('投递音效加载失败，继续动画');
+    // });
+
+    // 动画序列
+    // 1. 邮筒从下方升起
+    setTimeout(() => {
+      this.setData({ mailboxState: 'delivering' });
+    }, 300);
+
+    // 2. 信件从上方飞入
+    setTimeout(() => {
+      this.setData({ letterState: 'flying' });
+    }, 800);
+
+    // 3. 信件投入邮筒
+    setTimeout(() => {
+      this.setData({ letterState: 'dropped' });
+      // dropSound.play();
+      wx.vibrateShort({ type: 'medium' });
+    }, 1800);
+
+    // 4. 显示投递成功状态
+    setTimeout(() => {
+      this.setData({ mailboxState: 'delivered' });
+      wx.vibrateShort({ type: 'light' });
+    }, 2200);
+
+    // 5. 关闭动画并跳转
+    setTimeout(() => {
+      this.setData({
+        showMailboxAnimation: false,
+        mailboxState: 'idle',
+        letterState: 'hidden'
+      });
+
+      // 跳转到对话页面
+      const emotions = encodeURIComponent(JSON.stringify(this.data.selectedEmotions));
+      const bodyFeelings = encodeURIComponent(JSON.stringify(this.data.selectedBodyFeelings));
+      const intensities = encodeURIComponent(JSON.stringify(this.data.emotionIntensities));
+
+      wx.navigateTo({
+        url: `/pages/chat/chat?emotions=${emotions}&bodyFeelings=${bodyFeelings}&intensities=${intensities}`
+      });
+    }, 3500);
   },
 
   onShareAppMessage: function() {

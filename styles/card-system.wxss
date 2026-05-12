@@ -1,0 +1,299 @@
+/**
+ * 知愈小程序 - 统一卡片系统 v1.0
+ *
+ * 定义了所有可复用的卡片样式，确保全局视觉一致性
+ * 创建时间: 2026-05-07
+ */
+
+/* ==================== 基础卡片样式 ==================== */
+
+/* 标准玻璃态卡片 - 最常用 */
+.card-glass-standard {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 253, 248, 0.80) 100%);
+  backdrop-filter: blur(20rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(20rpx) saturate(180%);
+  border-radius: 28rpx;
+  padding: 32rpx;
+  box-shadow:
+    0 8rpx 32rpx rgba(212, 184, 165, 0.12),
+    0 2rpx 8rpx rgba(212, 184, 165, 0.08),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.8);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 高透明度玻璃态卡片 - 用于叠加层 */
+.card-glass-light {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 253, 248, 0.70) 100%);
+  backdrop-filter: blur(30rpx) saturate(200%);
+  -webkit-backdrop-filter: blur(30rpx) saturate(200%);
+  border-radius: 28rpx;
+  padding: 32rpx;
+  box-shadow:
+    0 8rpx 32rpx rgba(212, 184, 165, 0.15),
+    0 2rpx 8rpx rgba(212, 184, 165, 0.10),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.9);
+  border: 1rpx solid rgba(255, 255, 255, 0.7);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 深色玻璃态卡片 - 用于强调内容 */
+.card-glass-deep {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 250, 247, 0.92) 100%);
+  backdrop-filter: blur(20rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(20rpx) saturate(180%);
+  border-radius: 28rpx;
+  padding: 32rpx;
+  box-shadow:
+    0 12rpx 48rpx rgba(212, 184, 165, 0.16),
+    0 4rpx 16rpx rgba(212, 184, 165, 0.12),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.9);
+  border: 2rpx solid rgba(255, 255, 255, 0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 纯白卡片 - 用于简洁场景 */
+.card-white {
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  border: 1rpx solid rgba(242, 230, 223, 0.5);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==================== 特殊卡片样式 ==================== */
+
+/* Hero卡片 - 用于页面顶部重要信息 */
+.card-hero {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 250, 247, 0.92) 100%);
+  backdrop-filter: blur(20rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(20rpx) saturate(180%);
+  border-radius: 32rpx;
+  padding: 36rpx 28rpx 28rpx;
+  box-shadow:
+    0 16rpx 48rpx rgba(212, 184, 165, 0.18),
+    0 4rpx 16rpx rgba(212, 184, 165, 0.12),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.9);
+  border: 2rpx solid rgba(255, 255, 255, 0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 信纸卡片 - 用于日记、记录等 */
+.card-letter {
+  background: linear-gradient(135deg,
+    rgba(255, 250, 245, 0.95) 0%,
+    rgba(255, 248, 240, 0.92) 100%);
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow:
+    0 8rpx 32rpx rgba(212, 184, 165, 0.15),
+    0 2rpx 8rpx rgba(212, 184, 165, 0.08),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1rpx 0 rgba(212, 184, 165, 0.1);
+  border: 2rpx solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 信纸纹理效果 */
+.card-letter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 48rpx,
+      rgba(212, 184, 165, 0.08) 48rpx,
+      rgba(212, 184, 165, 0.08) 50rpx
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==================== 卡片交互状态 ==================== */
+
+/* 悬浮状态 */
+.card-hover {
+  transform: translateY(-4rpx);
+  box-shadow:
+    0 16rpx 48rpx rgba(212, 184, 165, 0.20),
+    0 4rpx 16rpx rgba(212, 184, 165, 0.15);
+}
+
+/* 点击状态 */
+.card-active {
+  transform: scale(0.98);
+  box-shadow:
+    0 4rpx 16rpx rgba(212, 184, 165, 0.15),
+    0 1rpx 4rpx rgba(212, 184, 165, 0.10);
+}
+
+/* ==================== 卡片尺寸变体 ==================== */
+
+/* 小卡片 */
+.card-sm {
+  border-radius: 20rpx;
+  padding: 20rpx;
+}
+
+/* 中卡片（默认） */
+.card-md {
+  border-radius: 24rpx;
+  padding: 28rpx;
+}
+
+/* 大卡片 */
+.card-lg {
+  border-radius: 28rpx;
+  padding: 32rpx;
+}
+
+/* 超大卡片 */
+.card-xl {
+  border-radius: 32rpx;
+  padding: 36rpx;
+}
+
+/* ==================== 卡片内部元素样式 ==================== */
+
+/* 卡片标题 */
+.card-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--color-text-primary, #6D6A65);
+  margin-bottom: 16rpx;
+  letter-spacing: 0.5rpx;
+}
+
+/* 卡片副标题 */
+.card-subtitle {
+  font-size: 24rpx;
+  color: var(--color-text-secondary, #8C8780);
+  margin-bottom: 20rpx;
+  line-height: 1.6;
+}
+
+/* 卡片内容 */
+.card-content {
+  font-size: 28rpx;
+  color: var(--color-text-primary, #6D6A65);
+  line-height: 1.8;
+}
+
+/* 卡片分隔线 */
+.card-divider {
+  height: 1rpx;
+  background: linear-gradient(to right,
+    transparent,
+    rgba(212, 184, 165, 0.3),
+    transparent);
+  margin: 24rpx 0;
+}
+
+/* ==================== 特殊效果卡片 ==================== */
+
+/* 渐变边框卡片 */
+.card-gradient-border {
+  position: relative;
+  background: white;
+  border-radius: 28rpx;
+  padding: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+}
+
+.card-gradient-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 28rpx;
+  padding: 2rpx;
+  background: linear-gradient(135deg,
+    rgba(212, 184, 165, 0.5) 0%,
+    rgba(232, 196, 168, 0.3) 50%,
+    rgba(212, 184, 165, 0.5) 100%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* 发光卡片 */
+.card-glow {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.90) 0%,
+    rgba(255, 253, 248, 0.85) 100%);
+  backdrop-filter: blur(20rpx) saturate(180%);
+  border-radius: 28rpx;
+  padding: 32rpx;
+  box-shadow:
+    0 8rpx 32rpx rgba(212, 184, 165, 0.12),
+    0 0 48rpx rgba(245, 198, 203, 0.15);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  animation: cardGlow 3s ease-in-out infinite;
+}
+
+@keyframes cardGlow {
+  0%, 100% {
+    box-shadow:
+      0 8rpx 32rpx rgba(212, 184, 165, 0.12),
+      0 0 48rpx rgba(245, 198, 203, 0.15);
+  }
+  50% {
+    box-shadow:
+      0 8rpx 32rpx rgba(212, 184, 165, 0.16),
+      0 0 64rpx rgba(245, 198, 203, 0.25);
+  }
+}
+
+/* ==================== 卡片组合布局 ==================== */
+
+/* 卡片网格 */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+/* 卡片列表 */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+/* ==================== 响应式卡片 ==================== */
+
+/* 可点击卡片 */
+.card-clickable {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-clickable:active {
+  transform: scale(0.98);
+}
+
+/* 禁用状态卡片 */
+.card-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}

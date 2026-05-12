@@ -2,7 +2,7 @@
 .container {
   min-height: 100vh;
   background: linear-gradient(to bottom, #FAF9F7 0%, #F2E6DF 100%);
-  padding: 60rpx 40rpx 120rpx;
+  padding: calc(env(safe-area-inset-top) + 60rpx) 40rpx 120rpx;
   display: flex;
   flex-direction: column;
 }
@@ -79,6 +79,39 @@
 .feature-text {
   font-size: 28rpx;
   color: #6D6A65;
+  font-weight: 500;
+}
+
+/* 隐私协议同意 */
+.privacy-agreement {
+  margin-bottom: 32rpx;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16rpx;
+  backdrop-filter: blur(10rpx);
+}
+
+.agreement-checkbox {
+  display: flex;
+  align-items: flex-start;
+}
+
+.checkbox-icon {
+  font-size: 36rpx;
+  color: #D4B8A5;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+}
+
+.agreement-text {
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.6;
+}
+
+.link-text {
+  color: #D4B8A5;
+  text-decoration: underline;
   font-weight: 500;
 }
 
@@ -363,6 +396,12 @@
   margin-bottom: 24rpx;
 }
 
+.primary-btn.disabled {
+  background: #E0E0E0;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
 .primary-btn::after {
   border: none;
 }
@@ -383,12 +422,35 @@
   padding: 16rpx;
 }
 
+/* 步骤操作区 */
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16rpx;
+}
+
+.back-text {
+  font-size: 28rpx;
+  color: #D4B8A5;
+  padding: 16rpx;
+}
+
+.step-actions .skip-text {
+  padding: 16rpx;
+  margin: 0;
+}
+
 /* 进度指示器 */
 .progress-dots {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom) + 40rpx);
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   gap: 16rpx;
-  margin-top: 40rpx;
+  z-index: 100;
 }
 
 .progress-dots .dot {

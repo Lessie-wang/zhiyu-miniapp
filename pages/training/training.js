@@ -52,13 +52,12 @@ Page({
     this.loadTrainingHistory();
   },
 
-  // 点击"模拟对话"按钮
+  // 点击"模拟对话"按钮 - 直接跳转到游戏化页面
   showDialogueOptions: function() {
-    this.setData({
-      showDialogueScenarios: !this.data.showDialogueScenarios,
-      showWritingInput: false
+    wx.vibrateShort({ type: 'medium' });
+    wx.navigateTo({
+      url: '/subpages/training/dialogue-training/dialogue-training-gamified'
     });
-    wx.vibrateShort({ type: 'light' });
   },
 
   // 选择预设场景并跳转
@@ -66,7 +65,7 @@ Page({
     var scenarioId = e.currentTarget.dataset.id;
     wx.vibrateShort({ type: 'medium' });
     wx.navigateTo({
-      url: '/pages/dialogue-training/dialogue-training?scenarioId=' + scenarioId
+      url: '/subpages/training/dialogue-training/dialogue-training-gamified?scenarioId=' + scenarioId
     });
   },
 
@@ -90,15 +89,15 @@ Page({
     }
     wx.vibrateShort({ type: 'medium' });
     wx.navigateTo({
-      url: '/pages/dialogue-training/dialogue-training?customScene=' + encodeURIComponent(text)
+      url: '/subpages/training/dialogue-training/dialogue-training-gamified?customScene=' + encodeURIComponent(text)
     });
   },
 
-  // 点击"感官写作"按钮 - 直接跳转到场景选择页面
+  // 点击"感官写作"按钮 - 直接跳转到训练页面（暂不启用游戏化关卡）
   showWritingOptions: function() {
     wx.vibrateShort({ type: 'medium' });
     wx.navigateTo({
-      url: '/pages/sensory-writing/sensory-writing'
+      url: '/subpages/training/sensory-writing/sensory-writing'
     });
   },
 

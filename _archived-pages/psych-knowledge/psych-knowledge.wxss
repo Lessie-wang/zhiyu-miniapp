@@ -1,0 +1,266 @@
+/* 容器 */
+.container {
+  min-height: 100vh;
+  background: #FAFAF8;
+  padding: 0 0 40rpx 0;
+}
+
+/* 页面标题 */
+.page-header {
+  padding: 60rpx 32rpx 32rpx;
+  background: white;
+}
+
+.page-title {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #2C2C2C;
+  letter-spacing: 1rpx;
+}
+
+/* 情绪推荐卡片 */
+.emotion-card {
+  margin: 24rpx 32rpx;
+  padding: 24rpx;
+  background: linear-gradient(135deg, #F5E8E4 0%, #E8D4D0 100%);
+  border-radius: 16rpx;
+}
+
+.emotion-tags {
+  display: flex;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.emotion-tag {
+  padding: 6rpx 16rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: #6D5D52;
+}
+
+.emotion-hint {
+  font-size: 22rpx;
+  color: #8B7B6F;
+}
+
+/* 知识主题列表 */
+.topic-list {
+  padding: 0 32rpx;
+}
+
+/* 分类标题 */
+.category-header {
+  margin: 48rpx 0 24rpx;
+}
+
+.category-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2C2C2C;
+  margin-bottom: 8rpx;
+}
+
+.category-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 主题项 */
+.topic-item {
+  margin-bottom: 16rpx;
+}
+
+/* 主题卡片 */
+.topic-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 24rpx;
+  background: white;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.topic-main {
+  flex: 1;
+}
+
+.topic-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #2C2C2C;
+  margin-bottom: 8rpx;
+  line-height: 1.4;
+}
+
+.topic-subtitle {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+  line-height: 1.5;
+}
+
+/* 作者信息 */
+.topic-meta {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.meta-author {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.meta-divider {
+  font-size: 22rpx;
+  color: #DDD;
+}
+
+.meta-org {
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 阅读状态 */
+.topic-status {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-left: 16rpx;
+}
+
+.status-text {
+  font-size: 22rpx;
+  color: #D4B8A5;
+}
+
+.status-arrow {
+  font-size: 32rpx;
+  color: #CCC;
+  font-weight: 300;
+}
+
+/* 展开的内容 */
+.topic-content {
+  padding: 32rpx 24rpx;
+  background: white;
+  border-radius: 0 0 12rpx 12rpx;
+  margin-top: -12rpx;
+}
+
+/* 内容章节 */
+.content-sections {
+  margin-bottom: 32rpx;
+}
+
+.section-item {
+  margin-bottom: 40rpx;
+}
+
+.section-item:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2C2C2C;
+  margin-bottom: 16rpx;
+  padding-left: 16rpx;
+  border-left: 4rpx solid #D4B8A5;
+}
+
+/* 文本内容 */
+.section-body {
+  padding: 20rpx;
+  background: #FAFAF8;
+  border-radius: 8rpx;
+}
+
+.section-text {
+  font-size: 26rpx;
+  color: #4A4A4A;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+/* 列表内容 */
+.section-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.list-item {
+  padding: 20rpx;
+  background: #FAFAF8;
+  border-radius: 8rpx;
+}
+
+.list-header {
+  margin-bottom: 12rpx;
+}
+
+.list-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #2C2C2C;
+}
+
+.list-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 12rpx;
+}
+
+.list-example {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.6;
+  font-style: italic;
+  padding-left: 16rpx;
+  border-left: 2rpx solid #E0E0E0;
+}
+
+/* 底部操作 */
+.content-actions {
+  display: flex;
+  gap: 16rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid #F0F0F0;
+}
+
+.action-item {
+  flex: 1;
+  padding: 16rpx;
+  text-align: center;
+  background: #FAFAF8;
+  border-radius: 8rpx;
+}
+
+.action-label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 底部提示 */
+.footer-tip {
+  padding: 40rpx 32rpx;
+  text-align: center;
+}
+
+.tip-text {
+  font-size: 22rpx;
+  color: #BBB;
+}

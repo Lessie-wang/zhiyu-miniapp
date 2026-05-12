@@ -1,0 +1,584 @@
+/* ==================== 感官写作 - 游戏化关卡设计 ==================== */
+/* 方案3：关卡地图 + 解锁机制 + 奖励系统 */
+
+@import "../../../styles/design-tokens.wxss";
+@import "../../../styles/animations.wxss";
+@import "../../../styles/gamification.wxss";
+
+page {
+  background: linear-gradient(180deg, #E8F4F8 0%, #FAF9F7 100%);
+}
+
+.container {
+  min-height: 100vh;
+  padding: 0 0 120rpx;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ==================== 顶部用户进度卡片 ==================== */
+.user-progress-card {
+  position: relative;
+  z-index: 100;
+  margin: 32rpx 24rpx 0;
+  padding: 32rpx 28rpx;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20rpx) saturate(180%);
+  border-radius: 32rpx;
+  box-shadow:
+    0 8rpx 32rpx rgba(196, 212, 181, 0.12),
+    0 2rpx 8rpx rgba(196, 212, 181, 0.08),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.8);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  animation: cardSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes cardSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-40rpx);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.progress-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #3D3D3D;
+  letter-spacing: 0.5rpx;
+}
+
+.level-badge {
+  padding: 8rpx 20rpx;
+  background: linear-gradient(135deg, #C4D4B5 0%, #A8C090 100%);
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4rpx 12rpx rgba(196, 212, 181, 0.3);
+}
+
+.exp-bar-container {
+  margin-bottom: 16rpx;
+}
+
+.exp-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #8B7B6F;
+  margin-bottom: 12rpx;
+}
+
+.exp-bar {
+  height: 16rpx;
+  background: rgba(196, 212, 181, 0.2);
+  border-radius: 8rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.exp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #C4D4B5 0%, #A8C090 100%);
+  border-radius: 8rpx;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.exp-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.stats-row {
+  display: flex;
+  gap: 16rpx;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  background: rgba(196, 212, 181, 0.1);
+  border-radius: 16rpx;
+}
+
+.stat-value {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #C4D4B5;
+  margin-bottom: 4rpx;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: #8B7B6F;
+}
+
+/* ==================== 关卡地图 - S形曲线路径 ==================== */
+.level-map {
+  position: relative;
+  padding: 40rpx 24rpx;
+  min-height: 1400rpx;
+}
+
+/* S形路径背景线 */
+.path-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8rpx;
+  height: 100%;
+  background: linear-gradient(180deg,
+    rgba(196, 212, 181, 0.3) 0%,
+    rgba(168, 192, 144, 0.3) 50%,
+    rgba(132, 168, 108, 0.3) 100%
+  );
+  border-radius: 4rpx;
+  z-index: 0;
+}
+
+/* 关卡节点容器 */
+.level-node {
+  position: relative;
+  margin-bottom: 120rpx;
+  z-index: 10;
+  animation: nodeSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.level-node:nth-child(1) { animation-delay: 0.1s; }
+.level-node:nth-child(2) { animation-delay: 0.2s; }
+.level-node:nth-child(3) { animation-delay: 0.3s; }
+.level-node:nth-child(4) { animation-delay: 0.4s; }
+.level-node:nth-child(5) { animation-delay: 0.5s; }
+.level-node:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes nodeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40rpx);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* S形布局：左右交替 */
+.level-node:nth-child(odd) {
+  padding-left: 0;
+  padding-right: 50%;
+}
+
+.level-node:nth-child(even) {
+  padding-left: 50%;
+  padding-right: 0;
+}
+
+/* 关卡圆形按钮 */
+.level-circle {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 已完成关卡 */
+.level-circle.completed {
+  background: linear-gradient(135deg, #84A86C 0%, #6B8A56 100%);
+  animation: nodeFloat 3s ease-in-out infinite;
+}
+
+/* 当前可玩关卡 */
+.level-circle.available {
+  background: linear-gradient(135deg, #C4D4B5 0%, #A8C090 100%);
+  animation: nodePulse 2s ease-in-out infinite;
+}
+
+/* 锁定关卡 */
+.level-circle.locked {
+  background: linear-gradient(135deg, #E0E0E0 0%, #BDBDBD 100%);
+  filter: grayscale(80%);
+}
+
+/* Boss关卡（每5关） */
+.level-circle.boss {
+  width: 200rpx;
+  height: 200rpx;
+  background: linear-gradient(135deg, #8BA87C 0%, #6F8A5F 100%);
+  box-shadow: 0 12rpx 48rpx rgba(139, 168, 124, 0.4);
+}
+
+.level-circle.boss.available {
+  animation: bossGlow 2s ease-in-out infinite;
+}
+
+@keyframes nodeFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12rpx);
+  }
+}
+
+@keyframes nodePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8rpx 32rpx rgba(196, 212, 181, 0.3);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 12rpx 48rpx rgba(196, 212, 181, 0.5);
+  }
+}
+
+@keyframes bossGlow {
+  0%, 100% {
+    box-shadow: 0 12rpx 48rpx rgba(139, 168, 124, 0.4);
+  }
+  50% {
+    box-shadow: 0 16rpx 64rpx rgba(139, 168, 124, 0.7);
+  }
+}
+
+/* 关卡图标 */
+.level-icon {
+  width: 72rpx;
+  height: 72rpx;
+  margin-bottom: 8rpx;
+}
+
+.level-circle.boss .level-icon {
+  width: 96rpx;
+  height: 96rpx;
+}
+
+/* 锁定图标 */
+.lock-icon {
+  width: 48rpx;
+  height: 48rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #9E9E9E;
+}
+
+/* 完成勾选图标 */
+.check-icon {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  width: 48rpx;
+  height: 48rpx;
+  background: linear-gradient(135deg, #4CAF50 0%, #45A049 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 4rpx 12rpx rgba(76, 175, 80, 0.4);
+}
+
+/* 关卡编号 */
+.level-number {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.level-circle.boss .level-number {
+  font-size: 36rpx;
+}
+
+/* 关卡信息卡片 */
+.level-info {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10rpx);
+  border-radius: 24rpx;
+  border: 1rpx solid rgba(196, 212, 181, 0.2);
+}
+
+.level-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #3D3D3D;
+  margin-bottom: 8rpx;
+}
+
+.level-circle.boss + .level-info .level-title {
+  font-size: 32rpx;
+  color: #8BA87C;
+}
+
+.level-desc {
+  font-size: 24rpx;
+  color: #8B7B6F;
+  line-height: 1.5;
+  margin-bottom: 12rpx;
+}
+
+.level-rewards {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+}
+
+.reward-tag {
+  padding: 6rpx 16rpx;
+  background: linear-gradient(135deg, rgba(196, 212, 181, 0.2) 0%, rgba(168, 192, 144, 0.15) 100%);
+  border-radius: 16rpx;
+  font-size: 22rpx;
+  color: #6D6A65;
+  border: 1rpx solid rgba(196, 212, 181, 0.3);
+}
+
+.reward-tag.exp {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 193, 7, 0.15) 100%);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.reward-tag.badge {
+  background: linear-gradient(135deg, rgba(139, 168, 124, 0.2) 0%, rgba(111, 138, 95, 0.15) 100%);
+  border-color: rgba(139, 168, 124, 0.3);
+}
+
+/* ==================== 徽章展示区 ==================== */
+.badges-section {
+  margin: 40rpx 24rpx;
+  padding: 32rpx;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20rpx);
+  border-radius: 32rpx;
+  box-shadow: 0 8rpx 32rpx rgba(196, 212, 181, 0.12);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+}
+
+.badges-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.badges-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #3D3D3D;
+}
+
+.badges-count {
+  font-size: 24rpx;
+  color: #8B7B6F;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.badge-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C4D4B5 0%, #A8C090 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(196, 212, 181, 0.3);
+  transition: all 0.3s ease;
+}
+
+.badge-item.locked .badge-icon {
+  background: #E0E0E0;
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+
+.badge-item:active .badge-icon {
+  transform: scale(0.95);
+}
+
+.badge-name {
+  font-size: 20rpx;
+  color: #8B7B6F;
+  text-align: center;
+}
+
+/* ==================== 底部操作栏 ==================== */
+.bottom-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20rpx);
+  border-top: 1rpx solid rgba(196, 212, 181, 0.2);
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
+
+.action-button {
+  width: 100%;
+  padding: 24rpx;
+  background: linear-gradient(135deg, #C4D4B5 0%, #A8C090 100%);
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 8rpx 24rpx rgba(196, 212, 181, 0.4);
+  transition: all 0.3s ease;
+}
+
+.action-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 16rpx rgba(196, 212, 181, 0.5);
+}
+
+.action-button.disabled {
+  background: #E0E0E0;
+  color: #9E9E9E;
+  box-shadow: none;
+}
+
+/* ==================== 关卡详情弹窗 ==================== */
+.level-modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+.level-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: calc(100% - 80rpx);
+  max-width: 640rpx;
+  max-height: 80vh;
+  background: white;
+  border-radius: 32rpx;
+  z-index: 1000;
+  animation: modalPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 24rpx 80rpx rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes modalPopIn {
+  0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.modal-header {
+  padding: 32rpx 24rpx;
+  border-bottom: 1rpx solid rgba(196, 212, 181, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #3D3D3D;
+}
+
+.modal-close {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(196, 212, 181, 0.1);
+  font-size: 32rpx;
+  color: #8B7B6F;
+}
+
+.modal-body {
+  padding: 32rpx 24rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.modal-section {
+  margin-bottom: 32rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #3D3D3D;
+  margin-bottom: 16rpx;
+}
+
+.section-content {
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.6;
+}
+
+.modal-footer {
+  padding: 24rpx;
+  border-top: 1rpx solid rgba(196, 212, 181, 0.2);
+}

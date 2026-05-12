@@ -1,0 +1,101 @@
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="page-header">
+    <text class="page-title">知识库</text>
+  </view>
+
+  <!-- 情绪推荐卡片（如果有） -->
+  <view class="emotion-card" wx:if="{{recentEmotions.length > 0}}">
+    <view class="emotion-tags">
+      <text class="emotion-tag" wx:for="{{recentEmotions}}" wx:key="*this">{{item}}</text>
+    </view>
+    <text class="emotion-hint">为你推荐相关内容</text>
+  </view>
+
+  <!-- 知识主题列表 -->
+  <view class="topic-list">
+    <block wx:for="{{categories}}" wx:key="id" wx:for-item="category">
+      <!-- 分类标题 -->
+      <view class="category-header">
+        <text class="category-name">{{category.name}}</text>
+        <text class="category-desc">{{category.desc}}</text>
+      </view>
+
+      <!-- 该分类下的主题 -->
+      <view class="topic-item"
+            wx:for="{{category.topics}}"
+            wx:for-item="topic"
+            wx:key="id"
+            bindtap="onTopicTap"
+            data-topic-id="{{topic.id}}"
+            data-category-id="{{category.id}}">
+
+        <!-- 主题卡片 -->
+        <view class="topic-card">
+          <view class="topic-main">
+            <text class="topic-title">{{topic.title}}</text>
+            <text class="topic-subtitle">{{topic.subtitle}}</text>
+
+            <!-- 作者信息 -->
+            <view class="topic-meta">
+              <text class="meta-author">{{topic.author.name}}</text>
+              <text class="meta-divider">·</text>
+              <text class="meta-org">{{topic.author.title}}</text>
+            </view>
+          </view>
+
+          <!-- 阅读状态 -->
+          <view class="topic-status">
+            <text class="status-text" wx:if="{{topic.isRead}}">已读</text>
+            <text class="status-arrow">›</text>
+          </view>
+        </view>
+
+        <!-- 展开的内容 -->
+        <view class="topic-content" wx:if="{{expandedTopic === topic.id}}">
+          <!-- 内容章节 -->
+          <view class="content-sections">
+            <view class="section-item"
+                  wx:for="{{topic.sections}}"
+                  wx:for-item="section"
+                  wx:key="title">
+
+              <text class="section-title">{{section.title}}</text>
+
+              <!-- 文本内容 -->
+              <view class="section-body" wx:if="{{section.type === 'concept' || section.type === 'why' || section.type === 'exercise' || section.type === 'source'}}">
+                <text class="section-text">{{section.content}}</text>
+              </view>
+
+              <!-- 列表内容 -->
+              <view class="section-list" wx:if="{{section.type === 'list'}}">
+                <view class="list-item" wx:for="{{section.items}}" wx:for-item="listItem" wx:key="name">
+                  <view class="list-header">
+                    <text class="list-name">{{listItem.name}}</text>
+                  </view>
+                  <text class="list-desc">{{listItem.desc}}</text>
+                  <text class="list-example">{{listItem.example}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 底部操作 -->
+          <view class="content-actions">
+            <view class="action-item" bindtap="toggleCollect" data-topic-id="{{topic.id}}">
+              <text class="action-label">{{topic.isCollected ? '已收藏' : '收藏'}}</text>
+            </view>
+            <view class="action-item" bindtap="goToChat" data-topic-id="{{topic.id}}">
+              <text class="action-label">和小知聊聊</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 底部提示 -->
+  <view class="footer-tip">
+    <text class="tip-text">内容基于循证心理学研究</text>
+  </view>
+</view>

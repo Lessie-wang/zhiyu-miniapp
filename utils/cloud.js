@@ -257,6 +257,73 @@ async function getUserProfileFromCloud() {
   }
 }
 
+/**
+ * 保存陪伴者关系到云端
+ * @param {Object} companionData - 陪伴者数据
+ * @returns {Promise<boolean>} 是否成功
+ */
+async function saveCompanionToCloud(companionData) {
+  try {
+    const db = cloud.database();
+    await db.collection('companions').add({
+      data: {
+        ...companionData,
+        createdAt: db.serverDate(),
+        updatedAt: db.serverDate()
+      }
+    });
+    console.log('陪伴者关系云端保存成功');
+    return true;
+  } catch (error) {
+    console.error('陪伴者关系云端保存失败:', error);
+    return false;
+  }
+}
+
+/**
+ * 从云端获取陪伴者列表
+ * @returns {Promise<Array>} 陪伴者列表
+ */
+async function getCompanionsFromCloud() {
+  try {
+    const db = cloud.database();
+    const result = await db.collection('companions').where({
+      _openid: '{openid}',
+      status: 'active'
+    }).get();
+
+    return result.data || [];
+  } catch (error) {
+    console.error('获取云端陪伴者列表失败:', error);
+    return [];
+  }
+}
+
+/**
+ * 生成经期情绪报告
+ * @param {Object} options - 报告选项
+ * @returns {Promise<Object>} 报告数据
+ */
+async function generatePeriodEmotionReport(options = {}) {
+  try {
+    const res = await cloud.callFunction({
+      name: 'generatePeriodEmotionReport',
+      data: {
+        months: options.months || 3
+      }
+    });
+
+    if (res.result.success) {
+      return res.result.report;
+    } else {
+      throw new Error(res.result.error);
+    }
+  } catch (error) {
+    console.error('生成经期情绪报告失败:', error);
+    return null;
+  }
+}
+
 module.exports = {
   saveEmotionToCloud,
   getEmotionsFromCloud,
@@ -265,5 +332,8 @@ module.exports = {
   savePeriodDataToCloud,
   getPeriodDataFromCloud,
   saveUserProfileToCloud,
-  getUserProfileFromCloud
+  getUserProfileFromCloud,
+  saveCompanionToCloud,
+  getCompanionsFromCloud,
+  generatePeriodEmotionReport
 };

@@ -1,0 +1,305 @@
+/* 通用情绪报告页面样式 */
+.container {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(245, 198, 203, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(212, 184, 165, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at top left, #FAF9F7 0%, #F5F0EB 40%, #F2E6DF 100%);
+  padding: calc(env(safe-area-inset-top) + 60rpx) 40rpx 160rpx;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.page-title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 12rpx;
+}
+
+.page-subtitle {
+  display: block;
+  font-size: 26rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+}
+
+.period-selector {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 32rpx;
+  background: white;
+  border-radius: 40rpx;
+  padding: 8rpx;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.1);
+}
+
+.period-tab {
+  flex: 1;
+  padding: 16rpx 24rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #6D6A65;
+  font-weight: 600;
+  border-radius: 32rpx;
+  transition: all 0.3s ease;
+}
+
+.period-tab.active {
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  color: white;
+  box-shadow: 0 4rpx 12rpx rgba(212, 184, 165, 0.3);
+}
+
+.overview-card,
+.chart-card,
+.summary-card,
+.suggestions-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.card-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #6D6A65;
+  margin-bottom: 16rpx;
+}
+
+.date-range {
+  font-size: 24rpx;
+  color: #B8B2A7;
+}
+
+.ai-badge {
+  padding: 6rpx 16rpx;
+  background: linear-gradient(135deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  color: white;
+  font-weight: 600;
+}
+
+.emotion-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.stat-value {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #D4B8A5;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #B8B2A7;
+}
+
+.stat-divider {
+  width: 1rpx;
+  height: 60rpx;
+  background: #F2E6DF;
+}
+
+.emotion-distribution {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.emotion-bar {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.bar-info {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  width: 120rpx;
+  flex-shrink: 0;
+}
+
+.emotion-icon {
+  font-size: 32rpx;
+}
+
+.emotion-name {
+  font-size: 26rpx;
+  color: #6D6A65;
+  font-weight: 600;
+}
+
+.bar-container {
+  flex: 1;
+  height: 32rpx;
+  background: #F2E6DF;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 16rpx;
+  transition: width 0.5s ease;
+}
+
+.bar-count {
+  width: 80rpx;
+  text-align: right;
+  font-size: 24rpx;
+  color: #B8B2A7;
+  flex-shrink: 0;
+}
+
+.empty-hint {
+  text-align: center;
+  padding: 40rpx;
+  color: #B8B2A7;
+  font-size: 26rpx;
+}
+
+.summary-text {
+  font-size: 26rpx;
+  color: #6D6A65;
+  line-height: 1.8;
+  padding: 20rpx;
+  background: #F2E6DF;
+  border-radius: 16rpx;
+}
+
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.suggestion-item {
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx;
+  background: #F2E6DF;
+  border-radius: 16rpx;
+}
+
+.suggestion-icon {
+  width: 64rpx;
+  height: 64rpx;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  flex-shrink: 0;
+}
+
+.suggestion-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.suggestion-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #6D6A65;
+}
+
+.suggestion-desc {
+  font-size: 24rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+}
+
+.export-section {
+  margin-bottom: 40rpx;
+}
+
+.export-btn {
+  width: 100%;
+  padding: 28rpx;
+  background: linear-gradient(90deg, #D4B8A5 0%, #C4A893 100%);
+  border-radius: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  box-shadow: 0 16rpx 48rpx rgba(212, 184, 165, 0.3);
+  border: none;
+}
+
+.export-btn::after {
+  border: none;
+}
+
+.btn-icon {
+  font-size: 32rpx;
+}
+
+.btn-text {
+  font-size: 30rpx;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.tips-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(212, 184, 165, 0.12);
+  display: flex;
+  gap: 20rpx;
+}
+
+.tips-icon {
+  font-size: 40rpx;
+  flex-shrink: 0;
+}
+
+.tips-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.tips-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #6D6A65;
+}
+
+.tips-text {
+  font-size: 24rpx;
+  color: #B8B2A7;
+  line-height: 1.6;
+}

@@ -1,0 +1,579 @@
+/**
+ * 知愈小程序 - Mixins工具库 v3.0
+ *
+ * 这是整个小程序的样式工具库，提供可复用的样式混合
+ * 使用这些mixins可以快速应用常用的样式组合
+ *
+ * 创建时间: 2026-04-29
+ * 版本: v3.0
+ */
+
+/* ==================== 布局Mixins ==================== */
+
+/* Flexbox居中 */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-center-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-around {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* ==================== 定位Mixins ==================== */
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.absolute-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.fixed-full {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* ==================== 毛玻璃效果Mixins ==================== */
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
+}
+
+.glass-medium {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(32rpx);
+  -webkit-backdrop-filter: blur(32rpx);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(30rpx);
+  -webkit-backdrop-filter: blur(30rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 4rpx 16rpx rgba(212, 184, 165, 0.12),
+    0 12rpx 32rpx rgba(212, 184, 165, 0.08);
+}
+
+/* ==================== 卡片样式Mixins ==================== */
+
+.card-base {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.card-elevated {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-double-md);
+  transition: var(--transition-all);
+}
+
+.card-elevated:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(30rpx);
+  -webkit-backdrop-filter: blur(30rpx);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-double-md);
+}
+
+/* ==================== 按钮样式Mixins ==================== */
+
+.button-base {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-all);
+  cursor: pointer;
+}
+
+.button-primary {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-md);
+}
+
+.button-primary:active {
+  transform: scale(0.95);
+  box-shadow: var(--shadow-sm);
+}
+
+.button-secondary {
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+  border: 1rpx solid var(--color-border-medium);
+  box-shadow: var(--shadow-sm);
+}
+
+.button-secondary:active {
+  transform: scale(0.95);
+  background: var(--color-bg-secondary);
+}
+
+.button-ghost {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1rpx solid var(--color-border-medium);
+}
+
+.button-ghost:active {
+  background: var(--color-bg-secondary);
+}
+
+/* ==================== 文字样式Mixins ==================== */
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-ellipsis-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-ellipsis-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==================== 滚动条样式Mixins ==================== */
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4rpx;
+  height: 4rpx;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--color-border-medium);
+  border-radius: var(--radius-full);
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ==================== 交互反馈Mixins ==================== */
+
+.tap-feedback {
+  transition: var(--transition-transform);
+}
+
+.tap-feedback:active {
+  transform: scale(0.95);
+}
+
+.tap-feedback-light {
+  transition: var(--transition-transform);
+}
+
+.tap-feedback-light:active {
+  transform: scale(0.98);
+}
+
+.tap-feedback-strong {
+  transition: var(--transition-transform);
+}
+
+.tap-feedback-strong:active {
+  transform: scale(0.92);
+}
+
+.hover-lift {
+  transition: var(--transition-all);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4rpx);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ==================== 遮罩层Mixins ==================== */
+
+.overlay-dark {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.overlay-light {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.overlay-blur {
+  background: rgba(250, 249, 247, 0.8);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
+}
+
+/* ==================== 边框样式Mixins ==================== */
+
+.border-light {
+  border: 1rpx solid var(--color-border-light);
+}
+
+.border-medium {
+  border: 1rpx solid var(--color-border-medium);
+}
+
+.border-strong {
+  border: 1rpx solid var(--color-border-strong);
+}
+
+.border-gradient {
+  border: 1rpx solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.border-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 1rpx;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* ==================== 分隔线Mixins ==================== */
+
+.divider-horizontal {
+  width: 100%;
+  height: 1rpx;
+  background: var(--color-border-light);
+}
+
+.divider-vertical {
+  width: 1rpx;
+  height: 100%;
+  background: var(--color-border-light);
+}
+
+.divider-gradient {
+  width: 100%;
+  height: 1rpx;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--color-border-medium) 50%,
+    transparent 100%
+  );
+}
+
+/* ==================== 标签样式Mixins ==================== */
+
+.tag-base {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.tag-primary {
+  background: var(--color-primary-light);
+  color: var(--color-text-primary);
+}
+
+.tag-secondary {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+}
+
+.tag-outline {
+  background: transparent;
+  border: 1rpx solid var(--color-border-medium);
+  color: var(--color-text-secondary);
+}
+
+/* ==================== 输入框样式Mixins ==================== */
+
+.input-base {
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: var(--color-bg-card);
+  border: 1rpx solid var(--color-border-light);
+  transition: var(--transition-all);
+}
+
+.input-base:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4rpx rgba(212, 184, 165, 0.1);
+}
+
+.input-glass {
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  transition: var(--transition-all);
+}
+
+.input-glass:focus {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4rpx rgba(212, 184, 165, 0.1);
+}
+
+/* ==================== 头像样式Mixins ==================== */
+
+.avatar-base {
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+}
+
+.avatar-ring {
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 2rpx solid var(--color-primary-light);
+  box-shadow: var(--shadow-md);
+}
+
+.avatar-glow {
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  box-shadow: 0 0 16rpx rgba(212, 184, 165, 0.4);
+}
+
+/* ==================== 徽章样式Mixins ==================== */
+
+.badge-base {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  min-width: 32rpx;
+  height: 32rpx;
+  padding: 0 8rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  background: var(--color-error);
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: var(--radius-full);
+  background: var(--color-error);
+  border: 2rpx solid var(--color-bg-primary);
+}
+
+/* ==================== 骨架屏Mixins ==================== */
+
+.skeleton-base {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-secondary) 25%,
+    var(--color-bg-tertiary) 50%,
+    var(--color-bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-text {
+  height: 28rpx;
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-secondary) 25%,
+    var(--color-bg-tertiary) 50%,
+    var(--color-bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-circle {
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-secondary) 25%,
+    var(--color-bg-tertiary) 50%,
+    var(--color-bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ==================== 空状态Mixins ==================== */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-4xl) var(--spacing-2xl);
+  color: var(--color-text-tertiary);
+}
+
+.empty-state-icon {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: var(--spacing-lg);
+  opacity: 0.5;
+}
+
+.empty-state-text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-tertiary);
+}
+
+/* ==================== 性能优化Mixins ==================== */
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+}
+
+.smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.no-tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==================== 安全区域Mixins ==================== */
+
+.safe-area-top {
+  padding-top: var(--safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: var(--safe-area-inset-bottom);
+}
+
+.safe-area-left {
+  padding-left: var(--safe-area-inset-left);
+}
+
+.safe-area-right {
+  padding-right: var(--safe-area-inset-right);
+}
+
+.safe-area-all {
+  padding-top: var(--safe-area-inset-top);
+  padding-right: var(--safe-area-inset-right);
+  padding-bottom: var(--safe-area-inset-bottom);
+  padding-left: var(--safe-area-inset-left);
+}

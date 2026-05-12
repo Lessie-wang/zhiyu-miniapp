@@ -1,5 +1,5 @@
 <view class="container">
-  <!-- 步骤1: 欢迎页 -->
+  <!-- 步骤1: 欢迎页 + 隐私协议 -->
   <view class="step-container" wx:if="{{currentStep === 1}}">
     <view class="welcome-section">
       <text class="logo-text">知愈</text>
@@ -23,7 +23,18 @@
       </view>
     </view>
 
-    <button class="primary-btn" bindtap="nextStep">
+    <!-- 隐私协议同意 -->
+    <view class="privacy-agreement">
+      <view class="agreement-checkbox" bindtap="togglePrivacyAgreement">
+        <text class="checkbox-icon">{{privacyAgreed ? '☑' : '☐'}}</text>
+        <text class="agreement-text">
+          我已阅读并同意
+          <text class="link-text" catchtap="viewPrivacyPolicy">《隐私政策》</text>
+        </text>
+      </view>
+    </view>
+
+    <button class="primary-btn {{privacyAgreed ? '' : 'disabled'}}" bindtap="nextStep">
       <text class="btn-text">开始使用</text>
     </button>
   </view>
@@ -41,19 +52,21 @@
             <view wx:else class="avatar-placeholder">
               <text class="avatar-placeholder-icon">👤</text>
             </view>
-            <text class="avatar-edit-hint">点击选择头像</text>
+            <text class="avatar-edit-hint">点击选择头像（可选）</text>
           </button>
         </view>
 
         <view class="nickname-wrapper">
-          <text class="form-label">昵称</text>
+          <text class="form-label">昵称 *</text>
           <input
             type="nickname"
             class="nickname-input"
-            placeholder="点击填写昵称"
+            placeholder="请输入你的昵称"
             value="{{nickname}}"
             bindinput="onInputNickname"
             bindblur="onInputNickname"
+            adjust-position="{{true}}"
+            cursor-spacing="150"
           />
         </view>
       </view>
@@ -62,7 +75,10 @@
         <text class="btn-text">确认并继续</text>
       </button>
 
-      <text class="skip-text" bindtap="skipAuth">暂不设置，直接使用</text>
+      <view class="step-actions">
+        <text class="back-text" bindtap="prevStep">← 上一步</text>
+        <text class="skip-text" bindtap="skipAuth">暂不设置</text>
+      </view>
     </view>
   </view>
 
@@ -81,7 +97,7 @@
       <view class="survey-form">
         <!-- 生日 -->
         <view class="form-item">
-          <text class="form-label">生日</text>
+          <text class="form-label">生日（可选）</text>
           <picker mode="date" value="{{formData.birthday}}" bindchange="onBirthdayChange" end="{{today}}">
             <view class="picker-input">
               <text class="{{formData.birthday ? 'picker-value' : 'picker-placeholder'}}">
@@ -94,7 +110,7 @@
 
         <!-- 性别 -->
         <view class="form-item">
-          <text class="form-label">性别</text>
+          <text class="form-label">性别（可选）</text>
           <view class="radio-group">
             <view
               class="radio-item {{formData.gender === '男' ? 'active' : ''}}"
@@ -125,7 +141,7 @@
 
         <!-- 身份 -->
         <view class="form-item">
-          <text class="form-label">你是</text>
+          <text class="form-label">你是（可选）</text>
           <view class="radio-group">
             <view
               class="radio-item {{formData.occupation === '学生' ? 'active' : ''}}"
@@ -254,12 +270,16 @@
         <text class="btn-text">完成</text>
       </button>
 
-      <text class="skip-text" bindtap="skipSurvey">跳过，稍后填写</text>
+      <view class="step-actions">
+        <text class="back-text" bindtap="prevStep">← 上一步</text>
+        <text class="skip-text" bindtap="skipSurvey">跳过，稍后填写</text>
+      </view>
     </view>
   </view>
 
   <!-- 进度指示器 -->
-  <view class="progress-dots" wx:if="{{currentStep > 1}}">
+  <view class="progress-dots">
+    <view class="dot {{currentStep === 1 ? 'active' : ''}}"></view>
     <view class="dot {{currentStep === 2 ? 'active' : ''}}"></view>
     <view class="dot {{currentStep === 3 ? 'active' : ''}}"></view>
   </view>

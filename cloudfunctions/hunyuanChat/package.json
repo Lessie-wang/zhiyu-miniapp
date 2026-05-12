@@ -1,9 +1,0 @@
-{
-  "name": "hunyuanChat",
-  "version": "1.0.0",
-  "description": "调用腾讯混元大模型进行AI对话",
-  "main": "index.js",
-  "dependencies": {
-    "wx-server-sdk": "latest"
-  }
-}

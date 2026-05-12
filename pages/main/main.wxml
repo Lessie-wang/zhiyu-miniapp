@@ -1,428 +1,271 @@
 <view class="container">
-  <!-- 新手引导遮罩 -->
-  <view class="guide-overlay" wx:if="{{showGuide}}">
-    <view class="guide-mask"></view>
-    <view class="guide-content">
-      <!-- Step 0: 欢迎 -->
-      <view class="guide-card" wx:if="{{guideStep === 0}}">
-        <view class="guide-css-icon">
-          <view class="gicon-wave">
-            <view class="wave-palm"></view>
-            <view class="wave-line wl1"></view>
-            <view class="wave-line wl2"></view>
-          </view>
-        </view>
-        <text class="guide-title">欢迎来到知愈</text>
-        <text class="guide-text">这里是一个安全的空间，帮你看见、理解和表达自己的情绪。</text>
-        <view class="guide-buttons">
-          <button class="guide-btn skip" bindtap="skipGuide">跳过</button>
-          <button class="guide-btn next" bindtap="nextGuideStep">开始了解</button>
-        </view>
-      </view>
+  <!-- ==================== 背景装饰层 ==================== -->
 
-      <!-- Step 1: 场景引导 -->
-      <view class="guide-card" wx:if="{{guideStep === 1}}">
-        <view class="guide-css-icon">
-          <view class="gicon-thought">
-            <view class="thought-bubble"></view>
-            <view class="thought-dot td1"></view>
-            <view class="thought-dot td2"></view>
-          </view>
-        </view>
-        <text class="guide-title">什么时候用知愈？</text>
-        <view class="guide-scenarios">
-          <view class="scenario-item">
-            <view class="scenario-css-icon">
-              <view class="sicon-moon"></view>
-            </view>
-            <text class="scenario-text">今天发生了一些事，想记录下来</text>
-          </view>
-          <view class="scenario-item">
-            <view class="scenario-css-icon">
-              <view class="sicon-think">
-                <view class="think-head"></view>
-                <view class="think-dot"></view>
-              </view>
-            </view>
-            <text class="scenario-text">感觉不太对劲，但说不清是什么</text>
-          </view>
-          <view class="scenario-item">
-            <view class="scenario-css-icon">
-              <view class="sicon-chat">
-                <view class="chat-box"></view>
-                <view class="chat-tail"></view>
-              </view>
-            </view>
-            <text class="scenario-text">想找个人聊聊，但不知道怎么开口</text>
-          </view>
-          <view class="scenario-item">
-            <view class="scenario-css-icon">
-              <view class="sicon-sparkle">
-                <view class="sparkle-v"></view>
-                <view class="sparkle-h"></view>
-              </view>
-            </view>
-            <text class="scenario-text">只是想和自己待一会儿</text>
-          </view>
-        </view>
-        <view class="guide-buttons">
-          <button class="guide-btn skip" bindtap="skipGuide">跳过</button>
-          <button class="guide-btn next" bindtap="nextGuideStep">继续</button>
-        </view>
-      </view>
-
-      <!-- Step 2: 功能介绍 -->
-      <view class="guide-card" wx:if="{{guideStep === 2}}">
-        <view class="guide-css-icon">
-          <view class="gicon-target">
-            <view class="target-outer"></view>
-            <view class="target-inner"></view>
-            <view class="target-center"></view>
-          </view>
-        </view>
-        <text class="guide-title">知愈能帮你做什么？</text>
-        <view class="guide-features">
-          <view class="feature-item">
-            <text class="feature-number">1</text>
-            <view class="feature-content">
-              <text class="feature-title">记录情绪</text>
-              <text class="feature-desc">选择情绪卡片，记录此刻的感受</text>
-            </view>
-          </view>
-          <view class="feature-item">
-            <text class="feature-number">2</text>
-            <view class="feature-content">
-              <text class="feature-title">和小知聊聊</text>
-              <text class="feature-desc">AI 引导你理解和表达情绪</text>
-            </view>
-          </view>
-          <view class="feature-item">
-            <text class="feature-number">3</text>
-            <view class="feature-content">
-              <text class="feature-title">言心小筑</text>
-              <text class="feature-desc">通过写作练习提升情绪表达能力</text>
-            </view>
-          </view>
-        </view>
-        <view class="guide-buttons">
-          <button class="guide-btn skip" bindtap="skipGuide">跳过</button>
-          <button class="guide-btn next" bindtap="nextGuideStep">继续</button>
-        </view>
-      </view>
-
-      <!-- Step 3: 开始使用 -->
-      <view class="guide-card" wx:if="{{guideStep === 3}}">
-        <view class="guide-css-icon">
-          <view class="gicon-star">
-            <view class="star-body"></view>
-            <view class="star-ray sr1"></view>
-            <view class="star-ray sr2"></view>
-            <view class="star-ray sr3"></view>
-            <view class="star-ray sr4"></view>
-          </view>
-        </view>
-        <text class="guide-title">准备好了吗？</text>
-        <text class="guide-text">从选择一个情绪开始，或者直接写两句给自己。</text>
-        <view class="guide-hint-row">
-          <view class="hint-css-icon">
-            <view class="hint-bulb"></view>
-            <view class="hint-base"></view>
-          </view>
-          <text class="guide-hint-text">没有对错，跟着感觉走就好</text>
-        </view>
-        <view class="guide-buttons single">
-          <button class="guide-btn start" bindtap="closeGuide">开始使用</button>
-        </view>
-      </view>
-    </view>
+  <!-- 背景图片层 -->
+  <view class="bg-image-layer">
+    <image class="bg-image" src="/images/backgrounds/zhiyu-gradient-mesh.png" mode="aspectFill"></image>
   </view>
 
-  <!-- 顶部日期 -->
-  <view class="date-header">
-    <text class="date-text">{{currentDate}}</text>
-    <text class="time-text">{{currentTime}}</text>
-    <!-- 节日祝福 -->
-    <text class="festival-text" wx:if="{{festivalMessage}}">{{festivalMessage}}</text>
+  <!-- 粒子容器 -->
+  <view class="particle-container">
+    <view class="particle" wx:for="{{20}}" wx:key="*this" style="left: {{item * 5}}%; top: {{item * 4}}%; animation-delay: {{item * 0.4}}s;"></view>
   </view>
 
-  <!-- 情绪轮盘区域 -->
-  <view class="emotion-wheel-section">
-    <text class="section-title">此刻的你，感受到了什么？</text>
-    <text class="section-hint">选择情绪后可开启 AI 引导对话</text>
+  <!-- 光晕层 -->
+  <view class="glow-orb glow-orb-1"></view>
+  <view class="glow-orb glow-orb-2"></view>
+  <view class="glow-orb glow-orb-3"></view>
 
-    <view class="emotion-grid">
-      <view
-        class="emotion-card {{item.selected ? 'selected' : ''}}"
-        wx:for="{{emotions}}"
-        wx:key="name"
-        bindtap="toggleEmotion"
-        data-name="{{item.name}}"
-      >
-        <view class="emotion-css-icon emo-{{item.iconType}}" style="{{item.selected ? '' : 'color:' + item.color + ';'}}">
-          <!-- 开心：微笑弧线 -->
-          <block wx:if="{{item.iconType === 'happy'}}">
-            <view class="emo-eye el" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-eye er" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-smile" style="border-color: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 平静：三道波浪 -->
-          <block wx:elif="{{item.iconType === 'calm'}}">
-            <view class="emo-wave w1" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-wave w2" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-wave w3" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 难过：水滴 -->
-          <block wx:elif="{{item.iconType === 'sad'}}">
-            <view class="emo-drop" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 累：下垂弧线 -->
-          <block wx:elif="{{item.iconType === 'tired'}}">
-            <view class="emo-droop" style="border-color: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-droop-dot" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 烦躁：锯齿线 -->
-          <block wx:elif="{{item.iconType === 'irritated'}}">
-            <view class="emo-zig z1" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-zig z2" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-zig z3" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 焦虑：同心圈+缺口 -->
-          <block wx:elif="{{item.iconType === 'anxious'}}">
-            <view class="emo-spiral-outer" style="border-color: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-spiral-inner" style="border-color: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-spiral-dot" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 愤怒：闪电 -->
-          <block wx:elif="{{item.iconType === 'angry'}}">
-            <view class="emo-bolt-top" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-bolt-bottom" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 感动：心形 -->
-          <block wx:elif="{{item.iconType === 'touched'}}">
-            <view class="emo-heart-l" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-heart-r" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-heart-bottom" style="border-top-color: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 困惑：问号 -->
-          <block wx:elif="{{item.iconType === 'confused'}}">
-            <view class="emo-q-curve" style="border-color: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-q-dot" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 无聊：水平线+哈欠弧 -->
-          <block wx:elif="{{item.iconType === 'bored'}}">
-            <view class="emo-line" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-yawn" style="border-color: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 震惊：放射星 -->
-          <block wx:elif="{{item.iconType === 'shocked'}}">
-            <view class="emo-star-circle" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-ray r1" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-ray r2" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-ray r3" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-ray r4" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 不知道：迷雾云朵 -->
-          <block wx:elif="{{item.iconType === 'unknown'}}">
-            <view class="emo-cloud-main" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-cloud-top" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-            <view class="emo-cloud-q" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-          <!-- 自定义：星星 -->
-          <block wx:elif="{{item.iconType === 'custom'}}">
-            <view class="emo-star-custom" style="background: {{item.selected ? '#fff' : item.color}};"></view>
-          </block>
-        </view>
-        <text class="emotion-name">{{item.name}}</text>
-        <view class="check-mark" wx:if="{{item.selected}}">✓</view>
-      </view>
+  <!-- ==================== 内容层 ==================== -->
+  <view class="content-layer">
 
-      <!-- 自定义情绪 -->
-      <view class="emotion-card custom-emotion-card" bindtap="showCustomEmotionInput">
-        <view class="emotion-css-icon emo-add">
-          <view class="emo-plus-h" style="background: #D4B8A5;"></view>
-          <view class="emo-plus-v" style="background: #D4B8A5;"></view>
-        </view>
-        <text class="emotion-name">自定义</text>
-      </view>
-    </view>
-  </view>
+    <!-- 游戏式互动引导 -->
+    <interactive-guide
+      id="interactive-guide"
+      visible="{{showGuide}}"
+      steps="{{guideSteps}}"
+      showSkip="{{true}}"
+      bind:complete="onGuideComplete"
+    />
 
-  <!-- 身体感受区域 -->
-  <view class="body-feeling-section" wx:if="{{selectedEmotions.length > 0}}">
-    <text class="section-title">身体有什么感觉吗？</text>
-    <text class="section-hint">可选，帮助 AI 更好地理解你</text>
-    <view class="feeling-tags">
-      <view
-        class="feeling-tag {{item.selected ? 'selected' : ''}}"
-        wx:for="{{bodyFeelings}}"
-        wx:key="name"
-        bindtap="toggleBodyFeeling"
-        data-feeling="{{item.name}}"
-        wx:if="{{!item.isOther}}"
-      >
-        {{item.name}}
+    <!-- 顶部日期卡片 -->
+    <card type="glass" shadow="{{true}}" custom-class="date-card">
+      <view class="date-header">
+        <text class="date-text">{{currentDate}}</text>
+        <text class="time-text">{{currentTime}}</text>
+        <!-- 节日祝福 -->
+        <text class="festival-text" wx:if="{{festivalMessage}}">{{festivalMessage}}</text>
       </view>
-      <!-- "其他"标签 + 内联输入框 -->
-      <view class="other-tag-wrapper">
+    </card>
+
+    <!-- 情绪轮盘区域 -->
+    <card type="glass" shadow="{{true}}" custom-class="emotion-wheel-card">
+      <view class="emotion-wheel-section">
+        <text class="section-title">此刻的你，感受到了什么？</text>
+        <text class="section-hint">轻触选择，记录当下的情绪</text>
+
+        <view class="emotion-grid">
         <view
-          class="feeling-tag {{bodyFeelings[bodyFeelings.length - 1].selected ? 'selected' : ''}}"
-          bindtap="toggleBodyFeeling"
-          data-feeling="其他"
-        >其他</view>
-        <input
-          wx:if="{{showOtherInput}}"
-          class="other-inline-input"
-          placeholder="描述感受..."
-          value="{{otherBodyFeeling}}"
-          bindinput="onOtherFeelingInput"
-          maxlength="30"
-        />
-      </view>
-    </view>
+          class="emotion-card {{item.selected ? 'selected' : ''}}"
+          wx:for="{{emotions}}"
+          wx:key="name"
+          bindtap="toggleEmotion"
+          data-name="{{item.name}}"
+          style="--emotion-color: {{item.color}}; --emotion-color-light: {{item.colorLight}};"
+        >
+          <image class="emotion-icon" src="/images/emotion-icons/{{item.iconType}}.png" mode="aspectFit"></image>
+          <text class="emotion-name">{{item.name}}</text>
+          <view class="check-mark" wx:if="{{item.selected}}">✓</view>
+        </view>
 
-    <!-- 快速记录区域（信纸风格） -->
-    <view class="quick-note-section">
-      <view class="letter-paper">
-        <view class="letter-lines">
-          <textarea
-            class="quick-note-input"
-            placeholder="今天想记点什么..."
-            value="{{quickNote}}"
-            bindinput="onQuickNoteInput"
-            maxlength="500"
-            auto-height
-            style="min-height: 160rpx; max-height: 300rpx;"
+        <!-- 自定义情绪 -->
+        <view class="emotion-card custom-emotion-card" bindtap="showCustomEmotionInput">
+          <view class="emotion-css-icon emo-add">
+            <view class="emo-plus-h" style="background: #D4B8A5;"></view>
+            <view class="emo-plus-v" style="background: #D4B8A5;"></view>
+          </view>
+          <text class="emotion-name">自定义</text>
+        </view>
+      </view>
+      </view>
+    </card>
+
+    <!-- 身体感受区域 -->
+    <card type="glass" shadow="{{true}}" custom-class="body-feeling-card" wx:if="{{selectedEmotions.length > 0}}">
+      <view class="body-feeling-section">
+        <text class="section-title">身体有什么感觉吗？</text>
+        <text class="section-hint">可选，帮助你更好地理解自己</text>
+      <view class="feeling-tags">
+        <view
+          class="feeling-tag {{item.selected ? 'selected' : ''}}"
+          wx:for="{{bodyFeelings}}"
+          wx:key="name"
+          bindtap="toggleBodyFeeling"
+          data-feeling="{{item.name}}"
+          wx:if="{{!item.isOther}}"
+        >
+          {{item.name}}
+        </view>
+        <!-- "其他"标签 + 内联输入框 -->
+        <view class="other-tag-wrapper">
+          <view
+            class="feeling-tag {{bodyFeelings[bodyFeelings.length - 1].selected ? 'selected' : ''}}"
+            bindtap="toggleBodyFeeling"
+            data-feeling="其他"
+          >其他</view>
+          <input
+            wx:if="{{showOtherInput}}"
+            class="other-inline-input"
+            placeholder="描述感受..."
+            value="{{otherBodyFeeling}}"
+            bindinput="onOtherFeelingInput"
+            maxlength="30"
+            adjust-position="{{true}}"
+            cursor-spacing="150"
           />
         </view>
       </view>
+
+      <!-- 快速记录区域（信纸风格） -->
+      <view class="quick-note-section">
+        <view class="letter-paper">
+          <view class="letter-lines">
+            <textarea
+              class="quick-note-input"
+              placeholder="今天想记点什么..."
+              bindinput="onQuickNoteInput"
+              maxlength="500"
+              auto-height
+              style="min-height: 180rpx; max-height: 300rpx;"
+              adjust-position="{{true}}"
+              cursor-spacing="150"
+              hold-keyboard="{{true}}"
+            />
+          </view>
+        </view>
+      </view>
+
+        <!-- 操作按钮（左右并排） -->
+        <view class="action-row">
+          <zh-button type="primary" size="large" custom-class="action-btn" bind:tap="saveRecord">保存记录</zh-button>
+          <zh-button type="secondary" size="large" custom-class="action-btn" bind:tap="goToChat">继续对话</zh-button>
+        </view>
+      </view>
+    </card>
+
+    <!-- 情绪强度滑块弹窗 -->
+    <view class="intensity-modal" wx:if="{{showIntensitySlider}}">
+      <view class="modal-mask" bindtap="closeIntensitySlider"></view>
+      <view class="modal-content">
+        <view class="modal-header">
+          <text class="modal-title" style="color: {{currentEditingEmotion.intensityColors[currentIntensity]}};">{{currentEditingEmotion.name}}</text>
+          <text class="modal-subtitle">滑动选择你的感受程度</text>
+        </view>
+
+        <!-- 当前选中的子情绪显示 -->
+        <view class="current-intensity" style="border-color: {{currentEditingEmotion.intensityColors[currentIntensity]}};">
+          <text class="current-label" style="color: {{currentEditingEmotion.intensityColors[currentIntensity]}};">{{currentEditingEmotion.subEmotions[currentIntensity]}}</text>
+        </view>
+        <view class="current-level">
+          <text class="level-text" style="color: {{currentEditingEmotion.intensityColors[currentIntensity]}};">强度 {{currentIntensity + 1}}/6</text>
+        </view>
+
+        <!-- 滑动条 -->
+        <view class="slider-container">
+          <slider
+            class="intensity-slider"
+            min="0"
+            max="5"
+            step="1"
+            value="{{currentIntensity}}"
+            activeColor="{{currentEditingEmotion.intensityColors[currentIntensity]}}"
+            backgroundColor="#F2E6DF"
+            block-size="32"
+            bindchange="onIntensityChange"
+            bindchanging="onIntensityChanging"
+          />
+
+          <!-- 刻度标签 -->
+          <view class="slider-labels">
+            <text
+              class="slider-label {{currentIntensity === idx ? 'label-active' : ''}}"
+              wx:for="{{currentEditingEmotion.subEmotions}}"
+              wx:key="*this"
+              wx:for-index="idx"
+              style="color: {{currentIntensity === idx ? currentEditingEmotion.intensityColors[currentIntensity] : '#B8B2A7'}};"
+            >
+              {{item}}
+            </text>
+          </view>
+        </view>
+
+        <!-- 确认和取消按钮 -->
+        <view class="modal-buttons">
+          <button class="modal-button modal-button-cancel" bindtap="closeIntensitySlider">取消</button>
+          <button class="modal-button modal-button-confirm" bindtap="confirmIntensity" style="background: {{currentEditingEmotion.intensityColors[currentIntensity]}};">确认</button>
+        </view>
+      </view>
     </view>
 
-    <!-- 操作按钮（左右并排） -->
-    <view class="action-row">
-      <button class="action-left-btn" bindtap="goToChat">和小知聊聊</button>
-      <button class="action-right-btn" bindtap="saveRecord">保存记录</button>
+    <!-- 自定义情绪输入弹窗 -->
+    <view class="custom-emotion-modal" wx:if="{{showCustomEmotionModal}}">
+      <view class="modal-mask" bindtap="closeCustomEmotionModal"></view>
+      <view class="modal-content custom-emotion-content">
+        <view class="modal-header">
+          <text class="modal-title" style="color: #D4B8A5;">自定义情绪</text>
+          <text class="modal-subtitle">用你自己的语言描述此刻的感受</text>
+        </view>
+
+        <!-- 信纸风格的多行输入框 -->
+        <view class="custom-emotion-paper">
+          <view class="paper-lines">
+            <textarea
+              class="custom-emotion-textarea"
+              placeholder="描述你的情绪感受..."
+              placeholder-style="color: #B8B2A7; font-size: 28rpx;"
+              value="{{customEmotionInput}}"
+              bindinput="onCustomEmotionInput"
+              maxlength="50"
+              auto-height
+              auto-focus
+              style="min-height: 200rpx; max-height: 400rpx;"
+              adjust-position="{{true}}"
+              cursor-spacing="150"
+              hold-keyboard="{{true}}"
+            />
+          </view>
+          <view class="char-count">{{customEmotionInput.length}}/50</view>
+        </view>
+
+        <!-- 确认和取消按钮 -->
+        <view class="modal-buttons">
+          <button class="modal-button modal-button-cancel" bindtap="closeCustomEmotionModal">取消</button>
+          <button class="modal-button modal-button-confirm" bindtap="confirmCustomEmotion" style="background: #D4B8A5;">确认</button>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- 邮筒投递动画 -->
+  <view class="mailbox-animation" wx:if="{{showMailboxAnimation}}">
+    <view class="animation-mask"></view>
+
+    <!-- 邮筒 -->
+    <view class="mailbox {{mailboxState}}">
+      <view class="mailbox-top">
+        <view class="mailbox-flag {{mailboxState === 'delivered' ? 'raised' : ''}}"></view>
+        <view class="mailbox-slot"></view>
+      </view>
+      <view class="mailbox-body">
+        <view class="mailbox-front">
+          <view class="mailbox-logo">
+            <text class="mailbox-logo-text">知愈</text>
+          </view>
+        </view>
+      </view>
+      <view class="mailbox-base"></view>
+    </view>
+
+    <!-- 飞行的信纸 -->
+    <view class="flying-letter {{letterState}}">
+      <view class="letter-fold">
+        <view class="letter-content">
+          <view class="letter-emotion-stamp" wx:for="{{selectedEmotions}}" wx:key="*this" wx:if="{{index < 3}}">
+            <text class="stamp-text">{{item}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 成功提示 -->
+    <view class="delivery-success {{mailboxState === 'delivered' ? 'show' : ''}}">
+      <view class="success-icon">
+        <view class="success-checkmark"></view>
+      </view>
+      <text class="success-text">第 {{recordCount}} 封情绪信件已投递</text>
+      <text class="success-subtitle">你的感受已被温柔收藏</text>
     </view>
   </view>
 
-  <!-- 情绪强度滑块弹窗 -->
-  <view class="intensity-modal" wx:if="{{showIntensitySlider}}">
-    <view class="modal-mask" bindtap="closeIntensitySlider"></view>
-    <view class="modal-content">
-      <view class="modal-header">
-        <text class="modal-title" style="color: {{currentEditingEmotion.color}};">{{currentEditingEmotion.name}}</text>
-        <text class="modal-subtitle">滑动选择你的感受程度</text>
-      </view>
-
-      <!-- 当前选中的子情绪显示 -->
-      <view class="current-intensity">
-        <text class="current-label">{{currentEditingEmotion.subEmotions[currentIntensity]}}</text>
-        <text class="current-level">强度 {{currentIntensity + 1}}/6</text>
-      </view>
-
-      <!-- 滑动条 -->
-      <view class="slider-container">
-        <slider
-          class="intensity-slider"
-          min="0"
-          max="5"
-          step="1"
-          value="{{currentIntensity}}"
-          activeColor="{{currentEditingEmotion.color}}"
-          backgroundColor="#F2E6DF"
-          block-size="28"
-          bindchange="onIntensityChange"
-          bindchanging="onIntensityChanging"
-        />
-
-        <!-- 刻度标签 -->
-        <view class="slider-labels">
-          <text
-            class="slider-label {{currentIntensity === idx ? 'label-active' : ''}}"
-            wx:for="{{currentEditingEmotion.subEmotions}}"
-            wx:key="*this"
-            wx:for-index="idx"
-            style="color: {{currentIntensity === idx ? currentEditingEmotion.color : '#B8B2A7'}};"
-          >
-            {{item}}
-          </text>
-        </view>
-      </view>
-
-      <!-- 确认和取消按钮 -->
-      <view class="modal-actions">
-        <button class="action-btn cancel-btn" bindtap="closeIntensitySlider">取消</button>
-        <button class="action-btn confirm-btn" bindtap="confirmIntensity" style="background: {{currentEditingEmotion.color}};">确认</button>
-      </view>
-    </view>
-  </view>
-
-  <!-- 底部功能导航 4+1 -->
-  <view class="bottom-nav">
-
-  <!-- 知识库浮窗按钮 -->
-  <view class="knowledge-fab" bindtap="goToKnowledge">
-    <view class="fab-inner">
-      <view class="fab-book-icon">
-        <view class="fbook-spine"></view>
-        <view class="fbook-cover"></view>
-        <view class="fbook-line fl1"></view>
-        <view class="fbook-line fl2"></view>
-      </view>
-    </view>
-    <text class="fab-label">知识库</text>
-  </view>
-    <view class="nav-item active" bindtap="goToMain">
-      <view class="nav-icon-wrap">
-        <view class="icon-yinji">
-          <view class="ripple r1"></view>
-          <view class="ripple r2"></view>
-          <view class="drop"></view>
-        </view>
-      </view>
-      <text class="nav-label">印记</text>
-    </view>
-    <view class="nav-item" bindtap="goToTraining">
-      <view class="nav-icon-wrap">
-        <view class="icon-yanxin">
-          <view class="roof"></view>
-          <view class="wall"></view>
-          <view class="door"></view>
-        </view>
-      </view>
-      <text class="nav-label">言心小筑</text>
-    </view>
-
-    <!-- 小知中间突出按钮 -->
-    <view class="nav-center-btn" bindtap="goToChat">
-      <view class="center-btn-inner">
-        <view class="center-chat-icon">
-          <view class="cchat-bubble"></view>
-          <view class="cchat-tail"></view>
-        </view>
-      </view>
-      <text class="nav-label center-label">小知</text>
-    </view>
-
-    <view class="nav-item" bindtap="goToProfile">
-      <view class="nav-icon-wrap">
-        <view class="icon-jianyu">
-          <view class="envelope"></view>
-          <view class="flap"></view>
-          <view class="seal"></view>
-        </view>
-      </view>
-      <text class="nav-label">心之笺语</text>
-    </view>
-    <view class="nav-item" bindtap="goToMine">
-      <view class="nav-icon-wrap">
-        <view class="icon-wujing">
-          <view class="moon"></view>
-          <view class="star s1"></view>
-          <view class="star s2"></view>
-          <view class="star s3"></view>
-        </view>
-      </view>
-      <text class="nav-label">吾境</text>
-    </view>
-  </view>
 </view>

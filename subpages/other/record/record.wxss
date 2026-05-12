@@ -1,0 +1,261 @@
+@import "../../../styles/design-tokens.wxss";
+
+/* 情绪记录页面样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+  padding: calc(env(safe-area-inset-top) + 60rpx) var(--spacing-3xl) var(--spacing-3xl);
+  animation: fadeIn var(--transition-normal) var(--ease-smooth);
+}
+
+/* 页面标题 */
+.page-header {
+  text-align: center;
+  margin-bottom: var(--spacing-4xl);
+}
+
+.page-title {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-lg);
+  letter-spacing: 2rpx;
+}
+
+.page-subtitle {
+  display: block;
+  font-size: var(--font-size-md);
+  color: var(--color-text-tertiary);
+  line-height: 1.6;
+}
+
+/* 区块标签 */
+.section-label {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* 情绪选择区域 */
+.emotion-select-section {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.emotion-tags-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.emotion-tags {
+  display: inline-flex;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-sm) 0;
+}
+
+.emotion-tag {
+  display: inline-block;
+  padding: var(--spacing-lg) var(--spacing-2xl);
+  background: white;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal) var(--ease-smooth);
+  white-space: nowrap;
+}
+
+.emotion-tag:active {
+  transform: scale(0.95);
+}
+
+.emotion-tag.active {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.05);
+}
+
+/* 强度选择区域 */
+.intensity-section {
+  margin-bottom: var(--spacing-3xl);
+  background: white;
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-md);
+  animation: fadeInUp var(--transition-normal) var(--ease-smooth);
+}
+
+.intensity-slider {
+  margin: var(--spacing-2xl) 0;
+}
+
+.intensity-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-lg);
+}
+
+.intensity-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+/* 文字记录区域 */
+.note-section {
+  margin-bottom: var(--spacing-3xl);
+  background: white;
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-md);
+  animation: fadeInUp var(--transition-normal) var(--ease-smooth);
+  animation-delay: 0.1s;
+  animation-fill-mode: both;
+}
+
+.note-input {
+  width: 100%;
+  min-height: 200rpx;
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  line-height: 1.8;
+  margin-top: var(--spacing-lg);
+}
+
+.char-count {
+  display: block;
+  text-align: right;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  margin-top: var(--spacing-lg);
+}
+
+/* 保存按钮 */
+.action-footer {
+  margin-top: var(--spacing-3xl);
+}
+
+.save-btn {
+  width: 100%;
+  height: 100rpx;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-xl);
+  border: none;
+  transition: all var(--transition-fast) var(--ease-smooth);
+}
+
+.save-btn:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-md);
+}
+
+.save-btn[disabled] {
+  background: #E8E8E8;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+.save-btn::after {
+  border: none;
+}
+
+.btn-text {
+  font-size: var(--font-size-lg);
+  color: white;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 2rpx;
+}
+
+.save-btn[disabled] .btn-text {
+  color: var(--color-text-tertiary);
+}
+
+/* 感官写作引导弹窗 */
+.writing-prompt-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeIn var(--transition-fast) var(--ease-smooth);
+}
+
+.writing-prompt-card {
+  width: 100%;
+  background: white;
+  border-radius: var(--radius-3xl) var(--radius-3xl) 0 0;
+  padding: var(--spacing-3xl) var(--spacing-3xl) var(--spacing-4xl);
+  text-align: center;
+  animation: slideUp var(--transition-normal) var(--ease-smooth);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.prompt-icon {
+  font-size: 64rpx;
+  margin-bottom: var(--spacing-lg);
+}
+
+.prompt-title {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.prompt-desc {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.prompt-buttons {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.prompt-btn {
+  flex: 1;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  transition: all var(--transition-fast) var(--ease-smooth);
+}
+
+.prompt-btn::after {
+  border: none;
+}
+
+.prompt-btn.primary {
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+  box-shadow: var(--shadow-lg);
+}
+
+.prompt-btn.secondary {
+  background: var(--color-bg-primary);
+  color: var(--color-text-tertiary);
+}
+
+.prompt-btn:active {
+  transform: scale(0.95);
+}

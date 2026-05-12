@@ -1,35 +1,102 @@
 {
   "pages": [
-    "pages/onboarding/onboarding",
     "pages/index/index",
+    "pages/onboarding/onboarding",
     "pages/main/main",
-    "pages/settings/settings",
     "pages/history/history",
-    "pages/emotion/emotion",
     "pages/training/training",
-    "pages/women/women",
-    "pages/shop/shop",
-    "pages/record/record",
-    "pages/about/about",
-    "pages/companion/companion",
-    "pages/knowledge/knowledge",
-    "pages/emotion-report/emotion-report",
-    "pages/general-report/general-report",
-    "pages/sensory-writing/sensory-writing",
-    "pages/dialogue-training/dialogue-training",
-    "pages/contact/contact",
-    "pages/emotion-library/emotion-library",
-    "pages/emotion-detail/emotion-detail",
-    "pages/chat/chat",
     "pages/mine/mine",
-    "pages/favorite-quotes/favorite-quotes",
-    "pages/psych-knowledge/psych-knowledge"
+    "pages/chat/chat"
+  ],
+  "subPackages": [
+    {
+      "root": "subpages/training",
+      "name": "training",
+      "pages": [
+        "dialogue-training/dialogue-training",
+        "dialogue-training/dialogue-training-gamified",
+        "sensory-writing/sensory-writing",
+        "sensory-writing/sensory-writing-gamified"
+      ]
+    },
+    {
+      "root": "subpages/profile",
+      "name": "profile",
+      "pages": [
+        "settings/settings",
+        "about/about",
+        "favorite-quotes/favorite-quotes",
+        "privacy-policy/privacy-policy"
+      ]
+    },
+    {
+      "root": "subpages/emotion",
+      "name": "emotion",
+      "pages": [
+        "emotion/emotion",
+        "emotion-library/emotion-library",
+        "emotion-detail/emotion-detail",
+        "emotion-report/emotion-report",
+        "general-report/general-report"
+      ]
+    },
+    {
+      "root": "subpages/social",
+      "name": "social",
+      "pages": [
+        "companion/companion",
+        "companion-invite/companion-invite",
+        "companion-view/companion-view",
+        "contact/contact"
+      ]
+    },
+    {
+      "root": "subpages/other",
+      "name": "other",
+      "pages": [
+        "women/women",
+        "record/record"
+      ]
+    }
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#FAF9F7",
+    "navigationStyle": "custom",
     "backgroundColor": "#FAF9F7",
     "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#8C8780",
+    "selectedColor": "#D4B8A5",
+    "backgroundColor": "#FAF9F7",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "text": "印记",
+        "iconPath": "assets/images/icons/icon-flower.jpg",
+        "selectedIconPath": "assets/images/icons/icon-flower.jpg"
+      },
+      {
+        "pagePath": "pages/training/training",
+        "text": "言心小筑",
+        "iconPath": "assets/images/icons/icon-dialogue-training.jpg",
+        "selectedIconPath": "assets/images/icons/icon-dialogue-training.jpg"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "心之笺语",
+        "iconPath": "assets/images/icons/icon-chat.jpg",
+        "selectedIconPath": "assets/images/icons/icon-chat.jpg"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "吾境",
+        "iconPath": "assets/images/icons/icon-sparkle.jpg",
+        "selectedIconPath": "assets/images/icons/icon-sparkle.jpg"
+      }
+    ]
   },
   "style": "v2",
   "requiredBackgroundModes": ["audio"],

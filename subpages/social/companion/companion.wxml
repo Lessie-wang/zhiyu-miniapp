@@ -1,0 +1,212 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="page-title-row">
+      <text class="page-title">陪伴者管理</text>
+      <custom-icon type="companion" size="md"></custom-icon>
+    </view>
+    <text class="page-subtitle">邀请信任的人，一起守护你的情绪健康</text>
+  </view>
+
+  <!-- 添加陪伴者卡片 -->
+  <view class="add-companion-card">
+    <view class="add-icon">
+      <custom-icon type="plus" size="lg"></custom-icon>
+    </view>
+    <view class="add-content">
+      <text class="add-title">添加新的陪伴者</text>
+      <text class="add-desc">邀请家人、朋友或伴侣成为你的陪伴者</text>
+    </view>
+    <button class="add-btn" bindtap="addCompanion">
+      <text class="btn-text">添加</text>
+    </button>
+  </view>
+
+  <!-- 分享绑定说明卡片 -->
+  <view class="share-guide-card">
+    <view class="guide-header">
+      <custom-icon type="gift" size="md" class="guide-icon"></custom-icon>
+      <text class="guide-title">如何邀请陪伴者？</text>
+    </view>
+    <view class="guide-steps">
+      <view class="step-item">
+        <view class="step-number">1</view>
+        <text class="step-text">点击"添加"按钮，输入陪伴者信息</text>
+      </view>
+      <view class="step-item">
+        <view class="step-number">2</view>
+        <text class="step-text">生成专属邀请链接或二维码</text>
+      </view>
+      <view class="step-item">
+        <view class="step-number">3</view>
+        <text class="step-text">分享给TA，TA扫码即可绑定</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 陪伴者列表 -->
+  <view class="companions-section" wx:if="{{companions.length > 0}}">
+    <text class="section-title">我的陪伴者 ({{companions.length}})</text>
+
+    <view class="companion-list">
+      <view
+        class="companion-card"
+        wx:for="{{companions}}"
+        wx:key="id"
+      >
+        <view class="companion-avatar">
+          <text class="avatar-text">{{item.name.charAt(0)}}</text>
+        </view>
+
+        <view class="companion-info">
+          <text class="companion-name">{{item.name}}</text>
+          <text class="companion-relation">{{item.relation}}</text>
+          <text class="companion-status">
+            <text class="status-dot {{item.status}}"></text>
+            {{item.status === 'active' ? '已接受邀请' : '等待接受'}}
+          </text>
+        </view>
+
+        <view class="companion-actions">
+          <button
+            class="action-btn settings-btn"
+            bindtap="editCompanion"
+            data-id="{{item.id}}"
+          >
+            <text class="action-icon">⚙️</text>
+          </button>
+          <button
+            class="action-btn remove-btn"
+            bindtap="removeCompanion"
+            data-id="{{item.id}}"
+          >
+            <text class="action-icon">🗑️</text>
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">💝</text>
+    <text class="empty-title">还没有陪伴者</text>
+    <text class="empty-desc">添加信任的人，让他们了解你的情绪状态，在需要时给予支持</text>
+  </view>
+
+  <!-- 权限设置说明 -->
+  <view class="permission-info-card">
+    <text class="info-title">🔒 隐私与权限</text>
+    <view class="info-list">
+      <view class="info-item">
+        <text class="info-icon">✓</text>
+        <text class="info-text">陪伴者可以看到你的情绪趋势和记录</text>
+      </view>
+      <view class="info-item">
+        <text class="info-icon">✓</text>
+        <text class="info-text">你可以随时调整分享的内容范围</text>
+      </view>
+      <view class="info-item">
+        <text class="info-icon">✓</text>
+        <text class="info-text">AI 对话内容默认不分享，需手动开启</text>
+      </view>
+      <view class="info-item">
+        <text class="info-icon">✓</text>
+        <text class="info-text">你可以随时移除陪伴者</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 陪伴者功能介绍 -->
+  <view class="features-section">
+    <text class="section-title">陪伴者能做什么？</text>
+
+    <view class="feature-grid">
+      <view class="feature-card">
+        <text class="feature-icon">📊</text>
+        <text class="feature-title">查看情绪趋势</text>
+        <text class="feature-desc">了解你的情绪变化模式</text>
+      </view>
+
+      <view class="feature-card">
+        <text class="feature-icon">🔔</text>
+        <text class="feature-title">接收关怀提醒</text>
+        <text class="feature-desc">当你情绪低落时收到通知</text>
+      </view>
+
+      <view class="feature-card">
+        <text class="feature-icon">💬</text>
+        <text class="feature-title">发送关怀消息</text>
+        <text class="feature-desc">在合适的时候给予支持</text>
+      </view>
+
+      <view class="feature-card">
+        <text class="feature-icon">📝</text>
+        <text class="feature-title">查看记录摘要</text>
+        <text class="feature-desc">了解你的日常状态</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加陪伴者弹窗 -->
+  <view class="zh-input-modal" wx:if="{{showAddCompanionModal}}">
+    <view class="modal-mask" bindtap="closeAddCompanionModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title" style="color: #D4B8A5;">添加陪伴者</text>
+        <text class="modal-subtitle">请输入陪伴者的姓名</text>
+      </view>
+
+      <view class="input-paper">
+        <input
+          class="zh-input"
+          placeholder="例如：妈妈、小明"
+          placeholder-style="color: #B8B2A7;"
+          value="{{addCompanionInput}}"
+          bindinput="onAddCompanionInput"
+          maxlength="20"
+          auto-focus
+          adjust-position="{{true}}"
+          cursor-spacing="150"
+        />
+        <view class="char-count">{{addCompanionInput.length}}/20</view>
+      </view>
+
+      <view class="modal-buttons">
+        <button class="modal-button modal-button-cancel" bindtap="closeAddCompanionModal">取消</button>
+        <button class="modal-button modal-button-confirm" bindtap="confirmAddCompanion">确认</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 修改备注弹窗 -->
+  <view class="zh-input-modal" wx:if="{{showEditNameModal}}">
+    <view class="modal-mask" bindtap="closeEditNameModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title" style="color: #D4B8A5;">修改备注</text>
+        <text class="modal-subtitle">请输入新的备注名称</text>
+      </view>
+
+      <view class="input-paper">
+        <input
+          class="zh-input"
+          placeholder="输入新名称..."
+          placeholder-style="color: #B8B2A7;"
+          value="{{editNameInput}}"
+          bindinput="onEditNameInput"
+          maxlength="20"
+          auto-focus
+          adjust-position="{{true}}"
+          cursor-spacing="150"
+        />
+        <view class="char-count">{{editNameInput.length}}/20</view>
+      </view>
+
+      <view class="modal-buttons">
+        <button class="modal-button modal-button-cancel" bindtap="closeEditNameModal">取消</button>
+        <button class="modal-button modal-button-confirm" bindtap="confirmEditName">确认</button>
+      </view>
+    </view>
+  </view>
+</view>

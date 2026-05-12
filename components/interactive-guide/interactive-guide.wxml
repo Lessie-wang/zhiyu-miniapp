@@ -1,0 +1,58 @@
+<!-- 游戏式互动引导组件 -->
+<view class="guide-container" wx:if="{{visible}}">
+  <!-- 半透明遮罩层 -->
+  <view class="guide-mask" bindtap="onMaskTap"></view>
+
+  <!-- 高亮镂空区域 -->
+  <view class="guide-spotlight" style="{{spotlightStyle}}"></view>
+
+  <!-- 引导内容卡片 -->
+  <view class="guide-card" style="{{cardStyle}}" animation="{{cardAnimation}}">
+    <!-- 指向箭头 -->
+    <view class="guide-arrow {{arrowDirection}}" wx:if="{{currentStep.showArrow}}"></view>
+
+    <!-- 卡片内容 -->
+    <view class="guide-card-content">
+      <!-- 步骤标题 -->
+      <view class="guide-header">
+        <view class="guide-icon">{{currentStep.icon}}</view>
+        <text class="guide-title">{{currentStep.title}}</text>
+      </view>
+
+      <!-- 步骤描述 -->
+      <text class="guide-description">{{currentStep.description}}</text>
+
+      <!-- 操作提示 -->
+      <view class="guide-action-hint" wx:if="{{currentStep.actionHint}}">
+        <view class="hint-icon">👆</view>
+        <text class="hint-text">{{currentStep.actionHint}}</text>
+      </view>
+
+      <!-- 底部操作栏 -->
+      <view class="guide-footer">
+        <!-- 进度指示器 -->
+        <view class="guide-progress">
+          <view
+            class="progress-dot {{index <= currentStepIndex ? 'active' : ''}}"
+            wx:for="{{steps}}"
+            wx:key="index"
+          ></view>
+        </view>
+
+        <!-- 操作按钮 -->
+        <view class="guide-buttons">
+          <text class="guide-btn skip-btn" bindtap="onSkip" wx:if="{{showSkip}}">跳过</text>
+          <text class="guide-btn next-btn" bindtap="onNext" wx:if="{{!currentStep.requireAction}}">
+            {{isLastStep ? '开始使用' : '下一步'}}
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 手指点击动画（用于需要用户点击的步骤） -->
+  <view class="guide-finger" style="{{fingerStyle}}" wx:if="{{currentStep.requireAction}}">
+    <view class="finger-icon">👆</view>
+    <view class="finger-ripple"></view>
+  </view>
+</view>

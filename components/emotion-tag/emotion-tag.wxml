@@ -1,0 +1,27 @@
+<!--
+  知愈小程序 - 情绪标签组件
+  用于显示情绪类型和颜色
+-->
+<view
+  class="zh-emotion-tag zh-emotion-tag--{{size}} {{customClass}}"
+  style="background: {{bgColor}}; color: {{textColor}};"
+  hover-class="{{clickable ? 'zh-emotion-tag--active' : ''}}"
+  hover-stay-time="100"
+  bindtap="handleTap"
+>
+  <!-- 情绪图标 -->
+  <image
+    wx:if="{{icon}}"
+    class="zh-emotion-tag__icon"
+    src="{{icon}}"
+    mode="aspectFit"
+  />
+
+  <!-- 情绪名称 -->
+  <text class="zh-emotion-tag__text">{{name}}</text>
+
+  <!-- 关闭按钮 -->
+  <view wx:if="{{closable}}" class="zh-emotion-tag__close" catchtap="handleClose">
+    <text>×</text>
+  </view>
+</view>

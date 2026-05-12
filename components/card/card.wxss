@@ -1,0 +1,85 @@
+/**
+ * 知愈小程序 - 卡片组件样式
+ */
+
+.zh-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-sizing: border-box;
+  transition: var(--transition-all);
+}
+
+/* ==================== 卡片类型 ==================== */
+
+/* 默认卡片 */
+.zh-card--default {
+  background: var(--color-bg-card);
+}
+
+.zh-card--default.zh-card--shadow {
+  box-shadow: var(--shadow-md);
+}
+
+/* 毛玻璃卡片 */
+.zh-card--glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(30rpx);
+  -webkit-backdrop-filter: blur(30rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.zh-card--glass.zh-card--shadow {
+  box-shadow: var(--shadow-double-md);
+}
+
+/* 浮起卡片 */
+.zh-card--elevated {
+  background: var(--color-bg-card);
+}
+
+.zh-card--elevated.zh-card--shadow {
+  box-shadow: var(--shadow-double-md);
+}
+
+/* ==================== 交互效果 ==================== */
+
+.zh-card--hover.zh-card--active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ==================== 卡片结构 ==================== */
+
+/* 卡片头部 */
+.zh-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.zh-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.zh-card__extra {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* 卡片内容 */
+.zh-card__body {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* 卡片底部 */
+.zh-card__footer {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1rpx solid var(--color-border-light);
+}

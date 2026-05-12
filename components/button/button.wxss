@@ -1,0 +1,173 @@
+/**
+ * 知愈小程序 - 按钮组件样式
+ */
+
+.zh-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  transition: var(--transition-all);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ==================== 按钮类型 ==================== */
+
+/* 主要按钮 */
+.zh-button--primary {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-md);
+}
+
+.zh-button--primary.zh-button--active {
+  transform: scale(0.95);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 次要按钮 */
+.zh-button--secondary {
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+  border: 1rpx solid var(--color-border-medium);
+  box-shadow: var(--shadow-sm);
+}
+
+.zh-button--secondary.zh-button--active {
+  transform: scale(0.95);
+  background: var(--color-bg-secondary);
+}
+
+/* 幽灵按钮 */
+.zh-button--ghost {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1rpx solid var(--color-border-medium);
+}
+
+.zh-button--ghost.zh-button--active {
+  background: var(--color-bg-secondary);
+}
+
+/* 文字按钮 */
+.zh-button--text {
+  background: transparent;
+  color: var(--color-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.zh-button--text.zh-button--active {
+  opacity: 0.7;
+}
+
+/* 毛玻璃按钮 */
+.zh-button--glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
+  color: var(--color-text-primary);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-md);
+}
+
+.zh-button--glass.zh-button--active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* ==================== 按钮尺寸 ==================== */
+
+.zh-button--small {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-sm);
+}
+
+.zh-button--medium {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-base);
+  border-radius: var(--radius-md);
+}
+
+.zh-button--large {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  font-size: var(--font-size-lg);
+  border-radius: var(--radius-lg);
+}
+
+/* ==================== 按钮状态 ==================== */
+
+/* 禁用状态 */
+.zh-button--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 加载状态 */
+.zh-button--loading {
+  cursor: not-allowed;
+}
+
+/* 块级按钮 */
+.zh-button--block {
+  width: 100%;
+  display: flex;
+}
+
+/* ==================== 按钮元素 ==================== */
+
+/* 图标 */
+.zh-button__icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: var(--spacing-sm);
+}
+
+.zh-button--small .zh-button__icon {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.zh-button--large .zh-button__icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+/* 文字 */
+.zh-button__text {
+  flex: 1;
+  text-align: center;
+}
+
+/* 加载图标 */
+.zh-button__loading {
+  margin-right: var(--spacing-sm);
+}
+
+.zh-button__loading-icon {
+  width: 32rpx;
+  height: 32rpx;
+  border: 3rpx solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--radius-full);
+  animation: spin 0.8s linear infinite;
+}
+
+.zh-button--small .zh-button__loading-icon {
+  width: 28rpx;
+  height: 28rpx;
+  border-width: 2rpx;
+}
+
+.zh-button--large .zh-button__loading-icon {
+  width: 36rpx;
+  height: 36rpx;
+  border-width: 4rpx;
+}

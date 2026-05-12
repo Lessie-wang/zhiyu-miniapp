@@ -1,0 +1,394 @@
+<view class="container">
+  <!-- 顶部导航栏 -->
+  <view class="top-nav">
+    <scroll-view class="nav-scroll" scroll-x>
+      <view class="nav-tabs">
+        <view
+          class="nav-tab {{activeNav === item.id ? 'active' : ''}}"
+          wx:for="{{navTabs}}"
+          wx:key="id"
+          bindtap="switchNav"
+          data-id="{{item.id}}"
+        >
+          <text class="nav-icon">{{item.icon}}</text>
+          <text class="nav-name">{{item.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <text class="search-icon">🔍</text>
+      <input
+        class="search-input"
+        placeholder="搜索情绪、理论、技能..."
+        value="{{searchQuery}}"
+        bindinput="onSearchInput"
+        bindconfirm="performSearch"
+      />
+      <text class="clear-icon" wx:if="{{searchQuery}}" bindtap="clearSearch">✕</text>
+    </view>
+
+    <!-- 搜索建议 -->
+    <view class="search-suggestions" wx:if="{{searchSuggestions.length > 0}}">
+      <view
+        class="suggestion-item"
+        wx:for="{{searchSuggestions}}"
+        wx:key="*this"
+        bindtap="selectSuggestion"
+        data-suggestion="{{item}}"
+      >
+        <text class="suggestion-icon">🔍</text>
+        <text class="suggestion-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户学习统计卡片 -->
+  <view class="stats-card" bindtap="viewStats">
+    <view class="stats-left">
+      <view class="stat-item">
+        <text class="stat-value">{{userStats.readCount}}</text>
+        <text class="stat-label">已读</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{userStats.readTime}}</text>
+        <text class="stat-label">分钟</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{userStats.currentStreak}}</text>
+        <text class="stat-label">连续天</text>
+      </view>
+    </view>
+    <view class="stats-right">
+      <text class="stats-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 为你推荐区域 -->
+  <view class="section" wx:if="{{activeNav === 'for-you'}}">
+    <view class="section-header">
+      <view class="section-title-wrapper">
+        <text class="section-icon">✨</text>
+        <view class="section-text">
+          <text class="section-title">{{personalizedSection.title}}</text>
+          <text class="section-subtitle">{{personalizedSection.subtitle}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="article-list">
+      <view
+        class="article-card premium-card"
+        wx:for="{{personalizedSection.articles}}"
+        wx:key="id"
+        bindtap="viewArticle"
+        data-article="{{item}}"
+      >
+        <!-- 付费标签 -->
+        <view class="premium-badge" wx:if="{{item.isPremium}}">
+          <text class="badge-icon">💎</text>
+          <text class="badge-text">¥{{item.price}}</text>
+        </view>
+
+        <!-- 封面图 -->
+        <image class="article-cover" src="{{item.coverImage}}" mode="aspectFill" />
+
+        <!-- 文章信息 -->
+        <view class="article-content">
+          <!-- 难度标签 -->
+          <view class="level-badge level-{{item.level}}">
+            <text wx:if="{{item.level === 'basic'}}">入门</text>
+            <text wx:elif="{{item.level === 'intermediate'}}">进阶</text>
+            <text wx:elif="{{item.level === 'advanced'}}">深度</text>
+          </view>
+
+          <text class="article-title">{{item.title}}</text>
+          <text class="article-subtitle">{{item.subtitle}}</text>
+          <text class="article-summary">{{item.summary}}</text>
+
+          <!-- 作者信息 -->
+          <view class="author-info">
+            <view class="author-avatar">{{item.author.name.charAt(0)}}</view>
+            <view class="author-details">
+              <view class="author-name-wrapper">
+                <text class="author-name">{{item.author.name}}</text>
+                <text class="verified-icon" wx:if="{{item.author.verified}}">✓</text>
+              </view>
+              <text class="author-title">{{item.author.title}}</text>
+            </view>
+          </view>
+
+          <!-- 标签 -->
+          <view class="article-tags">
+            <text class="tag" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag">
+              {{tag}}
+            </text>
+          </view>
+
+          <!-- 底部信息 -->
+          <view class="article-footer">
+            <view class="footer-left">
+              <text class="read-time">📖 {{item.readTime}}分钟</text>
+              <text class="likes">👍 {{item.likes}}</text>
+              <text class="collections">⭐ {{item.collections}}</text>
+            </view>
+            <view class="footer-right">
+              <view class="collect-btn" catchtap="toggleCollection" data-id="{{item.id}}">
+                <text class="collect-icon">{{item.isCollected ? '⭐' : '☆'}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 情绪相关知识区域 -->
+  <view class="section" wx:if="{{activeNav === 'emotion'}}">
+    <view class="section-header">
+      <view class="section-title-wrapper">
+        <text class="section-icon">💭</text>
+        <view class="section-text">
+          <text class="section-title">情绪相关知识</text>
+          <text class="section-subtitle">基于循证心理学的情绪科学</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 情绪筛选器 -->
+    <scroll-view class="emotion-filter" scroll-x>
+      <view class="filter-item active">全部</view>
+      <view class="filter-item">焦虑</view>
+      <view class="filter-item">难过</view>
+      <view class="filter-item">愤怒</view>
+      <view class="filter-item">疲惫</view>
+      <view class="filter-item">困惑</view>
+    </scroll-view>
+
+    <view class="article-list">
+      <view
+        class="article-card"
+        wx:for="{{emotionKnowledge}}"
+        wx:key="id"
+        bindtap="viewArticle"
+        data-article="{{item}}"
+      >
+        <!-- 情绪标签 -->
+        <view class="emotion-tag">{{item.emotionTag}}</view>
+
+        <image class="article-cover" src="{{item.coverImage}}" mode="aspectFill" />
+
+        <view class="article-content">
+          <view class="level-badge level-{{item.level}}">
+            <text wx:if="{{item.level === 'basic'}}">入门</text>
+            <text wx:elif="{{item.level === 'intermediate'}}">进阶</text>
+            <text wx:elif="{{item.level === 'advanced'}}">深度</text>
+          </view>
+
+          <text class="article-title">{{item.title}}</text>
+          <text class="article-subtitle">{{item.subtitle}}</text>
+
+          <!-- 作者信息 -->
+          <view class="author-info">
+            <view class="author-avatar">{{item.author.name.charAt(0)}}</view>
+            <view class="author-details">
+              <view class="author-name-wrapper">
+                <text class="author-name">{{item.author.name}}</text>
+                <text class="verified-icon" wx:if="{{item.author.verified}}">✓</text>
+              </view>
+              <text class="author-title">{{item.author.title}}</text>
+            </view>
+          </view>
+
+          <view class="article-footer">
+            <view class="footer-left">
+              <text class="read-time">📖 {{item.readTime}}分钟</text>
+              <text class="likes">👍 {{item.likes}}</text>
+            </view>
+            <view class="footer-right">
+              <view class="collect-btn" catchtap="toggleCollection" data-id="{{item.id}}">
+                <text class="collect-icon">☆</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 深度理论区域（付费内容） -->
+  <view class="section" wx:if="{{activeNav === 'theory'}}">
+    <view class="section-header">
+      <view class="section-title-wrapper">
+        <text class="section-icon">📚</text>
+        <view class="section-text">
+          <text class="section-title">深度理论</text>
+          <text class="section-subtitle">系统学习心理学核心理论</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="article-list">
+      <view
+        class="article-card premium-card"
+        wx:for="{{theoryArticles}}"
+        wx:key="id"
+        bindtap="viewArticle"
+        data-article="{{item}}"
+      >
+        <view class="premium-badge">
+          <text class="badge-icon">💎</text>
+          <text class="badge-text">¥{{item.price}}</text>
+        </view>
+
+        <image class="article-cover" src="{{item.coverImage}}" mode="aspectFill" />
+
+        <view class="article-content">
+          <text class="article-title">{{item.title}}</text>
+          <text class="article-subtitle">{{item.subtitle}}</text>
+
+          <!-- 作者信息 -->
+          <view class="author-info">
+            <view class="author-avatar">{{item.author.name.charAt(0)}}</view>
+            <view class="author-details">
+              <view class="author-name-wrapper">
+                <text class="author-name">{{item.author.name}}</text>
+                <text class="verified-icon">✓</text>
+              </view>
+              <text class="author-title">{{item.author.title}}</text>
+              <text class="author-credentials">{{item.author.credentials}}</text>
+            </view>
+          </view>
+
+          <!-- 目录预览 -->
+          <view class="toc-preview">
+            <text class="toc-title">📑 内容目录</text>
+            <view class="toc-items">
+              <text class="toc-item" wx:for="{{item.tableOfContents.slice(0, 3)}}" wx:key="*this">
+                {{item}}
+              </text>
+              <text class="toc-more">...共{{item.tableOfContents.length}}章</text>
+            </view>
+          </view>
+
+          <view class="article-footer">
+            <view class="footer-left">
+              <text class="read-time">📖 {{item.readTime}}分钟</text>
+              <text class="purchase-count">{{item.purchaseCount}}人已购买</text>
+              <text class="rating">⭐ {{item.rating}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 实用技能区域 -->
+  <view class="section" wx:if="{{activeNav === 'skills'}}">
+    <view class="section-header">
+      <view class="section-title-wrapper">
+        <text class="section-icon">🛠️</text>
+        <view class="section-text">
+          <text class="section-title">实用技能</text>
+          <text class="section-subtitle">可以立即应用的心理技巧</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="article-list">
+      <view
+        class="article-card"
+        wx:for="{{skillArticles}}"
+        wx:key="id"
+        bindtap="viewArticle"
+        data-article="{{item}}"
+      >
+        <image class="article-cover" src="{{item.coverImage}}" mode="aspectFill" />
+
+        <view class="article-content">
+          <text class="article-title">{{item.title}}</text>
+          <text class="article-subtitle">{{item.subtitle}}</text>
+
+          <!-- 进阶版本提示 -->
+          <view class="upgrade-hint" wx:if="{{item.hasAdvancedVersion}}">
+            <text class="upgrade-icon">⬆️</text>
+            <text class="upgrade-text">有进阶版本</text>
+          </view>
+
+          <view class="article-footer">
+            <view class="footer-left">
+              <text class="read-time">📖 {{item.readTime}}分钟</text>
+              <text class="likes">👍 {{item.likes}}</text>
+            </view>
+            <view class="footer-right">
+              <view class="collect-btn" catchtap="toggleCollection" data-id="{{item.id}}">
+                <text class="collect-icon">☆</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 付费内容预览弹窗 -->
+  <view class="premium-modal" wx:if="{{showPremiumModal}}">
+    <view class="modal-mask" bindtap="closePremiumModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">💎 优质内容</text>
+        <view class="close-btn" bindtap="closePremiumModal">✕</view>
+      </view>
+
+      <view class="modal-body">
+        <text class="premium-title">{{selectedPremiumArticle.title}}</text>
+        <text class="premium-subtitle">{{selectedPremiumArticle.subtitle}}</text>
+
+        <!-- 作者信息 -->
+        <view class="premium-author">
+          <view class="author-avatar">{{selectedPremiumArticle.author.name.charAt(0)}}</view>
+          <view class="author-details">
+            <text class="author-name">{{selectedPremiumArticle.author.name}}</text>
+            <text class="author-title">{{selectedPremiumArticle.author.title}}</text>
+          </view>
+        </view>
+
+        <!-- 内容价值说明 -->
+        <view class="value-points">
+          <text class="value-title">你将获得：</text>
+          <view class="value-item">
+            <text class="value-icon">✓</text>
+            <text class="value-text">系统完整的理论框架</text>
+          </view>
+          <view class="value-item">
+            <text class="value-icon">✓</text>
+            <text class="value-text">可实践的练习和工具</text>
+          </view>
+          <view class="value-item">
+            <text class="value-icon">✓</text>
+            <text class="value-text">权威文献和延伸阅读</text>
+          </view>
+          <view class="value-item">
+            <text class="value-icon">✓</text>
+            <text class="value-text">永久阅读权限</text>
+          </view>
+        </view>
+
+        <!-- 价格和购买按钮 -->
+        <view class="premium-price">
+          <text class="price-label">限时优惠</text>
+          <text class="price-value">¥{{selectedPremiumArticle.price}}</text>
+        </view>
+
+        <button class="purchase-btn" bindtap="purchaseArticle">
+          立即购买
+        </button>
+
+        <text class="preview-hint">{{selectedPremiumArticle.preview}}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,186 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">陪的时间 🌸</text>
+    <text class="page-subtitle">记录经期，关注情绪波动</text>
+  </view>
+
+  <!-- 经期状态卡片 -->
+  <view class="period-status-card">
+    <view class="status-header">
+      <view class="status-icon-wrap">
+        <view class="moon-icon">🌙</view>
+      </view>
+      <view class="status-info">
+        <text class="status-title">{{periodStatus.title}}</text>
+        <text class="status-desc">{{periodStatus.desc}}</text>
+      </view>
+    </view>
+
+    <view class="countdown-section" wx:if="{{periodStatus.daysLeft > 0}}">
+      <view class="countdown-circle">
+        <text class="countdown-number">{{periodStatus.daysLeft}}</text>
+        <text class="countdown-unit">天</text>
+      </view>
+      <text class="countdown-label">距离下次经期</text>
+    </view>
+
+    <view class="period-info-row">
+      <view class="info-item">
+        <text class="info-label">周期</text>
+        <text class="info-value">{{cycleLength}}天</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">经期</text>
+        <text class="info-value">{{periodLength}}天</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">上次</text>
+        <text class="info-value">{{lastPeriodDate}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 经期日历 -->
+  <view class="calendar-section">
+    <view class="calendar-header">
+      <view class="month-nav" bindtap="prevMonth">
+        <text class="nav-arrow">‹</text>
+      </view>
+      <text class="month-title">{{currentMonth}}</text>
+      <view class="month-nav" bindtap="nextMonth">
+        <text class="nav-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="calendar-weekdays">
+      <text class="weekday" wx:for="{{weekdays}}" wx:key="*this">{{item}}</text>
+    </view>
+
+    <view class="calendar-days">
+      <view
+        class="day-cell {{day.isPeriod ? 'period-day' : ''}} {{day.isToday ? 'today' : ''}} {{day.isOtherMonth ? 'other-month' : ''}}"
+        wx:for="{{calendarDays}}"
+        wx:key="date"
+        bindtap="onDayTap"
+        data-date="{{day.date}}"
+      >
+        <text class="day-number">{{day.day}}</text>
+        <view class="day-indicator" wx:if="{{day.hasEmotion}}">
+          <view class="emotion-dot" style="background: {{day.emotionColor}};"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 经期情绪关联分析 -->
+  <view class="emotion-analysis-section">
+    <view class="section-header">
+      <text class="section-title">情绪波动分析</text>
+      <text class="section-subtitle">经期前后情绪变化</text>
+    </view>
+
+    <view class="emotion-chart">
+      <view class="chart-legend">
+        <view class="legend-item">
+          <view class="legend-dot period"></view>
+          <text class="legend-text">经期中</text>
+        </view>
+        <view class="legend-item">
+          <view class="legend-dot pre-period"></view>
+          <text class="legend-text">经期前</text>
+        </view>
+        <view class="legend-item">
+          <view class="legend-dot normal"></view>
+          <text class="legend-text">平时</text>
+        </view>
+      </view>
+
+      <view class="emotion-bars">
+        <view class="emotion-bar-item" wx:for="{{emotionStats}}" wx:key="name">
+          <text class="emotion-name">{{item.name}}</text>
+          <view class="bar-container">
+            <view class="bar-fill {{item.phase}}" style="width: {{item.percentage}}%;"></view>
+          </view>
+          <text class="emotion-count">{{item.count}}次</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 症状记录 -->
+  <view class="symptoms-section">
+    <view class="section-header">
+      <text class="section-title">今日症状</text>
+      <text class="section-action" bindtap="addSymptom">+ 添加</text>
+    </view>
+
+    <view class="symptoms-grid">
+      <view
+        class="symptom-tag {{symptom.selected ? 'selected' : ''}}"
+        wx:for="{{commonSymptoms}}"
+        wx:key="id"
+        bindtap="toggleSymptom"
+        data-id="{{symptom.id}}"
+      >
+        <text class="symptom-icon">{{symptom.icon}}</text>
+        <text class="symptom-name">{{symptom.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 健康建议 -->
+  <view class="tips-section">
+    <view class="section-header">
+      <text class="section-title">💡 健康小贴士</text>
+    </view>
+
+    <view class="tips-list">
+      <view class="tip-item" wx:for="{{healthTips}}" wx:key="*this">
+        <view class="tip-icon">✓</view>
+        <text class="tip-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作按钮 -->
+  <view class="bottom-actions">
+    <button class="action-btn primary" bindtap="recordPeriod">
+      <text class="btn-icon">📝</text>
+      <text class="btn-text">记录经期</text>
+    </button>
+    <button class="action-btn secondary" bindtap="viewHistory">
+      <text class="btn-icon">📊</text>
+      <text class="btn-text">历史记录</text>
+    </button>
+  </view>
+
+  <!-- 添加症状弹窗 -->
+  <view class="zh-input-modal" wx:if="{{showAddSymptomModal}}">
+    <view class="modal-mask" bindtap="closeAddSymptomModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title" style="color: #D4B8A5;">添加症状</text>
+        <text class="modal-subtitle">请输入症状描述</text>
+      </view>
+
+      <view class="input-paper">
+        <input
+          class="zh-input"
+          placeholder="例如：轻微头痛"
+          placeholder-style="color: #B8B2A7;"
+          value="{{addSymptomInput}}"
+          bindinput="onAddSymptomInput"
+          maxlength="30"
+          auto-focus
+        />
+        <view class="char-count">{{addSymptomInput.length}}/30</view>
+      </view>
+
+      <view class="modal-buttons">
+        <button class="modal-button modal-button-cancel" bindtap="closeAddSymptomModal">取消</button>
+        <button class="modal-button modal-button-confirm" bindtap="confirmAddSymptom">确认</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,6 +1,15 @@
 <view class="container">
-  <!-- 粒子效果画布 -->
-  <canvas canvas-id="particleCanvas" class="particle-canvas"></canvas>
+  <!-- 落叶特效 -->
+  <view class="falling-leaves">
+    <view class="leaf leaf1"></view>
+    <view class="leaf leaf2"></view>
+    <view class="leaf leaf3"></view>
+    <view class="leaf leaf4"></view>
+    <view class="leaf leaf5"></view>
+    <view class="leaf leaf6"></view>
+    <view class="leaf leaf7"></view>
+    <view class="leaf leaf8"></view>
+  </view>
 
   <!-- 用户信息卡片 -->
   <view class="user-card" hover-class="card-hover">
@@ -20,109 +29,35 @@
     </view>
   </view>
 
-  <!-- 知愈之树 -->
+  <!-- 知愈之树 - 水彩渐变背景 -->
   <view class="tree-section">
-    <!-- 树冠光晕 -->
-    <view class="tree-crown"></view>
-
-    <!-- 树干 -->
-    <view class="tree-trunk">
-      <view class="trunk-tex t1"></view>
-      <view class="trunk-tex t2"></view>
-      <view class="trunk-tex t3"></view>
-      <view class="trunk-tex t4"></view>
-    </view>
-
-    <!-- 树枝 -->
-    <view class="branch branch-1" wx:if="{{showWomenModule}}"></view>
-    <view class="branch branch-2"></view>
-    <view class="branch branch-3"></view>
-    <view class="branch branch-4"></view>
-
-    <!-- 枝节点 -->
-    <view class="branch-joint joint-top"></view>
-    <view class="branch-joint joint-mid"></view>
-
-    <!-- 树叶 -->
-    <view class="leaf lf1"></view>
-    <view class="leaf lf2"></view>
-    <view class="leaf lf3"></view>
-    <view class="leaf lf4"></view>
-    <view class="leaf lf5"></view>
-    <view class="leaf lf6"></view>
-    <view class="leaf lf7"></view>
-    <view class="leaf lf8"></view>
-    <view class="leaf lf9"></view>
-    <view class="leaf lf10"></view>
-
-    <!-- 树根 -->
-    <view class="tree-roots">
-      <view class="root r1"></view>
-      <view class="root r2"></view>
-      <view class="root r3"></view>
-    </view>
+    <!-- 树周围的光晕 -->
+    <view class="tree-glow"></view>
 
     <!-- 功能按钮 -->
-    <view class="tree-node node-1" hover-class="node-active" bindtap="goToWomen" wx:if="{{showWomenModule}}">
+    <view class="tree-node node-1" hover-class="node-active" bindtap="goToEmotionLibrary">
       <view class="node-circle">
-        <view class="node-icon">
-          <view class="sflower-center"></view>
-          <view class="sflower-petal sp1"></view>
-          <view class="sflower-petal sp2"></view>
-          <view class="sflower-petal sp3"></view>
-          <view class="sflower-petal sp4"></view>
-        </view>
-      </view>
-      <text class="node-label">她的时间</text>
-    </view>
-
-    <view class="tree-node node-2" hover-class="node-active" bindtap="goToEmotionLibrary">
-      <view class="node-circle">
-        <view class="node-icon">
-          <view class="sbook-spine"></view>
-          <view class="sbook-body"></view>
-          <view class="sbook-line bl1"></view>
-          <view class="sbook-line bl2"></view>
-        </view>
+        <image class="node-icon-img" src="/assets/images/icons/icon-emotion-library.jpg" mode="aspectFit"></image>
       </view>
       <text class="node-label">情绪库</text>
     </view>
 
-    <view class="tree-node node-3" hover-class="node-active" bindtap="goToShop">
+    <view class="tree-node node-2" hover-class="node-active" bindtap="goToSettings">
       <view class="node-circle">
-        <view class="node-icon">
-          <view class="sshop-bag"></view>
-          <view class="sshop-handle"></view>
-        </view>
-      </view>
-      <text class="node-label">疗愈商店</text>
-    </view>
-
-    <view class="tree-node node-4" hover-class="node-active" bindtap="goToSettings">
-      <view class="node-circle">
-        <view class="node-icon">
-          <view class="sgear-center"></view>
-          <view class="sgear-tooth gt1"></view>
-          <view class="sgear-tooth gt2"></view>
-          <view class="sgear-tooth gt3"></view>
-        </view>
+        <image class="node-icon-img" src="/assets/images/icons/icon-settings.jpg" mode="aspectFit"></image>
       </view>
       <text class="node-label">设置</text>
     </view>
 
-    <view class="tree-node node-5" hover-class="node-active" bindtap="goToAbout">
+    <view class="tree-node node-3" hover-class="node-active" bindtap="goToAbout">
       <view class="node-circle">
-        <view class="node-icon">
-          <view class="sabout-bubble"></view>
-          <view class="sabout-dot sad1"></view>
-          <view class="sabout-dot sad2"></view>
-        </view>
+        <image class="node-icon-img" src="/assets/images/icons/icon-about.jpg" mode="aspectFit"></image>
       </view>
       <text class="node-label">关于知愈</text>
     </view>
   </view>
 
   <view class="version-info">
-    <text class="version-text">知愈 FeelingMosaic v1.1.0</text>
+    <text class="version-text">知愈 FeelingMosaic v1.2.0</text>
   </view>
 </view>

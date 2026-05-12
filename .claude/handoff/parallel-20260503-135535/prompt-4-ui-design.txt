@@ -1,0 +1,212 @@
+我正在处理知愈微信小程序的并行优化项目 - 分支4：UI设计系统统一。
+
+# 项目背景
+
+知愈是一个情绪健康微信小程序，采用 Morandi 色系和玻璃态设计风格。当前正在进行4个分支的并行优化，我负责建立统一的UI设计系统，提取全局样式变量，创建可复用的组件样式。
+
+# 我的任务范围
+
+**只能修改以下文件**：
+- `app.wxss` — 全局样式文件
+- `styles/` 目录下的所有文件
+  - `styles/variables.wxss` — 色系变量（需要创建）
+  - `styles/components.wxss` — 组件样式（需要创建）
+  - `styles/animations.wxss` — 动画效果（需要创建）
+  - `styles/typography.wxss` — 字体排版（需要创建）
+  - `styles/gamification.wxss` — 游戏化样式（已存在）
+- `components/` 目录下的组件样式文件（如果有）
+
+**不能修改**：各页面的 `.wxss` 文件（由其他分支负责）
+
+**可以读取分析**：所有页面的 `.wxss` 文件，提取共同样式
+
+# 核心任务
+
+1. **建立全局色系变量** - 定义 Morandi 色系、渐变、透明度、阴影、圆角、间距变量
+2. **统一玻璃态效果** - 创建标准玻璃态 class，定义不同透明度和模糊度的变体
+3. **创建可复用卡片样式** - 定义基础卡片、卡片变体（大/中/小）、卡片状态
+4. **统一动画效果** - 定义标准过渡时间、常用动画（fade/slide/scale/float）
+5. **优化全局字体和排版** - 定义字体大小、行高、字重、间距体系
+6. **创建设计规范文档** - 编写 `DESIGN_SYSTEM.md`，记录使用规范和代码示例
+
+# 设计规范
+
+**Morandi 色系**（需要定义为变量）:
+- 粉色: `#F5C6CB`
+- 米驼色: `#D4B8A5`
+- 薰衣草色: `#C4B5D8`
+- 鼠尾草绿: `#C4D4B5`
+- 金色: `#E8D4B8`
+- 背景色: `#FAF9F7`
+
+**玻璃态效果**（需要统一）:
+- 背景: `rgba(255,255,255,0.7)`
+- 模糊: `backdrop-filter: blur(20rpx)`
+- 圆角: `16rpx`
+- 阴影: `0 4rpx 12rpx rgba(0,0,0,0.08)`
+
+**动画效果**（需要统一）:
+- 标准过渡: `transition: all 0.3s ease`
+- 常用动画: fadeIn, slideUp, float, pulse
+
+# 文件组织结构
+
+```
+styles/
+├── variables.wxss      # 色系、尺寸、阴影变量（需要创建）
+├── components.wxss     # 可复用组件样式（需要创建）
+├── animations.wxss     # 动画和过渡效果（需要创建）
+├── typography.wxss     # 字体和排版（需要创建）
+└── gamification.wxss   # 游戏化样式（已存在，需要整合）
+
+app.wxss                # 引入所有全局样式（需要修改）
+```
+
+# 变量命名规范
+
+```css
+/* 色系变量 */
+--color-primary: #F5C6CB;
+--color-secondary: #D4B8A5;
+--color-accent: #C4B5D8;
+--color-success: #C4D4B5;
+--color-warning: #E8D4B8;
+--color-bg: #FAF9F7;
+
+/* 渐变变量 */
+--gradient-pink: linear-gradient(135deg, #F5C6CB, #FFE0E5);
+--gradient-lavender: linear-gradient(135deg, #C4B5D8, #E8D4F0);
+
+/* 透明度变量 */
+--opacity-glass: 0.7;
+--opacity-overlay: 0.5;
+
+/* 阴影变量 */
+--shadow-sm: 0 2rpx 8rpx rgba(0,0,0,0.06);
+--shadow-md: 0 4rpx 12rpx rgba(0,0,0,0.08);
+--shadow-lg: 0 8rpx 24rpx rgba(0,0,0,0.12);
+
+/* 圆角变量 */
+--radius-sm: 8rpx;
+--radius-md: 16rpx;
+--radius-lg: 24rpx;
+
+/* 间距变量 */
+--spacing-xs: 8rpx;
+--spacing-sm: 16rpx;
+--spacing-md: 24rpx;
+--spacing-lg: 32rpx;
+--spacing-xl: 48rpx;
+```
+
+# 组件样式规范
+
+```css
+/* 玻璃态卡片 */
+.glass-card {
+  background: rgba(255, 255, 255, var(--opacity-glass));
+  backdrop-filter: blur(20rpx);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+/* 标准卡片 */
+.card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-md);
+}
+
+.card-sm { padding: var(--spacing-sm); }
+.card-lg { padding: var(--spacing-lg); }
+```
+
+# 工作流程
+
+1. 读取 `app.wxss` 和 `styles/` 目录下的所有文件
+2. 扫描所有页面的 `.wxss` 文件，识别重复样式
+3. 统计色值使用情况，识别玻璃态效果的不同实现
+4. 创建 `styles/variables.wxss`，定义全局变量
+5. 创建 `styles/components.wxss`，定义可复用组件样式
+6. 创建 `styles/animations.wxss`，定义动画效果
+7. 创建 `styles/typography.wxss`，定义字体排版
+8. 整合 `styles/gamification.wxss`，提取可复用样式
+9. 修改 `app.wxss`，引入所有全局样式
+10. 创建 `DESIGN_SYSTEM.md`，记录设计规范
+11. 生成完成报告，说明各分支可以如何使用全局样式
+
+# 完成标准
+
+- [ ] 全局色系变量系统建立（10+个变量）
+- [ ] 玻璃态效果统一（3+个变体）
+- [ ] 可复用卡片样式创建（5+个样式）
+- [ ] 动画效果统一（8+个动画）
+- [ ] 字体和排版优化（12+个样式）
+- [ ] 游戏化样式整合完成
+- [ ] 设计规范文档完成（DESIGN_SYSTEM.md）
+- [ ] 代码整洁有注释
+- [ ] 向后兼容，不破坏现有样式
+
+# 项目路径
+
+`d:\Obsidian\10-Projects\知愈 FeelingMosaic\知愈 微信小程序\`
+
+# 样式提取清单
+
+从现有页面中提取以下样式：
+- [ ] 色值使用（统计频率）
+- [ ] 玻璃态效果（不同实现）
+- [ ] 卡片样式（不同变体）
+- [ ] 按钮样式（不同状态）
+- [ ] 输入框样式
+- [ ] 标签样式
+- [ ] 动画效果
+- [ ] 字体大小和行高
+
+# 与其他分支的接口
+
+**分支1（Index页面）**:
+- 提供全局色系变量和卡片样式
+- 在完成报告中说明 Index 页面可以如何迁移到全局样式
+
+**分支2（Chat页面）**:
+- 提供玻璃态消息气泡样式
+- Chat 页面的玻璃态效果可以使用全局 class
+
+**分支3（知识库页面）**:
+- 提供标准卡片样式和搜索框样式
+- 知识库卡片可以使用全局卡片样式
+
+# 设计规范文档结构
+
+`DESIGN_SYSTEM.md` 应包含：
+1. **色系使用规范** - 何时使用哪种颜色
+2. **组件样式使用方法** - 如何使用全局 class
+3. **动画使用规范** - 何时使用哪种动画
+4. **代码示例** - 完整的使用示例
+5. **最佳实践** - 性能优化、命名规范
+6. **迁移指南** - 如何将现有页面迁移到全局样式
+
+# 详细文档
+
+完整的任务说明、技术上下文、接口约定请参考：
+`.claude\handoff\parallel-20260503-135535\branch-4-ui-design.md`
+
+---
+
+请直接开始执行，按照以下步骤：
+1. 读取 `app.wxss` 和 `styles/` 目录下的所有文件
+2. 扫描所有页面的 `.wxss` 文件（至少10个页面），识别重复样式
+3. 统计色值使用情况，识别玻璃态效果的不同实现
+4. 创建 `styles/variables.wxss`，定义全局变量
+5. 创建 `styles/components.wxss`，定义可复用组件样式
+6. 创建 `styles/animations.wxss`，定义动画效果
+7. 创建 `styles/typography.wxss`，定义字体排版
+8. 整合 `styles/gamification.wxss`
+9. 修改 `app.wxss`，引入所有全局样式
+10. 创建 `DESIGN_SYSTEM.md`，记录设计规范
+11. 生成完成报告
+
+无需确认，直接开始工作。

@@ -58,7 +58,15 @@ Page({
     records: [],
     selectedDayRecords: [],
     showDayDetail: false,
-    showStats: false
+    showStats: false,
+
+    // 盆栽养成数据
+    plantStage: 1, // 1-5阶段
+    plantStageText: '种子',
+    plantDescription: '开始记录你的情绪，让心之花种子发芽吧',
+    monthRecordCount: 0, // 本月记录数
+    plantProgress: 0, // 进度百分比
+    plantNextStageCount: 6 // 下一阶段所需记录数
   },
 
   onLoad() {
@@ -160,6 +168,9 @@ Page({
     }
 
     this.setData({ calendarDays });
+
+    // 更新盆栽状态
+    this.updatePlantStatus(year, month);
   },
 
   // 获取情绪图标类型（用于CSS图标渲染）
@@ -427,7 +438,7 @@ Page({
   // 查看完整报告
   viewFullReport() {
     wx.navigateTo({
-      url: '/pages/general-report/general-report'
+      url: '/subpages/emotion/general-report/general-report'
     });
   },
 
@@ -589,14 +600,14 @@ Page({
   // 前往设置
   goToSettings() {
     wx.navigateTo({
-      url: '/pages/settings/settings'
+      url: '/subpages/profile/settings/settings'
     });
   },
 
   // 前往收藏金句
   goToFavoriteQuotes() {
     wx.navigateTo({
-      url: '/pages/favorite-quotes/favorite-quotes'
+      url: '/subpages/profile/favorite-quotes/favorite-quotes'
     });
   },
 
@@ -606,6 +617,67 @@ Page({
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
+  },
+
+  // 更新盆栽状态（基于本月记录数）
+  updatePlantStatus(year, month) {
+    const records = this.data.records || [];
+    const monthStr = `${year}-${String(month + 1).padStart(2, '0')}`;
+    const monthRecords = records.filter(r => r.date && r.date.startsWith(monthStr));
+    const monthRecordCount = monthRecords.length;
+
+    console.log('=== 盆栽状态更新 ===');
+    console.log('当前月份:', monthStr);
+    console.log('总记录数:', records.length);
+    console.log('本月记录数:', monthRecordCount);
+    console.log('本月记录:', monthRecords);
+
+    let stage = 1;
+    let stageText = '种子';
+    let description = '开始记录你的情绪，让心之花种子发芽吧';
+    let nextStageCount = 6;
+    let progress = 0;
+
+    if (monthRecordCount >= 51) {
+      stage = 5;
+      stageText = '盛开';
+      description = `本月已记录${monthRecordCount}次，心之花已盛开，继续保持记录习惯`;
+      nextStageCount = monthRecordCount;
+      progress = 100;
+    } else if (monthRecordCount >= 31) {
+      stage = 4;
+      stageText = '茂盛';
+      description = `本月已记录${monthRecordCount}次，心之花茂盛生长，再记录${51 - monthRecordCount}次即可开花`;
+      nextStageCount = 51;
+      progress = Math.round((monthRecordCount / 51) * 100);
+    } else if (monthRecordCount >= 16) {
+      stage = 3;
+      stageText = '小苗';
+      description = `本月已记录${monthRecordCount}次，心之花长成小苗，再记录${31 - monthRecordCount}次进入茂盛期`;
+      nextStageCount = 31;
+      progress = Math.round((monthRecordCount / 31) * 100);
+    } else if (monthRecordCount >= 6) {
+      stage = 2;
+      stageText = '发芽';
+      description = `本月已记录${monthRecordCount}次，心之花已发芽，再记录${16 - monthRecordCount}次长成小苗`;
+      nextStageCount = 16;
+      progress = Math.round((monthRecordCount / 16) * 100);
+    } else {
+      stage = 1;
+      stageText = '种子';
+      description = `本月已记录${monthRecordCount}次，再记录${6 - monthRecordCount}次让种子发芽`;
+      nextStageCount = 6;
+      progress = Math.round((monthRecordCount / 6) * 100);
+    }
+
+    this.setData({
+      plantStage: stage,
+      plantStageText: stageText,
+      plantDescription: description,
+      monthRecordCount: monthRecordCount,
+      plantProgress: progress,
+      plantNextStageCount: nextStageCount
+    });
   },
 
   onShareAppMessage() {

@@ -1,0 +1,106 @@
+<!-- 陪伴者视图页面 -->
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-info-card">
+    <view class="user-avatar">
+      <text class="avatar-text">{{userInfo.name ? userInfo.name.charAt(0) : '她'}}</text>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{userInfo.name || 'TA'}}</text>
+      <text class="user-relation">你的陪伴对象</text>
+    </view>
+  </view>
+
+  <!-- 痛经提醒 -->
+  <view class="pain-alert" wx:if="{{showPainAlert}}">
+    <custom-icon type="warning" size="lg" class="alert-icon"></custom-icon>
+    <view class="alert-content">
+      <text class="alert-title">TA正在经历痛经</text>
+      <text class="alert-desc">痛经程度：{{painLevel}}/10，建议给予关怀和支持</text>
+    </view>
+  </view>
+
+  <!-- 经期状态卡片 -->
+  <view class="period-status-card">
+    <view class="card-header">
+      <custom-icon type="flower" size="md" class="card-icon"></custom-icon>
+      <text class="card-title">经期状态</text>
+    </view>
+
+    <view class="period-info" wx:if="{{periodStatus}}">
+      <view class="info-row">
+        <text class="info-label">上次经期</text>
+        <text class="info-value">{{lastPeriodDate}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">周期长度</text>
+        <text class="info-value">{{cycleLength}} 天</text>
+      </view>
+
+      <view class="period-phase" wx:if="{{currentPhase}}">
+        <text class="phase-icon">{{currentPhase.icon}}</text>
+        <text class="phase-text">{{currentPhase.name}}</text>
+        <text class="phase-desc">{{currentPhase.desc}}</text>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:else>
+      <custom-icon type="calendar" size="xl" class="empty-icon"></custom-icon>
+      <text class="empty-desc">TA还没有记录经期数据</text>
+    </view>
+  </view>
+
+  <!-- 情绪趋势卡片 -->
+  <view class="emotion-trend-card">
+    <view class="card-header">
+      <custom-icon type="heart" size="md" class="card-icon"></custom-icon>
+      <text class="card-title">近期情绪</text>
+    </view>
+
+    <view class="emotion-list" wx:if="{{recentEmotions.length > 0}}">
+      <view class="emotion-item" wx:for="{{recentEmotions}}" wx:key="id">
+        <text class="emotion-icon">{{item.icon}}</text>
+        <view class="emotion-info">
+          <text class="emotion-name">{{item.emotion}}</text>
+          <text class="emotion-time">{{item.time}}</text>
+        </view>
+        <view class="emotion-intensity">
+          <view
+            class="intensity-dot {{index < item.intensity ? 'active' : ''}}"
+            wx:for="{{[1,2,3,4,5]}}"
+            wx:key="*this"
+            wx:for-index="index"
+          ></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:else>
+      <custom-icon type="heart" size="xl" class="empty-icon"></custom-icon>
+      <text class="empty-desc">TA最近没有记录情绪</text>
+    </view>
+  </view>
+
+  <!-- 关怀建议卡片 -->
+  <view class="care-suggestion-card" wx:if="{{careSuggestion}}">
+    <view class="card-header">
+      <custom-icon type="bulb" size="md" class="card-icon"></custom-icon>
+      <text class="card-title">关怀建议</text>
+    </view>
+
+    <view class="suggestion-content">
+      <text class="suggestion-text">{{careSuggestion}}</text>
+
+      <view class="suggestion-actions">
+        <button class="action-btn" bindtap="sendCareMessage">
+          <custom-icon type="chat" size="sm" class="btn-icon"></custom-icon>
+          <text class="btn-text">发送关怀</text>
+        </button>
+        <button class="action-btn" bindtap="viewMoreSuggestions">
+          <custom-icon type="bulb" size="sm" class="btn-icon"></custom-icon>
+          <text class="btn-text">更多建议</text>
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

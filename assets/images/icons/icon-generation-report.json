@@ -1,0 +1,74 @@
+{
+  "total": 11,
+  "success": 11,
+  "failed": 0,
+  "total_time": 270.95662450790405,
+  "results": [
+    {
+      "index": 1,
+      "prompt": "Sparkle star icon, watercolor hand-painted style, soft and warm, gradient colors of pink #F5C6CB and lavender #C4B5D8, gentle glow effect, light cream background, healing feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 45.02857255935669
+    },
+    {
+      "index": 2,
+      "prompt": "Love letter envelope icon, watercolor hand-painted style, soft and warm, gradient colors of pink #F5C6CB and beige #D4B8A5, gentle glow effect, light cream background, romantic and warm feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 47.797080993652344
+    },
+    {
+      "index": 3,
+      "prompt": "Document clipboard icon, watercolor hand-painted style, soft and warm, gradient colors of beige #D4B8A5 and gold #E8D4B8, gentle glow effect, light cream background, professional feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 45.67129373550415
+    },
+    {
+      "index": 4,
+      "prompt": "Notification bell icon, watercolor hand-painted style, soft and warm, gradient colors of lavender #C4B5D8 and sage green #C4D4B5, gentle glow effect, light cream background, friendly feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 44.95838236808777
+    },
+    {
+      "index": 5,
+      "prompt": "Lock security icon, watercolor hand-painted style, soft and warm, gradient colors of beige #D4B8A5 and gold #E8D4B8, gentle glow effect, light cream background, safe and trustworthy feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 48.35540151596069
+    },
+    {
+      "index": 6,
+      "prompt": "Chat bubble icon, watercolor hand-painted style, soft and warm, gradient colors of pink #F5C6CB and lavender #C4B5D8, gentle glow effect, light cream background, friendly communication feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 38.88222551345825
+    },
+    {
+      "index": 7,
+      "prompt": "Gift box icon, watercolor hand-painted style, soft and warm, gradient colors of pink #F5C6CB and gold #E8D4B8, gentle glow effect, light cream background, joyful and generous feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 45.876036643981934
+    },
+    {
+      "index": 8,
+      "prompt": "Email envelope icon, watercolor hand-painted style, soft and warm, gradient colors of beige #D4B8A5 and sage green #C4D4B5, gentle glow effect, light cream background, professional communication feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 51.24873113632202
+    },
+    {
+      "index": 9,
+      "prompt": "Flower blossom icon, watercolor hand-painted style, soft and warm, gradient colors of pink #F5C6CB and lavender #C4B5D8, gentle glow effect, light cream background, feminine and elegant feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 47.57363176345825
+    },
+    {
+      "index": 10,
+      "prompt": "Music note icon, watercolor hand-painted style, soft and warm, gradient colors of lavender #C4B5D8 and sage green #C4D4B5, gentle glow effect, light cream background, peaceful and melodic feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 44.293681144714355
+    },
+    {
+      "index": 11,
+      "prompt": "Mobile phone icon, watercolor hand-painted style, soft and warm, gradient colors of beige #D4B8A5 and gold #E8D4B8, gentle glow effect, light cream background, modern and accessible feeling, minimalist design, 512x512, icon design",
+      "status": "success",
+      "elapsed": 45.86704707145691
+    }
+  ]
+}

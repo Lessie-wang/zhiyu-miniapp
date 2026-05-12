@@ -1,0 +1,84 @@
+<!-- 陪伴者接受邀请页面 -->
+<view class="container">
+  <!-- 邀请信息卡片 -->
+  <view class="invite-card" wx:if="{{inviteInfo}}">
+    <view class="invite-header">
+      <custom-icon type="gift" size="xl" class="invite-icon"></custom-icon>
+      <text class="invite-title">{{inviteInfo.userName}} 邀请你成为TA的陪伴者</text>
+    </view>
+
+    <view class="invite-content">
+      <text class="invite-desc">作为陪伴者，你可以：</text>
+      <view class="feature-list">
+        <view class="feature-item">
+          <custom-icon type="chart" size="md" class="feature-icon"></custom-icon>
+          <text class="feature-text">查看TA的情绪趋势和经期状态</text>
+        </view>
+        <view class="feature-item">
+          <custom-icon type="bell" size="md" class="feature-icon"></custom-icon>
+          <text class="feature-text">在TA情绪低落时收到关怀提醒</text>
+        </view>
+        <view class="feature-item">
+          <custom-icon type="chat" size="md" class="feature-icon"></custom-icon>
+          <text class="feature-text">发送关怀消息给予支持</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="invite-actions">
+      <button class="accept-btn" bindtap="acceptInvite" disabled="{{accepting}}">
+        <text class="btn-text">{{accepting ? '接受中...' : '接受邀请'}}</text>
+      </button>
+      <button class="decline-btn" bindtap="declineInvite">
+        <text class="btn-text">暂不接受</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 输入邀请码 -->
+  <view class="input-code-card" wx:if="{{!inviteInfo}}">
+    <view class="input-header">
+      <custom-icon type="key" size="xl" class="input-icon"></custom-icon>
+      <text class="input-title">输入邀请码</text>
+    </view>
+
+    <view class="input-content">
+      <input
+        class="code-input"
+        type="text"
+        placeholder="请输入6位邀请码"
+        maxlength="10"
+        value="{{inviteCode}}"
+        bindinput="onCodeInput"
+        adjust-position="{{true}}"
+        cursor-spacing="150"
+      />
+      <button class="verify-btn" bindtap="verifyCode" disabled="{{!inviteCode || verifying}}">
+        <text class="btn-text">{{verifying ? '验证中...' : '验证'}}</text>
+      </button>
+    </view>
+
+    <view class="input-hint">
+      <text class="hint-text">邀请码由邀请人生成，请向TA索取</text>
+    </view>
+  </view>
+
+  <!-- 隐私说明 -->
+  <view class="privacy-card">
+    <text class="privacy-title">🔒 隐私保护</text>
+    <view class="privacy-list">
+      <view class="privacy-item">
+        <text class="privacy-icon">✓</text>
+        <text class="privacy-text">你只能看到对方授权的内容</text>
+      </view>
+      <view class="privacy-item">
+        <text class="privacy-icon">✓</text>
+        <text class="privacy-text">对方可以随时调整分享范围</text>
+      </view>
+      <view class="privacy-item">
+        <text class="privacy-icon">✓</text>
+        <text class="privacy-text">对方可以随时解除绑定关系</text>
+      </view>
+    </view>
+  </view>
+</view>

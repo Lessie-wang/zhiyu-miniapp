@@ -1,0 +1,219 @@
+<view class="container">
+  <!-- 加载中（自定义场景生成） -->
+  <view class="phase-loading" wx:if="{{currentPhase === 'loading'}}">
+    <view class="loading-card">
+      <view class="loading-icon">
+        <view class="loading-spinner"></view>
+      </view>
+      <text class="loading-text">小知正在为你搭建场景...</text>
+    </view>
+  </view>
+
+  <!-- 介绍阶段 -->
+  <view class="phase-intro" wx:if="{{currentPhase === 'intro' && scenario}}">
+    <view class="intro-card">
+      <view class="intro-icon-wrap">
+        <!-- CSS场景图标 -->
+        <view class="scene-icon scene-icon-{{scenario.title === '日常沟通' ? 'chat' : scenario.title === '表达拒绝' ? 'shield' : scenario.title === '处理冲突' ? 'bolt' : scenario.title === '安慰他人' ? 'heart' : 'custom'}}">
+          <view class="si-part1"></view>
+          <view class="si-part2"></view>
+          <view class="si-part3"></view>
+        </view>
+      </view>
+      <text class="intro-title">{{scenario.title}}</text>
+      <view class="intro-meta">
+        <view class="difficulty-tag">{{scenario.difficulty}}</view>
+        <text class="focus-text">{{scenario.focus}}</text>
+      </view>
+      <text class="intro-bg">{{scenario.background}}</text>
+      <view class="intro-tip">
+        <view class="tip-icon">
+          <view class="tip-bulb"></view>
+          <view class="tip-base"></view>
+        </view>
+        <text class="tip-text">自由回应，没有标准答案。小知会在旁边给你实时反馈。</text>
+      </view>
+      <button class="start-btn" bindtap="startTraining">
+        <text class="btn-text">开始训练</text>
+        <text class="btn-arrow">→</text>
+      </button>
+    </view>
+    <view class="back-link" bindtap="goBack">
+      <text class="back-text">← 返回训练列表</text>
+    </view>
+  </view>
+
+  <!-- 对话阶段 -->
+  <view class="phase-dialogue" wx:if="{{currentPhase === 'dialogue'}}">
+    <!-- 顶部栏 -->
+    <view class="dialogue-header">
+      <view class="header-left">
+        <text class="header-title">{{scenario.title}}</text>
+        <text class="header-round">第 {{currentRound}} 轮</text>
+      </view>
+      <view class="header-right">
+        <view class="end-btn" bindtap="endTrainingEarly">
+          <text class="end-btn-text">结束</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 场景提示 -->
+    <view class="scene-banner">
+      <text class="scene-banner-text">{{scenario.background}}</text>
+    </view>
+
+    <!-- 对话区域 -->
+    <scroll-view class="dialogue-scroll" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation>
+      <view class="dialogue-messages">
+        <block wx:for="{{messages}}" wx:key="index">
+          <!-- NPC气泡 -->
+          <view class="msg-row msg-npc" wx:if="{{item.role === 'npc'}}">
+            <view class="msg-avatar-wrap">
+              <text class="msg-avatar">{{scenario.npcAvatar}}</text>
+            </view>
+            <view class="msg-bubble npc-bubble">
+              <text class="msg-name">{{item.name}}</text>
+              <text class="msg-text">{{item.text}}</text>
+            </view>
+          </view>
+
+          <!-- 用户气泡 -->
+          <view class="msg-row msg-user" wx:if="{{item.role === 'user'}}">
+            <view class="msg-bubble user-bubble">
+              <text class="msg-text">{{item.text}}</text>
+            </view>
+          </view>
+
+          <!-- 小知旁白 -->
+          <view class="msg-row msg-coach" wx:if="{{item.role === 'coach'}}">
+            <view class="coach-card">
+              <view class="coach-icon">
+                <view class="coach-bulb"></view>
+                <view class="coach-rays"></view>
+              </view>
+              <view class="coach-content">
+                <text class="coach-label">小知旁白</text>
+                <text class="coach-text">{{item.text}}</text>
+              </view>
+            </view>
+          </view>
+        </block>
+
+        <!-- AI思考中 -->
+        <view class="msg-row msg-npc" wx:if="{{isAIThinking}}">
+          <view class="msg-avatar-wrap">
+            <text class="msg-avatar">{{scenario.npcAvatar}}</text>
+          </view>
+          <view class="msg-bubble npc-bubble thinking-bubble">
+            <view class="thinking-dots">
+              <view class="dot d1"></view>
+              <view class="dot d2"></view>
+              <view class="dot d3"></view>
+            </view>
+          </view>
+        </view>
+
+        <view id="msg-bottom"></view>
+      </view>
+    </scroll-view>
+
+    <!-- 输入区 -->
+    <view class="input-area">
+      <input
+        class="input-field"
+        placeholder="说出你的回应..."
+        value="{{inputText}}"
+        bindinput="onInputChange"
+        bindconfirm="sendResponse"
+        confirm-type="send"
+        disabled="{{isAIThinking}}"
+        adjust-position="{{true}}"
+        cursor-spacing="150"
+        hold-keyboard="{{true}}"
+      />
+      <view class="send-btn {{isAIThinking ? 'disabled' : ''}}" bindtap="sendResponse">
+        <view class="send-arrow"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 总结阶段 -->
+  <view class="phase-summary" wx:if="{{currentPhase === 'summary'}}">
+    <!-- 加载中 -->
+    <view class="summary-loading" wx:if="{{isSummaryLoading}}">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">小知正在为你生成训练总结...</text>
+    </view>
+
+    <block wx:if="{{summary && !isSummaryLoading}}">
+      <!-- 得分卡片 -->
+      <view class="score-card">
+        <view class="score-ring">
+          <text class="score-number">{{summary.totalScore}}</text>
+        </view>
+        <text class="score-rating">{{summary.rating}}</text>
+        <text class="score-scene">{{scenario.title}} · {{scenario.difficulty}}</text>
+      </view>
+
+      <!-- 亮点 -->
+      <view class="summary-section">
+        <view class="section-icon-wrap highlights-icon">
+          <view class="star-icon">
+            <view class="star-arm sa1"></view>
+            <view class="star-arm sa2"></view>
+            <view class="star-arm sa3"></view>
+            <view class="star-arm sa4"></view>
+          </view>
+        </view>
+        <text class="section-title">做得好的地方</text>
+        <view class="section-list">
+          <view class="section-item" wx:for="{{summary.highlights}}" wx:key="index">
+            <view class="item-dot good-dot"></view>
+            <text class="item-text">{{item}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 改进 -->
+      <view class="summary-section">
+        <view class="section-icon-wrap improve-icon">
+          <view class="sprout-icon">
+            <view class="sprout-stem"></view>
+            <view class="sprout-leaf1"></view>
+            <view class="sprout-leaf2"></view>
+          </view>
+        </view>
+        <text class="section-title">可以更好</text>
+        <view class="section-list">
+          <view class="section-item" wx:for="{{summary.improvements}}" wx:key="index">
+            <view class="item-dot improve-dot"></view>
+            <text class="item-text">{{item}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 核心建议 -->
+      <view class="tip-card" wx:if="{{summary.tip}}">
+        <view class="tip-card-icon">
+          <view class="tip-bulb"></view>
+          <view class="tip-base"></view>
+        </view>
+        <text class="tip-card-text">{{summary.tip}}</text>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="summary-actions">
+        <button class="action-btn retry-btn" bindtap="restartTraining">
+          <text>再试一次</text>
+        </button>
+        <button wx:if="{{hasNextLevel}}" class="action-btn next-btn" bindtap="goToNextLevel">
+          <text>进入下一关</text>
+        </button>
+        <button class="action-btn back-btn" bindtap="goBackToMap">
+          <text>返回关卡地图</text>
+        </button>
+      </view>
+    </block>
+  </view>
+</view>

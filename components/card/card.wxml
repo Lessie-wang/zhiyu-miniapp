@@ -1,0 +1,26 @@
+<!--
+  知愈小程序 - 卡片组件
+  支持多种样式和交互效果
+-->
+<view
+  class="zh-card zh-card--{{type}} {{shadow ? 'zh-card--shadow' : ''}} {{hover ? 'zh-card--hover' : ''}} {{customClass}}"
+  hover-class="{{hover ? 'zh-card--active' : ''}}"
+  hover-stay-time="100"
+  bindtap="handleTap"
+>
+  <!-- 卡片头部 -->
+  <view wx:if="{{title || extra}}" class="zh-card__header">
+    <view class="zh-card__title">{{title}}</view>
+    <view wx:if="{{extra}}" class="zh-card__extra">{{extra}}</view>
+  </view>
+
+  <!-- 卡片内容 -->
+  <view class="zh-card__body">
+    <slot></slot>
+  </view>
+
+  <!-- 卡片底部 -->
+  <view wx:if="{{footer}}" class="zh-card__footer">
+    <slot name="footer"></slot>
+  </view>
+</view>
