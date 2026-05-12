@@ -299,17 +299,16 @@ zhiyu-miniapp/
 
 ---
 
-## 👥 团队
+## 👤 开发者
 
-**开发者**：王佳怡  
-**指导教师**：宛璐（北京工商大学经济学院）  
+**独立开发者**：Aito  
 **理论支持**：北京工商大学本科毕业论文《认知型数字资产的估值问题研究——以AI心理健康平台为例》
 
 ---
 
 ## 📞 联系方式
 
-- 📧 Email: [项目邮箱]
+- 📧 Email: yinji_aito@yeah.net
 - 🌐 概念介绍网站: https://zhiyu-feelingmosaic.netlify.app/
 - 💬 问题反馈: [GitHub Issues](https://github.com/Lessie-wang/zhiyu-miniapp/issues)
 
