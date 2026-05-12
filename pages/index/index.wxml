@@ -23,7 +23,7 @@
 
     <!-- 信封上方：Logo 文字 -->
     <view class="logo-above-envelope">
-      <text class="logo-text-main">知愈</text>
+      <image class="logo-img-main" src="/assets/images/index/zhiyu-logo-watercolor.png" mode="aspectFit"></image>
       <text class="logo-text-sub">FeelingMosaic</text>
     </view>
 

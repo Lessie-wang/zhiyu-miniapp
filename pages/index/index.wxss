@@ -167,6 +167,34 @@
   }
 }
 
+/* 主标题"知愈" - 水彩图片版本 */
+.logo-img-main {
+  width: 520rpx;
+  height: 260rpx;
+  filter:
+    drop-shadow(0 10rpx 24rpx rgba(245, 198, 203, 0.5))
+    drop-shadow(0 6rpx 16rpx rgba(196, 181, 216, 0.4))
+    drop-shadow(0 4rpx 10rpx rgba(212, 184, 165, 0.45));
+  animation: logoImageFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoImageFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter:
+      drop-shadow(0 10rpx 24rpx rgba(245, 198, 203, 0.5))
+      drop-shadow(0 6rpx 16rpx rgba(196, 181, 216, 0.4))
+      drop-shadow(0 4rpx 10rpx rgba(212, 184, 165, 0.45));
+  }
+  50% {
+    transform: translateY(-8rpx) scale(1.02);
+    filter:
+      drop-shadow(0 12rpx 32rpx rgba(245, 198, 203, 0.6))
+      drop-shadow(0 8rpx 20rpx rgba(196, 181, 216, 0.5))
+      drop-shadow(0 5rpx 12rpx rgba(212, 184, 165, 0.5));
+  }
+}
+
 /* 主标题"知愈" - 彩色玻璃教堂风格 v6.0 - 彩色浓郁+细描边 */
 .logo-text-main {
   font-size: 128rpx;
